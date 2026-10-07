@@ -8,33 +8,34 @@ import SubjectMarquee from '../components/SubjectMarquee.astro';
 import { SITE, PARENT_PRICING, fmtKES } from '../lib/site';
 
 const description =
-  'Pathways gives parents CBC study notes, practice tests and exam preparation for every child, linked to the school and subject teachers, with progress, strengths and gaps in view. Free to start, KES 200 a month for one child after a 14-day trial.';
+  'Pathways for families: CBC study notes, study cards, practice tests and exam prep for your child, progress you can see, and a link to the school. Free to start, KES 200 a month for one child.';
 
 const steps = [
-  { k: 'Browse', t: 'Every subject, every sub-strand, in order', d: 'Open a child, pick a subject, and the notes are laid out exactly as the CBC design orders them: strand, sub-strand, lesson. No guessing what "Numbers" covers this term.', video: 'notes-browse', screen: null },
-  { k: 'Read', t: 'Notes written to be read at home', d: 'Key words, a strand overview, then the content in cards you can scan on a phone. Shapes come with formulas, body systems with organs and roles, grammar with examples a child recognises.', video: null, screen: 'note-shapes' },
-  { k: 'Work it through', t: 'Worked examples, one step at a time', d: 'Tap "Next step" and watch the method unfold column by column. Ones, tens, hundreds, carry. The child controls the pace, and can reset and go again.', video: 'notes-worked', screen: null },
-  { k: 'Check', t: 'Check my learning, right under the note', d: 'Short questions with gentle, instant feedback. A wrong answer explains why and invites a retry. A right one celebrates and moves on.', video: 'notes-quiz', screen: null },
-  { k: 'Test', t: 'Generate a test in seconds, assign it in a tap', d: 'Pick subject, difficulty and length. Pathways builds a five-question test from the curriculum, hands the phone to your child, and marks it when they finish.', video: 'tests-generate', screen: null },
-  { k: 'Celebrate', t: 'Results you both understand', d: 'A score, an answer review, and a little confetti when it goes well. Each test feeds a picture of progress, strengths and gaps per child that you and the teacher both see.', video: 'tests-result', screen: null },
+  { k: 'Browse', t: 'Every subject, in curriculum order', d: 'Strand, sub-strand, lesson. No guessing what "Numbers" covers this term.', video: 'walk-browse', screen: null },
+  { k: 'Read', t: 'Notes a child can read alone', d: 'A story, a picture, the lesson it teaches, then a quick check.', video: null, screen: 'note-cre-elisha' },
+  { k: 'Revise', t: 'Study cards for quick revision', d: 'Formulas, parts of speech, body systems: the facts on one card.', video: null, screen: 'card-shapes' },
+  { k: 'Work it through', t: 'Worked examples, one step at a time', d: 'Long division, one step per tap. The child sets the pace.', video: 'walk-worked', screen: null },
+  { k: 'Check', t: 'Check my learning', d: 'Short questions, instant feedback, and a "Great job" when the note is done.', video: 'walk-finish', screen: null },
+  { k: 'Test', t: 'A test in seconds', d: 'You pick the subject and length; Pathways builds and marks it.', video: 'tests-generate', screen: null },
+  { k: 'Celebrate', t: 'A score you both understand', d: 'Confetti for the child. Strengths and gaps for you and the teacher.', video: 'tests-result', screen: null },
 ];
 
 const gallery = [
-  ['note-parts-of-speech', 'Parts of Speech, English'],
-  ['note-states-of-matter', 'States of Matter, Science'],
-  ['note-government', 'Government Structure, Social Studies'],
-  ['note-body-respiratory', 'Body Systems, Science'],
-  ['note-punctuation', 'Punctuation, English'],
-  ['hub-diana', 'Home: one child, her subjects in orbit'],
+  ['card-parts-of-speech', 'Parts of Speech · English'],
+  ['card-states-of-matter', 'States of Matter · Science'],
+  ['card-government', 'Government Structure · Social Studies'],
+  ['card-body-respiratory', 'Body Systems · Science'],
+  ['card-punctuation', 'Punctuation · English'],
+  ['card-shapes', 'Shapes and Formulas · Mathematics'],
 ];
 
 const faqs = [
-  { q: 'Does my child\'s school need to use Pathways?', a: 'No. The app is fully standalone: sign up, add your children with their grade, and the notes, tests and tutor work immediately. If the school does use Pathways, you can link a child with their admission number and also see results, calendar and announcements.' },
-  { q: 'Which grades are covered?', a: 'The curriculum map covers Grades 1 to 9. Study notes are being completed grade by grade, with lower and upper primary furthest along. The Free plan lets you check your child\'s grade before paying.' },
-  { q: 'How much is it?', a: `Free to start, with a ${PARENT_PRICING.trialDays}-day trial of Standard. After that Standard is ${fmtKES(PARENT_PRICING.tiers[0].monthly)} a month for one child, ${fmtKES(PARENT_PRICING.tiers[1].monthly)} for two and ${fmtKES(PARENT_PRICING.tiers[2].monthly)} for three or more. Pay yearly and get two months free.` },
-  { q: 'How do I pay?', a: 'M-PESA, from inside the app. You get a prompt on your phone, enter your PIN, done. You can cancel any time; access runs to the end of the period you paid for.' },
-  { q: 'Can more than one parent use the account?', a: 'Yes. A household can have several adults, and each child can have their own login for a livelier, child-safe session on the same account.' },
-  { q: 'Is there an iPhone version?', a: 'Not yet. Pathways is on Android today via Google Play. Join the mailing list on the contact page and we will tell you when iOS ships.' },
+  { q: 'Does the school need to use Pathways?', a: 'No. Sign up, add your children with their grade, and the notes, tests and tutor work immediately. If the school is on Pathways, link a child with their admission number to also see results, calendar and announcements.' },
+  { q: 'Which grades are covered?', a: 'The curriculum map covers Grades 1 to 9. Study notes are being completed grade by grade, with primary furthest along. The Free plan lets you check your child\'s grade first.' },
+  { q: 'How much is it?', a: `Free to start, then a ${PARENT_PRICING.trialDays}-day trial of Standard. After that ${fmtKES(PARENT_PRICING.tiers[0].monthly)} a month for one child, ${fmtKES(PARENT_PRICING.tiers[1].monthly)} for two, ${fmtKES(PARENT_PRICING.tiers[2].monthly)} for three or more. Yearly is two months free.` },
+  { q: 'How do I pay?', a: 'M-PESA, inside the app. Cancel any time; access runs to the end of the paid period.' },
+  { q: 'Can the child have their own login?', a: 'Yes. Each child gets a child-safe session on the household account, and more than one adult can join.' },
+  { q: 'Is there an iPhone version?', a: 'Not yet. Pathways is on Android via Google Play. Tell us on the contact page and we\'ll let you know when iOS ships.' },
 ];
 
 const jsonLd = {
@@ -51,29 +52,31 @@ const jsonLd = {
 };
 ---
 
-<Base title="For Parents" {description} image="/og/parents.png" {jsonLd}>
+<Base title="For Families" {description} image="/og/parents.png" {jsonLd}>
   <section class="relative overflow-hidden">
     <div class="container-x grid items-center gap-10 py-10 lg:grid-cols-[1.05fr_1fr] lg:py-16">
       <div>
-        <p class="eyebrow mb-5" style="color: var(--primary)" data-reveal>Pathways for Parents · Android</p>
+        <p class="eyebrow mb-5" style="color: var(--primary)" data-reveal>For families · Android</p>
         <h1 class="font-display text-4xl font-bold leading-[1.04] sm:text-5xl lg:text-6xl" data-reveal data-reveal-delay="0.05">
-          CBC study notes and practice your child can use <span class="marker">at home<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 40 6, 90 4, 196 9" /></svg></span>.
+          Your child studies. You <span class="marker">see the progress.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 40 6, 90 4, 196 9" /></svg></span>
         </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground" data-reveal data-reveal-delay="0.1">
-          Notes for every sub-strand, worked examples, practice tests and exam preparation, with an AI tutor on hand. Link your child's school to see results, announcements and the subject teachers' work, and watch progress, strengths and gaps build up per child.
+        <p class="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground" data-reveal data-reveal-delay="0.1">
+          Notes, study cards, practice tests and exam prep for every sub-strand, with an AI tutor on hand. Link the school and results arrive in the same app.
         </p>
         <div class="mt-8 flex flex-wrap items-center gap-3" data-reveal data-reveal-delay="0.15">
           <a href={SITE.playStoreUrl} target="_blank" rel="noopener" class="btn-primary btn-lg">
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 2.2 13.4 12 3.6 21.8c-.4-.2-.6-.6-.6-1.1V3.3c0-.5.2-.9.6-1.1z"/><path fill="#FBBC04" d="m16.8 15.4-3.4-3.4 3.4-3.4 4 2.3c1.1.6 1.1 1.6 0 2.2l-4 2.3z"/><path fill="#4285F4" d="M13.4 12 3.6 2.2c.3-.2.8-.2 1.3.1l11.9 6.3-3.4 3.4z"/><path fill="#EA4335" d="m13.4 12 3.4 3.4-11.9 6.3c-.5.3-1 .3-1.3.1l9.8-9.8z"/></svg>
             Get it on Google Play
           </a>
-          <a href="#pricing" class="btn-ghost btn-lg">See pricing</a>
+          <a href="#pricing" class="btn-ghost btn-lg">Pricing</a>
         </div>
-        <p class="mt-5 text-sm text-muted-foreground" data-reveal data-reveal-delay="0.2">Free to start · {PARENT_PRICING.trialDays}-day trial of Standard · Pay with M-PESA · Works without the school</p>
+        <ul class="mt-7 flex flex-wrap gap-2 text-xs font-semibold" data-reveal data-reveal-delay="0.2">
+          {['Free to start', `${PARENT_PRICING.trialDays}-day trial`, 'M-PESA', 'Works without the school'].map((t) => <li class="rounded-full border border-border bg-card px-3 py-1.5">{t}</li>)}
+        </ul>
       </div>
       <div class="relative mx-auto flex w-full max-w-[520px] items-end justify-center gap-4" data-reveal="scale">
-        <PhoneFrame screen="hub-luther" alt="Pathways home screen: a child's subjects orbit their avatar" class="w-[38%] -rotate-6 translate-y-6" loading="eager" />
-        <PhoneFrame video="notes-browse" alt="Browsing from the home hub into Mathematics study notes" class="w-[46%] z-10" loading="eager" />
+        <PhoneFrame screen="notes-list" alt="Study notes for Grade 5, subject by subject, with progress per subject" class="w-[38%] -rotate-6 translate-y-6" loading="eager" />
+        <PhoneFrame video="walk-browse" alt="From the home hub into Mathematics study notes" class="w-[46%] z-10" loading="eager" />
         <div class="absolute -right-2 -bottom-4 z-20 sm:right-0" data-pola-float><Pola pose="hello" size="clamp(5rem, 12vw, 7.5rem)" seed={1} loading="eager" /></div>
       </div>
     </div>
@@ -82,9 +85,8 @@ const jsonLd = {
 
   <SubjectMarquee class="mt-4" />
 
-  {/* ---- Pinned walkthrough: text scrolls, the phone swaps clips ---- */}
   <section class="container-x py-20 lg:py-28" id="walkthrough">
-    <SectionHeading eyebrow="How a study session goes" title="Explain, show, check. Then test, and celebrate." mark="celebrate" align="center" lead="Six moments from the real app, recorded on a real phone." />
+    <SectionHeading eyebrow="A study session" title="Read, revise, work it through. Then test, and celebrate." mark="celebrate" align="center" lead="Seven moments from the real app." />
     <div class="walk mx-auto mt-14 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
       <div class="walk-stage mx-auto w-[min(70vw,300px)] lg:sticky lg:top-28 lg:w-[320px] lg:self-start lg:justify-self-end">
         <div class="relative">
@@ -101,7 +103,7 @@ const jsonLd = {
           <li class="walk-step card p-6 sm:p-7" data-step={i}>
             <p class="eyebrow" style="color: var(--primary)">{i + 1} · {s.k}</p>
             <h3 class="mt-2 font-display text-2xl font-bold">{s.t}</h3>
-            <p class="mt-2 text-muted-foreground leading-relaxed">{s.d}</p>
+            <p class="mt-2 text-muted-foreground">{s.d}</p>
             <div class="mt-4 lg:hidden">{s.video ? <PhoneFrame video={s.video} alt={s.t} class="mx-auto w-[200px]" /> : <PhoneFrame screen={s.screen!} alt={s.t} class="mx-auto w-[200px]" />}</div>
           </li>
         ))}
@@ -111,7 +113,7 @@ const jsonLd = {
 
   <section class="bg-background py-20 lg:py-28">
     <div class="container-x">
-      <SectionHeading eyebrow="Real pages from the app" title="Notes that look like the exercise book, not the syllabus." mark="exercise book" lead="Each one is a real screen from Pathways on Android. Colour-coded by subject, with a quick reference at the bottom of every topic." />
+      <SectionHeading eyebrow="Study cards" title="The whole topic on one card." mark="one card" lead="Colour-coded by subject, with a quick reference at the bottom. For the night before the test." />
       <div class="gallery mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 no-scrollbar" data-reveal-stagger="0.08">
         {gallery.map(([screen, cap]) => (
           <figure class="snap-center shrink-0">
@@ -124,7 +126,7 @@ const jsonLd = {
   </section>
 
   <section class="container-x py-20 lg:py-28" id="pricing">
-    <SectionHeading eyebrow="Pricing" title="One price for the whole household." mark="whole household" align="center" lead={`Start free. Try Standard for ${PARENT_PRICING.trialDays} days. Then pay for how many children you have, not how many subjects. Yearly is ten months for the price of twelve.`} />
+    <SectionHeading eyebrow="Pricing" title="One price for the whole household." mark="whole household" align="center" lead={`Free to start. ${PARENT_PRICING.trialDays} days of Standard on us. Then pay per child, not per subject.`} />
     <div class="mx-auto mt-10 flex w-fit items-center gap-1 rounded-full border border-border bg-card p-1" role="group" aria-label="Billing period" data-reveal>
       <button class="period-btn rounded-full px-4 py-2 text-sm font-semibold" data-period="monthly" aria-pressed="true">Monthly</button>
       <button class="period-btn rounded-full px-4 py-2 text-sm font-semibold" data-period="yearly" aria-pressed="false">Yearly <span class="tag tag-result ml-1">2 months free</span></button>
@@ -133,7 +135,6 @@ const jsonLd = {
       <div class="card flex flex-col p-7">
         <p class="eyebrow">Free</p>
         <p class="mt-3 font-display text-4xl font-bold">KES 0</p>
-        <p class="mt-1 text-sm text-muted-foreground">A real taste, not a locked door.</p>
         <ul class="mt-6 grid gap-2.5 text-sm">
           {PARENT_PRICING.free.map((f) => <li class="flex items-start gap-2.5"><i class="mt-1.5 size-2 shrink-0 rounded-full bg-muted-foreground"></i>{f}</li>)}
         </ul>
@@ -142,7 +143,6 @@ const jsonLd = {
       <div class="card relative overflow-hidden p-7" style="border-color: color-mix(in srgb, var(--gold-deep) 50%, var(--border))">
         <div class="absolute top-4 right-4"><Pola pose="happy" size="4.5rem" seed={10} /></div>
         <p class="eyebrow" style="color: var(--gold-deep)">Standard</p>
-        <p class="mt-3 text-sm text-muted-foreground">Everything, for every child in the house.</p>
         <div class="mt-5 grid gap-3 sm:grid-cols-3">
           {PARENT_PRICING.tiers.map((t, i) => (
             <div class:list={['rounded-2xl border p-4', i === 0 ? 'border-[var(--gold-deep)] bg-[color-mix(in_srgb,var(--gold)_18%,transparent)]' : 'border-border bg-background']}>
@@ -157,11 +157,18 @@ const jsonLd = {
         </ul>
         <div class="mt-7 flex flex-wrap items-center gap-4">
           <a href={SITE.playStoreUrl} target="_blank" rel="noopener" class="btn-primary btn-lg">Start {PARENT_PRICING.trialDays}-day free trial</a>
-          <p class="text-xs text-muted-foreground">Pay with M-PESA in the app. Cancel any time. Prices in KES, taxes included.</p>
+          <p class="text-xs text-muted-foreground">M-PESA in the app. Cancel any time.</p>
         </div>
       </div>
     </div>
-    <p class="mx-auto mt-6 max-w-2xl text-center text-sm text-muted-foreground" data-reveal>If your child's school sponsors their grade on Pathways, the app is free for you. Ask the school, or link with an admission number to find out.</p>
+    <div class="mx-auto mt-12 grid max-w-3xl items-center gap-8 sm:grid-cols-[200px_1fr]" data-reveal>
+      <PhoneFrame video="pricing-app" alt="The subscription screen in the app: per-child pricing and the manage subscription dialog" class="mx-auto w-[180px]" />
+      <div>
+        <p class="eyebrow">In the app</p>
+        <h3 class="mt-2 font-display text-2xl font-bold">Per child, shown before you pay.</h3>
+        <p class="mt-2 text-muted-foreground">The subscription screen lists every child, what you pay for each, and the renewal date. A child the school already covers is never charged to you.</p>
+      </div>
+    </div>
   </section>
 
   <section class="bg-background py-20 lg:py-28">
@@ -179,7 +186,6 @@ const jsonLd = {
       <div class="mx-auto flex max-w-2xl flex-col items-center">
         <Pola pose="cheer" size="7rem" seed={14} />
         <h2 class="mt-4 font-display text-3xl font-bold sm:text-4xl">Tonight's homework, sorted.</h2>
-        <p class="mt-3 text-primary-foreground/85">Download Pathways, add your children, and open the first note. It takes two minutes.</p>
         <a href={SITE.playStoreUrl} target="_blank" rel="noopener" class="btn mt-7 bg-white text-primary hover:-translate-y-0.5">Get it on Google Play</a>
       </div>
     </div>
@@ -200,7 +206,6 @@ const jsonLd = {
     if (!walk) return;
     const R = reduced();
 
-    // ---- Pricing period toggle ----
     document.querySelectorAll<HTMLButtonElement>('.period-btn').forEach((b) => {
       b.addEventListener('click', () => {
         const p = b.dataset.period as 'monthly' | 'yearly';
@@ -213,12 +218,10 @@ const jsonLd = {
       });
     });
 
-    // ---- Pinned walkthrough (desktop): activate the step whose card is mid-viewport ----
     if (!matchMedia('(min-width: 1024px)').matches) return;
     const media = gsap.utils.toArray<HTMLElement>('.walk-media');
     const cards = gsap.utils.toArray<HTMLElement>('.walk-step');
     const polaEl = document.getElementById('walk-pola');
-    const poses = ['read', 'read', 'think', 'happy', 'search', 'cheer'];
     let current = 0;
     const show = (i: number) => {
       if (i === current) return;
@@ -232,9 +235,6 @@ const jsonLd = {
       if (polaEl) gsap.fromTo(polaEl, { scale: 0.8, rotate: -8 }, { scale: 1, rotate: 0, duration: 0.5, ease: 'back.out(2)' });
     };
     cards[0].classList.add('is-active');
-    cards.forEach((card, i) => {
-      ScrollTrigger.create({ trigger: card, start: 'top 55%', end: 'bottom 45%', onEnter: () => show(i), onEnterBack: () => show(i) });
-    });
-    void poses;
+    cards.forEach((card, i) => ScrollTrigger.create({ trigger: card, start: 'top 55%', end: 'bottom 45%', onEnter: () => show(i), onEnterBack: () => show(i) }));
   });
 </script>

@@ -49,6 +49,6 @@ backend migration is live.
 ## Deploy
 
 Cloudflare Pages, project `pathways-website`, build command `npm run build`, output `dist`.
-First time: `npx wrangler login` (interactive), then `npx wrangler pages project create
-pathways-website --production-branch main`. Preview from a laptop with
-`npm run build && npx wrangler pages deploy dist`.
+Project `pathways-website` exists (created 2026-10-07). Deploy from a laptop with
+`PUBLIC_SUPABASE_URL=… PUBLIC_SUPABASE_ANON_KEY=… npm run build && npx wrangler pages deploy dist --project-name pathways-website --branch main`.
+Analytics: none yet (Plausible was removed until an account exists).

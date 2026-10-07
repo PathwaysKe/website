@@ -34,4 +34,12 @@ enc tests-generate -ss 2.0 -t 4.4 -i "$SRC/Tests.webm" -vf "$VF_BASE"
 enc tests-take -ss 11.5 -t 27.9 -i "$SRC/Tests.webm" -vf "setpts=PTS/3,$VF_BASE"
 # Tests: the result and confetti (39.8s–46.0s).
 enc tests-result -ss 39.8 -t 6.2 -i "$SRC/Tests.webm" -vf "$VF_BASE"
+# Walk Through (second recording, cleaner hub): hub → tap Mathematics → notes list → open a note (0.5s–10.8s, 1.2x).
+enc walk-browse -ss 0.5 -t 10.3 -i "$SRC/Walk Through.webm" -vf "setpts=PTS/1.2,$VF_BASE"
+# Walk Through: long division worked example, step by step (24.5s–29.8s).
+enc walk-worked -ss 24.5 -t 5.3 -i "$SRC/Walk Through.webm" -vf "$VF_BASE"
+# Walk Through: finishing a note, "Great job" with confetti (58.6s–63.6s).
+enc walk-finish -ss 58.6 -t 5.0 -i "$SRC/Walk Through.webm" -vf "$VF_BASE"
+# Pricing: the subscription screen and the manage dialog (2.6s–6.6s).
+enc pricing-app -ss 2.6 -t 4.0 -i "$SRC/Pricing.webm" -vf "$VF_BASE"
 ls -la "$OUT"

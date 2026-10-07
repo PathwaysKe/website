@@ -10,11 +10,10 @@ export const SITE = {
   email: 'hello@pathways.ke',
   /** Technical support line, shown as a WhatsApp button. */
   whatsapp: { display: '0704 236 788', e164: '254704236788' },
-  portalUrl: 'https://app.pathways.ke',
+  portalUrl: 'https://platform.pathways.ke',
   playStoreUrl: 'https://play.google.com/store/apps/details?id=com.pathways.ke',
   /** Set once there is an App Store listing. Until then iOS CTAs are hidden. */
   appStoreUrl: '',
-  plausibleDomain: 'pathways.ke',
   pilotSchools: ['Thorn Grove Schools'],
 } as const;
 
@@ -33,6 +32,7 @@ export const PARENT_PRICING = {
   ],
   standard: [
     'Full CBC study notes library',
+    'Study cards for quick revision',
     'Unlimited practice tests and quizzes',
     'Unlimited AI tutor chat',
     'Progress per child',
@@ -42,7 +42,7 @@ export const PARENT_PRICING = {
 
 export const NAV = [
   { href: '/schools', label: 'For Schools' },
-  { href: '/parents', label: 'For Parents' },
+  { href: '/parents', label: 'For Families' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ] as const;

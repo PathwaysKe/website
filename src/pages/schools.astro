@@ -8,17 +8,17 @@ import FAQ from '../components/FAQ.astro';
 import { SITE } from '../lib/site';
 
 const description =
-  'Pathways for Schools automates scheme-of-work planning, lesson plans and reporting, connects teachers directly to parents and learners, and gives the head teacher coverage and progress at a glance. Book a demo.';
+  'Pathways for Schools: schemes of work, lesson plans, merit lists and coverage from the CBC design, with every teacher connected to their learners\' parents. Book a demo.';
 
 const features = [
-  { t: 'Scheme of Work builder', d: 'Generated per subject, grade and term from the CBC design. Edit any week, clone and retarget across streams.', icon: 'layers', c: 'var(--subj-math)' },
-  { t: 'Lesson Plans', d: 'Every lesson pre-filled from the scheme with outcomes, key inquiry questions and activities. Teachers refine, not retype.', icon: 'book', c: 'var(--subj-eng)' },
-  { t: 'Formative hub', d: 'Competency checks, homework and subject tests from one builder, with learner attempts and marking in the same place.', icon: 'check', c: 'var(--subj-swa)' },
-  { t: 'Summative merit lists', d: 'Exam sittings, a marks-entry grid and a report with EE / ME / AE / BE bands and class means, published to parents in a tap.', icon: 'award', c: 'var(--subj-sci)' },
-  { t: 'Record of Work and coverage', d: 'Teachers tick what was taught; heads see coverage roll up by grade, subject and stream without asking around.', icon: 'chart', c: 'var(--subj-soc)' },
-  { t: 'Timetables and calendar', d: 'A central school timetable with per-teacher views, plus a school-wide calendar and announcements to parents.', icon: 'calendar', c: 'var(--subj-art)' },
-  { t: 'Learners, classes and teachers', d: 'A clean roster, classroom setup wizard, multi-admin schools and student insights per learner.', icon: 'users', c: 'var(--subj-cre)' },
-  { t: 'Notes and curriculum library', d: 'Block-rendered study notes for every sub-strand, the same notes parents see at home.', icon: 'file', c: 'var(--subj-agri)' },
+  { t: 'Scheme of Work', d: 'Generated per subject, grade and term. Edit any week.', icon: 'layers', c: 'var(--subj-math)' },
+  { t: 'Lesson Plans', d: 'Pre-filled from the scheme. Teachers refine, not retype.', icon: 'book', c: 'var(--subj-eng)' },
+  { t: 'Formative hub', d: 'Checks, homework and subject tests, marked in one place.', icon: 'check', c: 'var(--subj-swa)' },
+  { t: 'Merit lists', d: 'Marks grid, EE / ME / AE / BE bands, published to parents.', icon: 'award', c: 'var(--subj-sci)' },
+  { t: 'Record of Work', d: 'Tick what was taught; coverage rolls up to the head.', icon: 'chart', c: 'var(--subj-soc)' },
+  { t: 'Timetable and calendar', d: 'One school timetable, per-teacher views, announcements.', icon: 'calendar', c: 'var(--subj-art)' },
+  { t: 'Learners and insights', d: 'Roster, setup wizard, progress per learner.', icon: 'users', c: 'var(--subj-cre)' },
+  { t: 'Curriculum library', d: 'Study notes for every sub-strand, shared with homes.', icon: 'file', c: 'var(--subj-agri)' },
 ];
 const ICONS: Record<string, string> = {
   layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
@@ -32,19 +32,19 @@ const ICONS: Record<string, string> = {
 };
 
 const week = [
-  ['Monday', 'Plan', 'The Grade 5 Maths teacher opens this week in the scheme: "Adding with regrouping", 5 lessons. The lesson plans are already drafted.', 'scheme'],
-  ['Tuesday', 'Teach', 'Today\'s classes shows what\'s next. After the lesson she ticks it in her Record of Work and sets a 5-question check as homework.', 'coverage'],
-  ['Thursday', 'Check', 'Learner attempts come back marked. Two children struggled with the tens column, so she assigns them the worked example in the app.', 'coverage'],
-  ['End of term', 'Report', 'Marks go into the merit list grid. The head reviews bands and class means, then publishes results to parents.', 'merit'],
+  ['Monday', 'Plan', 'This week in the scheme: "Adding with regrouping", 5 lessons, plans already drafted.', 'scheme'],
+  ['Tuesday', 'Teach', 'Teach, tick it in the Record of Work, set a 5-question check as homework.', 'coverage'],
+  ['Thursday', 'Check', 'Attempts come back marked. Two children need the worked example; assign it in a tap.', 'coverage'],
+  ['End of term', 'Report', 'Marks into the grid, bands reviewed, results published to parents.', 'merit'],
 ];
 
 const faqs = [
-  { q: 'Does it follow the official CBC design?', a: 'Yes. Learning outcomes for Grades 1 to 9 are mapped by learning area, strand and sub-strand, and schemes of work are generated from that map. Teachers can edit every week.' },
-  { q: 'How are schools billed?', a: 'Per learner, per term, through a sponsorship for each grade you choose to cover. A sponsorship also covers those children\'s families in the parent app. We quote after a short call so the price fits your school; there is no fixed public rate.' },
-  { q: 'What do teachers need?', a: 'A browser. The portal runs on a laptop or a phone, and most schools onboard a whole staff room in an afternoon with the setup wizard.' },
-  { q: 'Can parents see results?', a: 'When you publish a merit list, families linked to your school see their child\'s results, class mean and bands in the Pathways app, alongside your calendar and announcements.' },
-  { q: 'Is our data safe?', a: 'Each school\'s data is isolated by row-level security in our database, access is role-based, and we never sell or share learner data. See our <a class="underline" href="/privacy">privacy policy</a>.' },
-  { q: 'What is not in the portal yet?', a: 'Attendance and a question bank marketplace are on the roadmap, not in the product today. We would rather show you what ships than promise what doesn\'t.' },
+  { q: 'Does it follow the official CBC design?', a: 'Yes. Outcomes for Grades 1 to 9 are mapped by learning area, strand and sub-strand; schemes are generated from that map and teachers edit any week.' },
+  { q: 'How are schools billed?', a: 'Per learner, per term, for each grade you sponsor. A sponsorship also covers those families in the app. We quote after a short call.' },
+  { q: 'What do teachers need?', a: 'A browser, on a laptop or a phone. Most staff rooms are set up in an afternoon.' },
+  { q: 'Can parents see results?', a: 'Yes. Publish a merit list and linked families see results, class mean and bands in the app, with your calendar and announcements.' },
+  { q: 'Is our data safe?', a: 'Each school\'s data is isolated by row-level security, access is role-based, and we never sell learner data. See the <a class="underline" href="/privacy">privacy policy</a>.' },
+  { q: 'What is not in the portal yet?', a: 'Attendance and a question bank marketplace are roadmap, not product. We show what ships.' },
 ];
 
 const jsonLd = {
@@ -65,8 +65,8 @@ const jsonLd = {
       <h1 class="font-display text-4xl font-bold leading-[1.06] sm:text-5xl lg:text-[3.4rem]" data-reveal data-reveal-delay="0.05">
         Planning, teaching and merit lists your teachers <span class="marker">keep updated.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 40 6, 90 4, 196 9" /></svg></span>
       </h1>
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground" data-reveal data-reveal-delay="0.1">
-        A learning platform that automates the paperwork of teaching, connects each teacher directly to their learners' parents, and gives the head teacher coverage and progress without asking around. Built on the CBC design.
+      <p class="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground" data-reveal data-reveal-delay="0.1">
+        The paperwork of teaching, automated from the CBC design. Every teacher connected to their learners' parents. Coverage the head can see.
       </p>
       <div class="mt-8 flex flex-wrap gap-3" data-reveal data-reveal-delay="0.15">
         <a href="/demo" class="btn-teal btn-lg">Book a 30-minute demo</a>
@@ -84,7 +84,7 @@ const jsonLd = {
 
   <section class="bg-background py-20 lg:py-28">
     <div class="container-x">
-      <SectionHeading eyebrow="What ships today" title="Everything a staff room needs, nothing it doesn't." mark="staff room" lead="We list only what a school admin or teacher can use right now. No roadmap features dressed up as product." />
+      <SectionHeading eyebrow="What ships today" title="Everything a staff room needs, nothing it doesn't." mark="staff room" />
       <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-reveal-stagger="0.07">
         {features.map((f) => (
           <li class="card feature group p-6">
@@ -100,7 +100,7 @@ const jsonLd = {
   </section>
 
   <section class="container-x py-20 lg:py-28">
-    <SectionHeading eyebrow="A week in Pathways" title="From Monday's plan to end-of-term report, without re-typing anything." mark="without re-typing" align="center" />
+    <SectionHeading eyebrow="A week in Pathways" title="Monday's plan to end-of-term report, nothing re-typed." mark="nothing re-typed" align="center" />
     <div class="week relative mx-auto mt-14 max-w-5xl">
       <div class="absolute top-0 bottom-0 left-[1.35rem] w-px bg-border lg:left-1/2" aria-hidden="true"></div>
       <ol class="grid gap-10">
@@ -122,9 +122,9 @@ const jsonLd = {
   <section class="bg-background py-20 lg:py-28">
     <div class="container-x grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
       <div>
-        <SectionHeading eyebrow="Teacher to parent to learner" title="Publish once. Every linked family sees it in the app." mark="Every linked family" lead="A school can sponsor whole grades so families get the full parent app at no cost to them: results, calendar, announcements, notes and practice, all from the same curriculum map your teachers plan on. Teachers see each learner's progress and can direct attention where it counts." />
+        <SectionHeading eyebrow="Teacher to parent to learner" title="Publish once. Every linked family sees it." mark="Every linked family" lead="Sponsor a grade and its families get the full app: results, calendar, announcements, and the notes that match this week's lessons." />
         <ul class="mt-8 grid gap-3 text-sm" data-reveal-stagger>
-          {['Results with class mean and expectation bands', 'School calendar and timetable on every parent\'s phone', 'Announcements that don\'t get lost in a WhatsApp group', 'Study notes and tests that match what was taught this week'].map((t) => (
+          {['Results with class mean and bands', 'Calendar and timetable on every parent\'s phone', 'Announcements that don\'t get lost in WhatsApp', 'Progress per learner, seen by teacher and parent'].map((t) => (
             <li class="flex items-start gap-2.5"><i class="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--brand-teal)]"></i>{t}</li>
           ))}
         </ul>
@@ -139,22 +139,22 @@ const jsonLd = {
 
   <section class="container-x py-20 lg:py-28">
     <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
-      <SectionHeading eyebrow="Pricing" title="Per learner, per term. Quoted for your school." mark="Quoted for your school" lead="Schools sponsor the grades they want covered. The per-learner rate depends on your size and which grades you start with, so we price it on a short call rather than publish a number that fits nobody." />
+      <SectionHeading eyebrow="Pricing" title="Per learner, per term. Quoted for your school." mark="Quoted for your school" lead="Sponsor the grades you want covered. The rate depends on your size, so we price it on a short call." />
       <div class="card p-7 sm:p-9" data-reveal="right">
         <ul class="grid gap-4">
           {[
-            ['Whole-school portal', 'Admin and every teacher, unlimited classes, schemes, lesson plans, merit lists and coverage.'],
-            ['Parent app for sponsored grades', 'Families of every learner in a sponsored grade get the full app, linked to your school.'],
-            ['Onboarding', 'Roster import, classroom setup and a staff-room walkthrough in your first week.'],
-            ['M-PESA and invoicing', 'Receivables, receipts and tax configuration handled per term.'],
-            ['Support on WhatsApp', 'A real person, during school hours.'],
+            ['Whole-school portal', 'Every admin and teacher, unlimited classes.'],
+            ['Parent app for sponsored grades', 'Every family in the grade, linked to your school.'],
+            ['Onboarding', 'Roster import and a staff-room walkthrough in week one.'],
+            ['M-PESA and invoicing', 'Receivables and receipts per term.'],
+            ['WhatsApp support', 'A real person, school hours.'],
           ].map(([t, d]) => (
             <li class="flex gap-3"><svg class="mt-1 shrink-0 text-teal-text" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg><div><b class="font-semibold">{t}</b><p class="text-sm text-muted-foreground">{d}</p></div></li>
           ))}
         </ul>
         <div class="mt-8 flex flex-wrap items-center gap-4">
           <a href="/demo" class="btn-teal btn-lg">Get a quote and a demo</a>
-          <p class="text-sm text-muted-foreground">Individual teachers can also start free in the portal, and upgrade to Teacher Pro for KES 500 a month.</p>
+          <p class="text-sm text-muted-foreground">Individual teachers start free; Teacher Pro is KES 500 a month.</p>
         </div>
       </div>
     </div>
@@ -163,7 +163,7 @@ const jsonLd = {
   <section class="bg-background py-20 lg:py-28">
     <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.4fr]">
       <div>
-        <SectionHeading eyebrow="Questions" title="Heads ask us these first." mark="these first" />
+        <SectionHeading eyebrow="Questions" title="What school leaders ask us first." mark="ask us first" />
         <div class="mt-8 hidden lg:block" data-reveal="scale"><Pola pose="think" size="9rem" seed={6} /></div>
       </div>
       <FAQ items={faqs} />
@@ -175,7 +175,7 @@ const jsonLd = {
       <Pola pose="hello" size="6rem" seed={8} />
       <div class="flex-1">
         <h2 class="font-display text-2xl font-bold">See it with your own timetable.</h2>
-        <p class="mt-1 text-muted-foreground">Bring one grade's scheme and we'll set it up live during the demo.</p>
+        <p class="mt-1 text-muted-foreground">Bring one grade. We set it up live on the call.</p>
       </div>
       <a href="/demo" class="btn-teal btn-lg">Book a demo</a>
     </div>
