@@ -17,7 +17,7 @@ const steps = [
   { k: 'Work it through', t: 'Worked examples, one step at a time', d: 'Long division, one step per tap. The child sets the pace.', video: 'walk-worked', screen: null },
   { k: 'Check', t: 'Check my learning', d: 'Short questions, instant feedback, and a "Great job" when the note is done.', video: 'walk-finish', screen: null },
   { k: 'Test', t: 'A test in seconds', d: 'You pick the subject and length; Pathways builds and marks it.', video: 'tests-generate', screen: null },
-  { k: 'Celebrate', t: 'A score you both understand', d: 'Confetti for the child. Strengths and gaps for you and the teacher.', video: 'tests-result', screen: null },
+  { k: 'Review', t: 'A score you both understand', d: 'The answers, question by question. Strengths and gaps for you and the teacher.', video: 'tests-result', screen: null },
 ];
 
 const gallery = [
@@ -86,7 +86,7 @@ const jsonLd = {
   <SubjectMarquee class="mt-4" />
 
   <section class="container-x py-20 lg:py-28" id="walkthrough">
-    <SectionHeading eyebrow="A study session" title="Read, revise, work it through. Then test, and celebrate." mark="celebrate" align="center" lead="Seven moments from the real app." />
+    <SectionHeading eyebrow="A study session" title="Read, revise, work it through. Then test, and review." mark="review" align="center" lead="Seven moments from the real app." />
     <div class="walk mx-auto mt-14 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
       <div class="walk-stage mx-auto w-[min(70vw,300px)] lg:sticky lg:top-28 lg:w-[320px] lg:self-start lg:justify-self-end">
         <div class="relative">
