@@ -1,5 +1,4 @@
-# www → apex (Cloudflare Pages honours absolute-URL redirects).
-https://www.pathways.ke/*  https://pathways.ke/:splat  301
+# www → apex is handled in worker.js (the assets layer only accepts relative redirects).
 
 # Old Vercel cleanUrls paths → the same pages under Astro.
 /privacy.html       /privacy      301

@@ -39,9 +39,12 @@ See README.md for the project map and asset pipeline. What is done:
   (backend#1554 for issue #1552, migration `20261008090000_website_leads.sql`, not yet merged, not run
   locally because Docker was down). Until merged + `PUBLIC_SUPABASE_*` set, the form falls
   back to mailto:.
-- Cloudflare: `wrangler.toml`, `_headers` (CSP allows plausible.io + *.supabase.co),
-  `_redirects`. **Not deployed** — needs the user's interactive `wrangler login`, project
-  creation, DNS cutover. Plausible script tag is in; the user must create the site in Plausible.
+- Cloudflare: **deployed 2026-10-07** as Worker `pathways-website` with static assets
+  (`wrangler.toml`, `worker.js` for the www→apex redirect, `_headers`, `_redirects`). Custom
+  domains `pathways.ke` + `www.pathways.ke` attached (DNS auto-managed in the zone on this
+  account). Deploy = build with `PUBLIC_SUPABASE_*` exported, then `npx wrangler deploy`
+  (README). Supabase keys are baked into the live build, so the forms post to
+  `website_leads` and will error until backend#1554 merges. No analytics (Plausible removed).
 
 Decisions taken 2026-10-07 (asked and answered by the user):
 - School pricing: none published; CTAs route to Book a demo. Teacher Pro KES 500/mo is
@@ -306,10 +309,9 @@ Use it for:
 
 ## Next steps, in order
 
-1. Review the site locally (`npm run dev`), then commit this branch and open the PR.
+1. Everything is merged to `main` and pushed; `feat/*` branches can be deleted.
 2. Merge backend#1554 (issue #1552), set `PUBLIC_SUPABASE_URL` / `PUBLIC_SUPABASE_ANON_KEY` for Pages.
-3. `wrangler login` → create the Pages project → deploy → point `pathways.ke` DNS at it →
-   remove the Vercel project. Create the Plausible site.
+3. Remove the old Vercel project. Pick an analytics tool when wanted (Plausible was removed).
 4. Replace `PortalMock` views with real portal screenshots when available; add testimonial
    quotes to the Schools page when approved; add the App Store link in `site.ts` when iOS ships.
 5. Re-verify prices in `src/lib/site.ts` against the backend before launch (billing

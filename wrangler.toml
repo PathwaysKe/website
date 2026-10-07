@@ -1,11 +1,19 @@
-# Cloudflare Pages project for pathways.ke. First-time setup needs an interactive `wrangler login`
-# (run it yourself), then: npx wrangler pages project create pathways-website --production-branch main
-# Deploy preview: npm run build && npx wrangler pages deploy dist
+# Cloudflare Workers static-assets deployment for pathways.ke (Pages is now part of Workers).
+# Build first with the public Supabase vars exported, then `npx wrangler deploy`:
+#   PUBLIC_SUPABASE_URL=… PUBLIC_SUPABASE_ANON_KEY=… npm run build && npx wrangler deploy
+# Custom domains below are created (with DNS) on first deploy; the zone pathways.ke is on this account.
 name = "pathways-website"
-pages_build_output_dir = "dist"
+main = "worker.js"
 compatibility_date = "2026-10-01"
 
-[env.production.vars]
-NODE_VERSION = "24"
-# PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY are set in the Pages dashboard (or here) —
-# the anon key is public by design; the demo form only has insert rights on website_leads.
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+run_worker_first = true
+not_found_handling = "404-page"
+html_handling = "drop-trailing-slash"
+
+routes = [
+  { pattern = "pathways.ke", custom_domain = true },
+  { pattern = "www.pathways.ke", custom_domain = true },
+]

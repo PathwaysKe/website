@@ -48,7 +48,13 @@ backend migration is live.
 
 ## Deploy
 
-Cloudflare Pages, project `pathways-website`, build command `npm run build`, output `dist`.
-Project `pathways-website` exists (created 2026-10-07). Deploy from a laptop with
-`PUBLIC_SUPABASE_URL=… PUBLIC_SUPABASE_ANON_KEY=… npm run build && npx wrangler pages deploy dist --project-name pathways-website --branch main`.
-Analytics: none yet (Plausible was removed until an account exists).
+Cloudflare Workers with static assets (Pages is now part of Workers), worker `pathways-website`,
+custom domains `pathways.ke` and `www.pathways.ke` (declared in `wrangler.toml`, DNS managed
+by Cloudflare). From a laptop logged in with `npx wrangler login`:
+
+```sh
+PUBLIC_SUPABASE_URL=… PUBLIC_SUPABASE_ANON_KEY=… npm run build && npx wrangler deploy
+```
+
+`_headers` and `_redirects` in `public/` are honoured by the assets layer; `404.html` is served
+for unknown paths. Analytics: none yet (Plausible was removed until an account exists).
