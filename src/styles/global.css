@@ -1,0 +1,271 @@
+@import 'tailwindcss';
+
+/* Dark mode is class-driven (html.dark) so the footer toggle can override the OS. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens — ported from pathways-web/src/index.css (see CLAUDE.md).
+   --primary (blue) is the only interactive accent. Teal is brand chrome.
+   --gold is Pola's tip / the compass north point, used for "earned" moments.
+------------------------------------------------------------------- */
+:root {
+  --radius: 0.75rem;
+  --background: #f8fafc;
+  --page: #eef3f9;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --primary-container: #eff6ff;
+  --primary-container-foreground: #1e3a6e;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --ring: #2563eb;
+  --success: #16a34a;
+  --warning: #d97706;
+  --info: #0ea5e9;
+  --destructive: #dc2626;
+  --brand-teal: #0d9488;
+  --brand-teal-deep: #0f766e;
+  --brand-teal-text: #0d9488;
+  --brand-teal-soft: #ccfbf1;
+  --gold: #fcd34d;
+  --gold-deep: #ca8a04;
+  --pola-teal: #20a8a0;
+  --pola-dots: #71dad7;
+  /* subject planet colours from the app hub */
+  --subj-math: #6366f1;
+  --subj-eng: #0ea5e9;
+  --subj-swa: #10b981;
+  --subj-sci: #f59e0b;
+  --subj-soc: #f97316;
+  --subj-art: #a855f7;
+  --subj-cre: #14b8a6;
+  --subj-agri: #84cc16;
+  --halo: 0.25;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0f172a;
+  --page: #070b14;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --primary-container: #1d3461;
+  --primary-container-foreground: #bfdbfe;
+  --secondary: #1e293b;
+  --secondary-foreground: #f8fafc;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --border: #334155;
+  --ring: #3b82f6;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --info: #38bdf8;
+  --destructive: #ef4444;
+  --brand-teal-text: #14b8a6;
+  --brand-teal-soft: #134e4a;
+  --halo: 0.55;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-page: var(--page);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-container: var(--primary-container);
+  --color-primary-container-foreground: var(--primary-container-foreground);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-destructive: var(--destructive);
+  --color-teal: var(--brand-teal);
+  --color-teal-deep: var(--brand-teal-deep);
+  --color-teal-text: var(--brand-teal-text);
+  --color-teal-soft: var(--brand-teal-soft);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-subj-math: var(--subj-math);
+  --color-subj-eng: var(--subj-eng);
+  --color-subj-swa: var(--subj-swa);
+  --color-subj-sci: var(--subj-sci);
+  --color-subj-soc: var(--subj-soc);
+  --color-subj-art: var(--subj-art);
+  --color-subj-cre: var(--subj-cre);
+  --color-subj-agri: var(--subj-agri);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2.25rem;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -12px rgb(15 23 42 / 0.18);
+  --shadow-float: 0 24px 60px -20px rgb(15 23 42 / 0.35);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  body {
+    background: var(--page);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection { background: color-mix(in srgb, var(--primary) 22%, transparent); }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3, .display {
+    font-family: var(--font-display);
+    font-variation-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 1;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  img, video { max-width: 100%; height: auto; }
+  button { font: inherit; }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) { .container-x { padding-inline: 1.5rem; } }
+  @media (min-width: 1024px) { .container-x { padding-inline: 2rem; } }
+
+  .btn, .btn-primary, .btn-ghost, .btn-teal {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-[transform,box-shadow,background-color,color] duration-300 select-none;
+    transition-timing-function: var(--ease-out-expo);
+  }
+  .btn:active, .btn-primary:active, .btn-ghost:active, .btn-teal:active { transform: translateY(1px) scale(0.99); }
+  .btn-primary {
+    @apply bg-primary text-primary-foreground;
+    box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--primary) 70%, transparent);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--primary) 75%, transparent); }
+  .btn-ghost { @apply border border-border bg-card text-foreground; }
+  .btn-ghost:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .btn-teal {
+    @apply text-white;
+    background: var(--brand-teal);
+    box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--brand-teal) 70%, transparent);
+  }
+  .btn-teal:hover { transform: translateY(-2px); }
+  .btn-lg { @apply px-7 py-4 text-base; }
+
+  .card {
+    @apply rounded-2xl border border-border bg-card;
+    box-shadow: var(--shadow-card);
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-bold tracking-[0.14em] uppercase;
+    color: var(--brand-teal-text);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 1.25rem; height: 2px; border-radius: 2px;
+    background: currentColor;
+  }
+  .prose-site p { @apply text-muted-foreground leading-relaxed; }
+
+  /* Attention tags, same vocabulary as the app. */
+  .tag { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold; background: color-mix(in srgb, var(--p, var(--primary)) 14%, transparent); color: var(--p, var(--primary)); }
+  .tag-urgent { --p: #e11d48; } .tag-due { --p: #d97706; } .tag-result { --p: #ca8a04; } .tag-info { --p: #0284c7; } .tag-nudge { --p: #7c3aed; }
+
+  /* Marker-style underline that DrawSVG animates in (see SectionHeading). */
+  .marker { position: relative; display: inline-block; }
+  .marker > svg { position: absolute; left: -2%; right: -2%; bottom: -0.34em; width: 104%; height: 0.42em; pointer-events: none; }
+  .marker > svg path { fill: none; stroke: var(--gold); stroke-width: 6; stroke-linecap: round; opacity: 0.9; }
+  .dark .marker > svg path { stroke: var(--gold-deep); }
+
+  /* Orbit backdrop ring — used in hero + about. */
+  .ring-dashed { fill: none; stroke: var(--border); stroke-width: 1.25; stroke-dasharray: 2 7; stroke-linecap: round; }
+  .ring-solid { fill: none; stroke: var(--border); stroke-width: 1; }
+
+  .glass {
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .mask-fade-x { mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  /* Elements GSAP reveals — hidden only when JS has signalled it will take over. */
+  .js-ready [data-reveal] { opacity: 0; }
+  .js-ready.reduce [data-reveal] { opacity: 1; }
+}
+
+/* ---- Pola: idle bob + blink patch (off under reduce-motion) ---- */
+.pola { position: relative; display: inline-block; line-height: 0; }
+.pola img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.pola .blink { position: absolute; opacity: 0; }
+.pola.anim .blink { animation: pola-blink var(--blk, 5s) steps(1, end) var(--dly, 0s) infinite; }
+.pola.anim > .body { animation: pola-bob var(--bob, 3s) ease-in-out var(--dly, 0s) infinite; will-change: transform; }
+@keyframes pola-bob { 0%, 100% { transform: translateY(-3%) rotate(-1.2deg); } 50% { transform: translateY(3%) rotate(1.2deg); } }
+@keyframes pola-blink { 0%, 95.5%, 100% { opacity: 0; } 96%, 99% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .pola.anim .blink, .pola.anim > .body { animation: none; }
+}
+html.reduce .pola.anim .blink, html.reduce .pola.anim > .body { animation: none; }
+
+/* ---- View transitions: compass sweep ---- */
+::view-transition-old(root) { animation: vt-out 0.28s ease-in both; }
+::view-transition-new(root) { animation: vt-in 0.5s var(--ease-out-expo) both; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+/* Phone frame */
+.phone {
+  position: relative;
+  aspect-ratio: 1080 / 2424;
+  border-radius: 11.5% / 5.1%;
+  overflow: hidden;
+  background: #0f172a;
+  box-shadow: 0 0 0 1px rgb(15 23 42 / 0.06), 0 0 0 10px #0f172a, 0 0 0 11px rgb(255 255 255 / 0.08), var(--shadow-float);
+  isolation: isolate;
+}
+.dark .phone { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.05), 0 0 0 10px #020617, 0 0 0 11px rgb(255 255 255 / 0.1), var(--shadow-float); }
+.phone > img, .phone > video, .phone > picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.phone.bare { box-shadow: var(--shadow-float); background: transparent; }
+
+/* Subject marquee */
+.marquee { display: flex; gap: 0.75rem; width: max-content; animation: marquee var(--dur, 40s) linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee:hover, .reduce .marquee { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
+
+/* Confetti bits for the celebration section */
+.confetti { position: absolute; width: 8px; height: 13px; border-radius: 2px; opacity: 0; pointer-events: none; }

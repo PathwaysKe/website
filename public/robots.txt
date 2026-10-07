@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pathways.ke/sitemap-index.xml

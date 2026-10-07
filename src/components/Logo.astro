@@ -1,0 +1,63 @@
+---
+/**
+ * The Pathways compass mark: a four-point star with a gold north tip and a teal ring pivot,
+ * on a teal disc. Matches mobile-app-v1/assets/images/logo_mark.png and the design kit's
+ * Pola.compass(). `mono` renders the one-colour star for small/inline use.
+ */
+interface Props {
+  size?: number;
+  mono?: boolean;
+  class?: string;
+  withWordmark?: boolean;
+}
+const { size = 36, mono = false, class: cls = '', withWordmark = false } = Astro.props;
+const Self = Astro.self;
+---
+
+{
+  withWordmark ? (
+    <span class:list={['inline-flex items-center gap-2.5 font-display font-bold tracking-tight', cls]}>
+      <Self size={size} mono={mono} />
+      <span class="text-[1.15em] leading-none">Pathways</span>
+    </span>
+  ) : mono ? (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 200 200"
+      aria-hidden="true"
+      class:list={['logo logo-mono', cls]}
+    >
+      <path d="M100,28 L120,80 L172,100 L120,120 L100,172 L80,120 L28,100 L80,80Z" fill="currentColor" />
+    </svg>
+  ) : (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 200 200"
+      aria-hidden="true"
+      class:list={['logo', cls]}
+    >
+      <defs>
+        <radialGradient id="lg-disc" cx="35%" cy="30%" r="80%">
+          <stop offset="0" stop-color="#2bb3a9" />
+          <stop offset="1" stop-color="#0d9488" />
+        </radialGradient>
+        <linearGradient id="lg-gold" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stop-color="#fde68a" />
+          <stop offset="1" stop-color="#f5c13a" />
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="100" fill="url(#lg-disc)" />
+      <g class="logo-star" style="transform-origin: 100px 100px">
+        <path d="M100,34 L116,84 L166,100 L116,116 L100,166 L84,116 L34,100 L84,84Z" fill="#f1f5f7" />
+        <path d="M100,34 L116,84 L100,100 L84,84Z" fill="url(#lg-gold)" />
+        <circle cx="100" cy="100" r="9" fill="#0d9488" stroke="#f1f5f7" stroke-width="3" />
+      </g>
+    </svg>
+  )
+}
+
+<style>
+  .logo { display: inline-block; flex: none; }
+</style>

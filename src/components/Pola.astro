@@ -1,0 +1,83 @@
+---
+/**
+ * Pola, the Pathways mascot. Twelve poses from the design kit (src/assets/pola/*.webp).
+ * Where a pose has a closed-eyes patch, the component layers it and blinks on a loop.
+ * Pola appears at feelings and hand-offs (hello, earned, tip, oops) and never to deliver
+ * bad news — see the brand notes in CLAUDE.md.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+type Pose =
+  | 'hello' | 'rest' | 'happy' | 'cheer' | 'think' | 'oops'
+  | 'search' | 'love' | 'tip' | 'read' | 'talk' | 'sleepy';
+
+interface Props {
+  pose?: Pose;
+  /** CSS width (any unit). */
+  size?: string;
+  /** Idle bob + blink. Off automatically under reduced motion. */
+  animate?: boolean;
+  /** Decorative by default; pass a label to expose it to assistive tech. */
+  label?: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  /** Bob period seed so neighbouring Polas don't move in lockstep. */
+  seed?: number;
+}
+
+const {
+  pose = 'hello',
+  size = '8rem',
+  animate = true,
+  label,
+  class: cls = '',
+  loading = 'lazy',
+  seed = pose.length,
+} = Astro.props;
+
+const bodies = import.meta.glob<{ default: ImageMetadata }>('../assets/pola/pola-*.webp', { eager: true });
+const blinks = import.meta.glob<{ default: ImageMetadata }>('../assets/pola/blink/pola-*-blink.webp', { eager: true });
+const body = bodies[`../assets/pola/pola-${pose}.webp`]?.default;
+const blink = blinks[`../assets/pola/blink/pola-${pose}-blink.webp`]?.default;
+if (!body) throw new Error(`Pola: unknown pose "${pose}"`);
+
+// Closed-eyes patch position, percent of the square canvas (from the kit's pola.js).
+const BLINK: Partial<Record<Pose, [number, number, number, number]>> = {
+  rest: [36.719, 44.043, 28.516, 9.668],
+  hello: [35.938, 44.238, 29.688, 10.742],
+  think: [35.84, 43.164, 28.32, 11.133],
+  oops: [36.426, 44.629, 29.395, 10.352],
+  tip: [36.426, 43.555, 28.32, 10.84],
+  read: [36.23, 45.801, 29.785, 10.352],
+  talk: [36.914, 43.457, 30.176, 12.109],
+};
+const b = BLINK[pose];
+const bob = (2.6 + (seed % 7) / 5).toFixed(1);
+const blk = (4.2 + (seed * 7) % 23 / 10).toFixed(1);
+const dly = (-(seed * 3) % 17 / 10).toFixed(1);
+const alt = label ?? '';
+---
+
+<span
+  class:list={['pola', animate && 'anim', cls]}
+  style={`width:${size};--bob:${bob}s;--blk:${blk}s;--dly:${dly}s`}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  data-pola={pose}
+>
+  <span class="body block">
+    <Image src={body} alt={alt} loading={loading} widths={[160, 256, 512]} sizes="(max-width: 640px) 160px, 256px" draggable="false" />
+    {blink && b && (
+      <Image
+        src={blink}
+        alt=""
+        class="blink"
+        loading={loading}
+        draggable="false"
+        style={`left:${b[0]}%;top:${b[1]}%;width:${b[2]}%;height:${b[3]}%`}
+      />
+    )}
+  </span>
+</span>

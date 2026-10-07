@@ -1,0 +1,388 @@
+---
+import Base from '../layouts/Base.astro';
+import OrbitHub from '../components/OrbitHub.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
+import Pola from '../components/Pola.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import SubjectMarquee from '../components/SubjectMarquee.astro';
+import PortalMock from '../components/PortalMock.astro';
+import { SITE } from '../lib/site';
+
+const description =
+  'Pathways is the all-in-one learning platform for Kenya\'s CBC. Schools automate planning, teaching and reporting and connect teachers to parents; families get study notes, tests and exam preparation; every learner\'s progress stays in view.';
+---
+
+<Base title={SITE.name} {description}>
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero relative overflow-hidden">
+    <div class="container-x grid items-center gap-10 py-10 lg:grid-cols-[1.05fr_1fr] lg:py-16">
+      <div class="relative z-10">
+        <p class="eyebrow mb-5" data-hero>Built for Kenya's CBC curriculum</p>
+        <h1 id="hero-title" class="font-display text-[2.6rem] leading-[1.02] font-bold sm:text-6xl lg:text-[4.2rem]">
+          One learning platform for the <span class="text-teal-text">school</span>, the parent and the learner.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl" data-hero>
+          Pathways automates a teacher's planning and reporting, gives parents study notes, tests and exam preparation, and connects both to the same child. Progress, strengths and gaps stay in view for everyone who helps that child learn.
+        </p>
+
+        <div class="mt-8 grid gap-3 sm:grid-cols-2" data-hero>
+          <a href="/schools" class="route-card group">
+            <span class="route-icon" style="--c: var(--brand-teal)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-5 9 5-9 5z"/><path d="M7 12.5V17c0 1 2.5 2 5 2s5-1 5-2v-4.5"/></svg>
+            </span>
+            <span>
+              <b class="block font-display text-xl font-bold">Run a school?</b>
+              <span class="text-sm text-muted-foreground">Plan, teach and report in one place.</span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="/parents" class="route-card group">
+            <span class="route-icon" style="--c: var(--primary)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.5 0 4.5 1.5 4.5 4.5"/></svg>
+            </span>
+            <span>
+              <b class="block font-display text-xl font-bold">Parent of a CBC learner?</b>
+              <span class="text-sm text-muted-foreground">Notes, tests and an AI tutor at home.</span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <p class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground" data-hero>
+          <span class="inline-flex items-center gap-1.5"><i class="size-1.5 rounded-full bg-success"></i>Grades 1 to 9</span>
+          <span class="inline-flex items-center gap-1.5"><i class="size-1.5 rounded-full bg-success"></i>Pays with M-PESA</span>
+          <span class="inline-flex items-center gap-1.5"><i class="size-1.5 rounded-full bg-success"></i>Made in Nairobi</span>
+        </p>
+      </div>
+
+      <div class="relative mx-auto w-full max-w-[560px]" id="hero-art">
+        <OrbitHub class="hero-orbit" angles={[-54, -26, 26, 54, 126, 154, 206, 234]}>
+          <PhoneFrame video="hub-loop" alt="The Pathways app home screen: a child's subjects orbiting their avatar" class="hero-phone w-[140px] sm:w-[170px] lg:w-[180px]" loading="eager" />
+        </OrbitHub>
+        <div class="hero-pola absolute -right-3 -bottom-2 sm:-right-8 sm:-bottom-4" data-pola-float>
+          <Pola pose="hello" size="clamp(5.5rem, 14vw, 8.5rem)" loading="eager" seed={2} label="Pola, the Pathways mascot, waving hello" />
+        </div>
+      </div>
+    </div>
+    <div class="hero-glow pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+  </section>
+
+  <SubjectMarquee class="mt-2" />
+
+  {/* ---------------- THREE SIDES, ONE PLATFORM ---------------- */}
+  <section class="container-x py-20 lg:py-28">
+    <SectionHeading
+      eyebrow="All in one"
+      title="Three sides of a child's education, finally on one platform."
+      mark="one platform"
+      lead="Teacher, parent and learner each get a view built for them. Underneath, it is one record of what was taught, what was practised and how the child is doing."
+      align="center"
+    />
+    <ul class="mt-12 grid gap-5 lg:grid-cols-3" data-reveal-stagger="0.1">
+      {[
+        ['The school', 'Teaching, automated where it should be', 'Schemes of work, lesson plans and merit lists generated from the CBC design and kept current with a tick. Coverage rolls up to the head teacher, and each teacher is connected directly to their learners\' parents.', 'var(--brand-teal)', 'school'],
+        ['The parent', 'Study material that matches the classroom', 'Study notes, practice tests and exam preparation for every sub-strand, linked to the child\'s school and subject teachers when they are on Pathways. Results, calendar and announcements arrive in the same app.', 'var(--primary)', 'users'],
+        ['The learner', 'Learning that feels like play, measured like school', 'An interactive hub where every subject orbits the child, worked examples at their own pace, and quick checks with gentle feedback. Each interaction feeds a picture of progress, strengths and gaps that the parent and teacher both see.', 'var(--gold-deep)', 'spark'],
+      ].map(([who, title, body, c, icon]) => (
+        <li class="card relative overflow-hidden p-7">
+          <span class="grid size-11 place-items-center rounded-xl" style={`color:${c};background:color-mix(in srgb, ${c} 14%, transparent)`}>
+            {icon === 'school' && <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-5 9 5-9 5z"/><path d="M7 12.5V17c0 1 2.5 2 5 2s5-1 5-2v-4.5"/></svg>}
+            {icon === 'users' && <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.5 0 4.5 1.5 4.5 4.5"/></svg>}
+            {icon === 'spark' && <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>}
+          </span>
+          <p class="mt-5 text-xs font-bold tracking-[0.14em] uppercase" style={`color:${c}`}>{who}</p>
+          <h3 class="mt-1.5 font-display text-xl font-bold">{title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {/* ---------------- THE MAP ---------------- */}
+  <section class="bg-background py-20 lg:py-28"><div class="container-x">
+    <SectionHeading
+      eyebrow="How it fits together"
+      title="The same curriculum map powers the classroom and the kitchen table."
+      mark="curriculum map"
+      lead="Every learning area in the CBC design is mapped into strands, sub-strands and lessons. Teachers plan on that map; parents and learners read, practise and revise on it. What a child meets in class is what they meet at home."
+      align="center"
+    />
+
+    <div class="map-flow relative mx-auto mt-14 max-w-5xl" data-reveal>
+      <svg class="absolute inset-x-0 top-9 hidden h-2 w-full lg:block" viewBox="0 0 1000 8" preserveAspectRatio="none" aria-hidden="true">
+        <path id="map-line" d="M20 4 H980" fill="none" stroke="var(--border)" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round" />
+        <path id="map-draw" d="M20 4 H980" fill="none" stroke="var(--brand-teal)" stroke-width="3" stroke-linecap="round" />
+      </svg>
+      <ol class="grid gap-6 lg:grid-cols-5" data-reveal-stagger="0.12">
+        {[
+          ['Learning area', 'Mathematics', 'calc', 'var(--subj-math)'],
+          ['Strand', 'Numbers', 'layers', 'var(--subj-eng)'],
+          ['Sub-strand', 'Addition', 'plus', 'var(--subj-swa)'],
+          ['Lesson', 'Adding with regrouping', 'book', 'var(--subj-sci)'],
+          ['Note + test', 'Worked example, 5 questions', 'check', 'var(--subj-soc)'],
+        ].map(([k, v, , c], i) => (
+          <li class="map-node relative text-center">
+            <span class="relative z-10 mx-auto grid size-[4.6rem] place-items-center rounded-full border-2 bg-card font-display text-xl font-bold" style={`border-color:${c};color:${c}`}>{i + 1}</span>
+            <p class="mt-4 text-xs font-bold tracking-[0.12em] text-muted-foreground uppercase">{k}</p>
+            <p class="mt-1 font-semibold">{v}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="pointer-events-none absolute -top-24 right-[17%] hidden lg:block" data-pola-float>
+        <Pola pose="tip" size="5.5rem" seed={4} />
+      </div>
+    </div>
+  </div></section>
+
+  {/* ---------------- TWO FUNNELS ---------------- */}
+  <section class="py-20 lg:py-28">
+    <div class="container-x">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <article class="funnel card relative overflow-hidden p-7 sm:p-9" data-reveal="left">
+          <p class="eyebrow">For schools</p>
+          <h2 class="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl">A teaching platform that automates the paperwork and connects teachers to every home.</h2>
+          <p class="mt-4 text-muted-foreground leading-relaxed">
+            Schemes of work and lesson plans generated from the CBC design, a Record of Work that rolls up into school-wide coverage, and merit lists with EE/ME/AE/BE bands published to parents in a tap. Teachers see each learner's progress and can give individual attention where it is needed.
+          </p>
+          <ul class="mt-6 grid gap-2.5 text-sm">
+            {['Scheme of Work and Lesson Plan builders', 'Formative hub: checks, homework, subject tests', 'Summative merit lists and student insights', 'Timetables, calendar, announcements and coverage rollup'].map((f) => (
+              <li class="flex items-start gap-2.5"><i class="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--brand-teal)]"></i>{f}</li>
+            ))}
+          </ul>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="/schools" class="btn-teal">Explore the portal</a>
+            <a href="/demo" class="btn-ghost">Book a demo</a>
+          </div>
+          <div class="mt-8 -mr-10 -mb-12 sm:-mr-16 sm:-mb-16"><PortalMock view="merit" compact /></div>
+        </article>
+
+        <article class="funnel card relative overflow-hidden p-7 sm:p-9" data-reveal="right">
+          <p class="eyebrow" style="color: var(--primary)">For parents</p>
+          <h2 class="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl">Study notes, tests and exam preparation, linked to your child's school.</h2>
+          <p class="mt-4 text-muted-foreground leading-relaxed">
+            Every sub-strand explained with worked examples, practice tests you assign in a tap, and an AI tutor for one child at a time. Link the school to see results, announcements and the subject teachers' work. Free to start, and it works on its own too.
+          </p>
+          <ul class="mt-6 grid gap-2.5 text-sm">
+            {['CBC study notes with step-by-step examples', 'Practice tests, quizzes and exam preparation', 'AI tutor, Pola, in the app', 'Progress, strengths and gaps per child'].map((f) => (
+              <li class="flex items-start gap-2.5"><i class="mt-1.5 size-2 shrink-0 rounded-full bg-primary"></i>{f}</li>
+            ))}
+          </ul>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="/parents" class="btn-primary">See the app</a>
+            <a href={SITE.playStoreUrl} target="_blank" rel="noopener" class="btn-ghost">Get it on Google Play</a>
+          </div>
+          <div class="mt-8 flex justify-center gap-4 pb-2">
+            <PhoneFrame screen="note-shapes" alt="Pathways study note: Shapes and Formulas" class="w-[120px] -rotate-6 sm:w-[150px]" />
+            <PhoneFrame video="notes-worked" alt="Pathways walks through adding six-digit numbers with regrouping, step by step" class="w-[120px] translate-y-6 sm:w-[150px]" />
+            <PhoneFrame screen="results-jesma" alt="School results for a learner, with class mean and bands" class="w-[120px] rotate-6 sm:w-[150px]" />
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- CHALKBOARD: an educational cue ---------------- */}
+  <section class="container-x py-20 lg:py-28">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <SectionHeading
+          eyebrow="Why it works"
+          title="A lesson is only finished when a child can do it alone."
+          mark="do it alone"
+          lead="Pathways notes show the working step by step, then check that the child can repeat it. Every check feeds the picture of progress that parent and teacher share, and the same sub-strand shows as covered in the teacher's Record of Work."
+        />
+        <ul class="mt-8 grid gap-4" data-reveal-stagger>
+          {[
+            ['Explain', 'Plain-language notes with key words and a strand overview.'],
+            ['Show', 'Worked examples that step through the method, one column at a time.'],
+            ['Check', '"Check my learning" questions with instant, gentle feedback.'],
+            ['Report', 'Progress, strengths and gaps per child, plus merit lists with class mean and expectation bands.'],
+          ].map(([t, d], i) => (
+            <li class="flex gap-4">
+              <span class="grid size-9 shrink-0 place-items-center rounded-full bg-primary-container font-display font-bold text-primary-container-foreground">{i + 1}</span>
+              <div><b class="font-semibold">{t}</b><p class="text-sm text-muted-foreground">{d}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="chalk relative" data-reveal="scale">
+        <div class="chalkboard relative overflow-hidden rounded-3xl p-7 text-white sm:p-10">
+          <p class="text-xs font-bold tracking-[0.14em] text-white/60 uppercase">Grade 5 · Measurement</p>
+          <p class="mt-2 font-display text-2xl font-bold">Area of a triangle</p>
+          <svg class="mt-5 w-full" viewBox="0 0 320 170" aria-hidden="true">
+            <path id="tri" d="M30 150 L160 20 L290 150 Z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" />
+            <path id="tri-h" d="M160 20 V150" fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round" />
+            <path id="tri-b" d="M30 158 H290" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round" />
+            <text id="tri-lb" x="160" y="168" text-anchor="middle" fill="var(--gold)" font-size="14" font-weight="700" opacity="0">b = 8 cm</text>
+            <text id="tri-lh" x="172" y="90" fill="var(--gold)" font-size="14" font-weight="700" opacity="0">h = 5 cm</text>
+          </svg>
+          <p class="formula mt-5 font-display text-3xl font-semibold tracking-wide sm:text-4xl" aria-label="Area equals a half times b times h equals a half times 8 times 5 equals 20 square centimetres">
+            <span class="f1">A = ½ × b × h</span><br />
+            <span class="f2 text-white/80">= ½ × 8 × 5</span><br />
+            <span class="f3 text-[var(--gold)]">= 20 cm²</span>
+          </p>
+          <span class="tick absolute right-6 bottom-6 grid size-11 place-items-center rounded-full bg-[var(--gold)] text-[#1c1300]" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7" /></svg>
+          </span>
+        </div>
+        <div class="absolute -top-8 -left-4 sm:-left-8" data-pola-float><Pola pose="read" size="5.5rem" seed={9} /></div>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- TRUST ---------------- */}
+  <section class="bg-background py-16">
+    <div class="container-x grid gap-8 md:grid-cols-3" data-reveal-stagger>
+      <div class="card p-6">
+        <p class="font-display text-4xl font-bold"><span data-count="9" data-prefix="Grades 1 to "></span></p>
+        <p class="mt-2 text-sm text-muted-foreground">Learning outcomes mapped for the whole of basic education, with study notes rolling out grade by grade.</p>
+      </div>
+      <div class="card p-6">
+        <p class="font-display text-4xl font-bold">M-PESA</p>
+        <p class="mt-2 text-sm text-muted-foreground">Families pay by phone, schools get receivables and receipts. No cards, no foreign billing.</p>
+      </div>
+      <div class="card p-6">
+        <p class="font-display text-4xl font-bold">Trusted by</p>
+        <p class="mt-2 text-sm text-muted-foreground">{SITE.pilotSchools.join(', ')} has onboarded teachers and parents onto Pathways. Ask us about joining the next cohort.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- CTA ---------------- */}
+  <section class="container-x py-20 lg:py-28">
+    <div class="cta relative overflow-hidden rounded-3xl bg-[var(--brand-teal)] px-7 py-14 text-center text-white sm:px-12 sm:py-20" data-celebrate>
+      <div class="confetti-field pointer-events-none absolute inset-0" aria-hidden="true"></div>
+      <div class="relative mx-auto flex max-w-2xl flex-col items-center">
+        <Pola pose="cheer" size="8rem" seed={7} />
+        <h2 class="mt-4 font-display text-3xl font-bold sm:text-5xl">Let's get the school, the parent and the learner on one page.</h2>
+        <p class="mt-4 text-white/85 sm:text-lg">Book a 30-minute walkthrough for your school, or try the parent app free today.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href="/demo" class="btn bg-white text-[var(--brand-teal-deep)] hover:-translate-y-0.5">Book a school demo</a>
+          <a href={SITE.playStoreUrl} target="_blank" rel="noopener" class="btn border border-white/40 bg-white/10 text-white hover:bg-white/20">Get the parent app</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  @reference "../styles/global.css";
+  .hero-glow {
+    background:
+      radial-gradient(60% 50% at 75% 45%, color-mix(in srgb, var(--primary) calc(var(--halo) * 45%), transparent), transparent 70%),
+      radial-gradient(40% 40% at 15% 10%, color-mix(in srgb, var(--brand-teal) calc(var(--halo) * 40%), transparent), transparent 70%);
+  }
+  .route-card {
+    @apply relative flex items-center gap-4 rounded-2xl border border-border bg-card p-4 pr-10 transition-[transform,box-shadow,border-color] duration-300;
+    transition-timing-function: var(--ease-out-expo);
+  }
+  .route-card:hover { transform: translateY(-3px); border-color: var(--c, var(--primary)); box-shadow: var(--shadow-card); }
+  .route-icon { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; flex: none; border-radius: 50%; color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+  .route-card .arrow { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted-foreground); transition: transform .3s var(--ease-out-expo); }
+  .route-card:hover .arrow { transform: translate(4px, -50%); color: var(--foreground); }
+  .hero-phone { filter: drop-shadow(0 30px 40px rgb(15 23 42 / .25)); }
+  .funnel { background: linear-gradient(180deg, var(--card), color-mix(in srgb, var(--card) 70%, var(--page))); }
+  .chalkboard { background: radial-gradient(120% 100% at 20% 0%, #164e4a, #0f3b39 60%, #0b2b2a); box-shadow: var(--shadow-float), inset 0 0 0 1px rgb(255 255 255 / .06); }
+  .chalkboard .tick { opacity: 0; transform: scale(.5); }
+  .chalkboard .f2, .chalkboard .f3 { opacity: 0; }
+  html.reduce .chalkboard .tick, html.reduce .chalkboard .f2, html.reduce .chalkboard .f3, html.reduce #tri-lb, html.reduce #tri-lh { opacity: 1 !important; transform: none; }
+  .map-node { --d: 0; }
+</style>
+
+<script>
+  import { gsap, ScrollTrigger, reduced, splitWords, onPage } from '../lib/motion';
+
+  onPage(() => {
+    if (!document.getElementById('hero-title')) return; // not on home
+    const R = reduced();
+
+    // ---- Hero entrance: words rise, planets pop in around the phone, Pola waves. ----
+    const title = document.getElementById('hero-title')!;
+    const words = splitWords(title);
+    const planets = gsap.utils.toArray<HTMLElement>('#hero-art [data-planet]');
+    const heroBits = gsap.utils.toArray<HTMLElement>('[data-hero]');
+    const phone = document.querySelector('#hero-art .hero-phone');
+    const pola = document.querySelector('#hero-art .hero-pola');
+    if (R) {
+      gsap.set([words, heroBits, planets, phone, pola], { opacity: 1 });
+    } else {
+      const start = () => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        tl.fromTo(words, { yPercent: 110, opacity: 0, rotate: 2 }, { yPercent: 0, opacity: 1, rotate: 0, duration: 0.9, stagger: 0.045 }, 0)
+          .fromTo(heroBits, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 }, 0.3)
+          .fromTo(phone, { scale: 0.7, opacity: 0, y: 30 }, { scale: 1, opacity: 1, y: 0, duration: 1, ease: 'back.out(1.4)' }, 0.2)
+          .fromTo(planets, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(2)', stagger: { each: 0.07, from: 'start' } }, 0.45)
+          .fromTo(pola, { scale: 0.6, opacity: 0, rotate: -12 }, { scale: 1, opacity: 1, rotate: 0, duration: 0.8, ease: 'elastic.out(1, 0.55)' }, 0.9);
+      };
+      gsap.set([words], { yPercent: 110, opacity: 0 });
+      gsap.set([heroBits, phone, planets, pola], { opacity: 0 });
+      if (document.documentElement.classList.contains('intro')) document.addEventListener('pw:intro-done', start, { once: true });
+      else start();
+
+      // Pointer parallax on the orbit (desktop only).
+      const art = document.getElementById('hero-art')!;
+      if (matchMedia('(pointer: fine)').matches) {
+        const qx = gsap.quickTo(planets, 'x', { duration: 0.6, ease: 'power3' });
+        const qy = gsap.quickTo(planets, 'y', { duration: 0.6, ease: 'power3' });
+        art.addEventListener('pointermove', (e) => {
+          const r = art.getBoundingClientRect();
+          const dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          qx(dx * 14); qy(dy * 14);
+        });
+        art.addEventListener('pointerleave', () => { qx(0); qy(0); });
+      }
+    }
+
+    // ---- Curriculum map line draws across as the nodes appear. ----
+    const draw = document.getElementById('map-draw');
+    if (draw && !R) {
+      gsap.fromTo(draw, { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.6, ease: 'power2.inOut', scrollTrigger: { trigger: '.map-flow', start: 'top 75%', once: true } });
+    }
+
+    // ---- Chalkboard: triangle draws, labels appear, formula resolves, tick pops. ----
+    const chalk = document.querySelector('.chalkboard');
+    if (chalk && !R) {
+      const tl = gsap.timeline({ scrollTrigger: { trigger: chalk, start: 'top 70%', once: true }, defaults: { ease: 'power2.inOut' } });
+      tl.fromTo('#tri', { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.1 })
+        .fromTo('#tri-b', { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5 })
+        .to('#tri-lb', { opacity: 1, duration: 0.3 }, '<0.2')
+        .fromTo('#tri-h', { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5 })
+        .to('#tri-lh', { opacity: 1, duration: 0.3 }, '<0.2')
+        .fromTo('.chalkboard .f2', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, '+=0.2')
+        .fromTo('.chalkboard .f3', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, '+=0.25')
+        .to('.chalkboard .tick', { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)' }, '+=0.1');
+    }
+
+    // ---- Floating Polas drift a little with scroll. ----
+    if (!R) {
+      gsap.utils.toArray<HTMLElement>('[data-pola-float]').forEach((el) => {
+        gsap.to(el, { y: -24, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.8 } });
+      });
+    }
+
+    // ---- CTA confetti burst when the celebration enters. ----
+    const cta = document.querySelector<HTMLElement>('[data-celebrate]');
+    if (cta && !R) {
+      const field = cta.querySelector('.confetti-field')!;
+      const cols = ['#fcd34d', '#ffffff', '#71dad7', '#a78bfa', '#fb923c', '#34d399'];
+      ScrollTrigger.create({
+        trigger: cta, start: 'top 70%', once: true,
+        onEnter: () => {
+          for (let i = 0; i < 42; i++) {
+            const b = document.createElement('i');
+            b.className = 'confetti';
+            b.style.background = cols[i % cols.length];
+            b.style.left = '50%'; b.style.top = '45%';
+            field.appendChild(b);
+            const a = Math.random() * Math.PI * 2, d = 140 + Math.random() * 260;
+            gsap.fromTo(b, { opacity: 1, x: 0, y: 0, rotate: 0 }, {
+              x: Math.cos(a) * d, y: Math.sin(a) * d * 0.7 + 120, rotate: Math.random() * 720, opacity: 0,
+              duration: 1.4 + Math.random() * 0.6, ease: 'power2.out', delay: Math.random() * 0.15, onComplete: () => b.remove(),
+            });
+          }
+        },
+      });
+    }
+  });
+</script>

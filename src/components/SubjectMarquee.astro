@@ -1,0 +1,22 @@
+---
+/** A slow, pausable ribbon of CBC learning areas — an educational cue between sections. */
+const subjects = [
+  ['Mathematics', 'var(--subj-math)'], ['English', 'var(--subj-eng)'], ['Kiswahili', 'var(--subj-swa)'],
+  ['Science & Technology', 'var(--subj-sci)'], ['Social Studies', 'var(--subj-soc)'], ['Creative Arts', 'var(--subj-art)'],
+  ['Agriculture & Nutrition', 'var(--subj-agri)'], ['Religious Education', 'var(--subj-cre)'], ['Environmental Activities', 'var(--subj-agri)'],
+  ['Integrated Science', 'var(--subj-sci)'], ['Pre-Technical Studies', 'var(--subj-soc)'], ['Health Education', 'var(--subj-math)'],
+];
+const row = [...subjects, ...subjects];
+interface Props { class?: string; label?: string }
+const { class: cls = '', label = 'CBC learning areas, Grades 1 to 9' } = Astro.props;
+---
+
+<div class:list={['mask-fade-x overflow-hidden py-2', cls]} aria-label={label} role="group">
+  <div class="marquee" style="--dur: 55s">
+    {row.map(([name, c], i) => (
+      <span class="inline-flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold" aria-hidden={i >= subjects.length ? 'true' : undefined} style={`--c:${c}`}>
+        <i class="size-2.5 rounded-full" style="background: var(--c)"></i>{name}
+      </span>
+    ))}
+  </div>
+</div>

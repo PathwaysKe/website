@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Pola from '../components/Pola.astro';
+import Logo from '../components/Logo.astro';
+import { SITE } from '../lib/site';
+
+const description = 'Pathways is a Nairobi-built, all-in-one learning platform for Kenya\'s CBC: planning and reporting for schools, study material for families, an interactive hub for learners, and one shared picture of each child\'s progress.';
+
+const values = [
+  ['Say only what ships', 'Our product pages list what a teacher or parent can use today. Roadmap items are called roadmap items.'],
+  ['Teachers plan, machines retype', 'Schemes and lesson plans start from the CBC design so a teacher edits, rather than types the same outcomes every term.'],
+  ['Warm for a child, calm for an adult', 'A child\'s session is livelier than a parent\'s view of the same child. The attention colours, not the mascot, carry bad news.'],
+  ['Pay how Kenya pays', 'M-PESA for families, receivables and receipts for schools. No cards, no foreign billing.'],
+];
+const poses = [
+  ['hello', 'Firsts and hellos'], ['read', 'Notes and learning'], ['think', 'Nothing here yet'], ['happy', 'Something was earned'],
+  ['cheer', 'A big win'], ['tip', 'A hint or a tour'], ['search', 'Searching, matching'], ['love', 'Thanks and warmth'],
+  ['talk', 'The tutor, replying'], ['oops', 'Something went wrong, gently'], ['rest', 'Waiting on you'], ['sleepy', 'Offline, out of hours'],
+];
+---
+
+<Base title="About" {description}>
+  <section class="container-x grid items-center gap-10 py-10 lg:grid-cols-[1.1fr_1fr] lg:py-16">
+    <div>
+      <p class="eyebrow mb-5" data-reveal>About Pathways</p>
+      <h1 class="font-display text-4xl font-bold leading-[1.04] sm:text-5xl lg:text-6xl" data-reveal data-reveal-delay="0.05">
+        We mapped the CBC once, so nobody has to <span class="marker">decode it twice<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 40 6, 90 4, 196 9" /></svg></span>.
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground" data-reveal data-reveal-delay="0.1">
+        Kenya's Competency Based Curriculum is a good design that arrived without good tools. Teachers retype outcomes into schemes every term. Parents stare at a strand name and can't find a page to read. Pathways is one learning platform for all three sides: planning and reporting for the school, study material for the home, and an interactive hub for the learner, with one shared picture of how each child is doing.
+      </p>
+    </div>
+    <div class="relative mx-auto grid w-full max-w-md place-items-center" data-reveal="scale">
+      <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="ring-dashed" cx="50" cy="50" r="46" /><circle class="ring-solid" cx="50" cy="50" r="30" />
+      </svg>
+      <div class="relative grid place-items-center gap-4 p-10">
+        <Logo size={120} />
+        <Pola pose="hello" size="9rem" seed={2} label="Pola, the Pathways mascot" />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-background py-20 lg:py-28">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_1.2fr]">
+      <SectionHeading eyebrow="The story" title="It started in a staff room, with a scheme of work due on Monday." mark="due on Monday" />
+      <div class="prose-site grid gap-5 text-lg" data-reveal-stagger>
+        <p>The first thing we built was a scheme-of-work generator, because that was the thing teachers were losing their weekends to. To generate a scheme you need the curriculum as data: every learning area, strand, sub-strand and learning outcome for Grades 1 to 9. So we built the map.</p>
+        <p>Once the map existed, lesson plans fell out of it. Then formative checks, then merit lists with the expectation bands heads actually report on. Then a Record of Work that rolls up into coverage, so a head teacher can see where the school is without walking the corridor.</p>
+        <p>The same map, read from the other side, is what a parent needs at the kitchen table: this sub-strand, explained plainly, with a worked example and a short check. So the parent app reads from the same source as the school portal. When a school publishes results, the family sees them in the app they already use for homework, and every test and check a child completes feeds a picture of strengths and gaps that the teacher and parent both see.</p>
+        <p>We are a small team in Nairobi. We work with pilot schools like {SITE.pilotSchools.join(', ')}, and we ship what we can stand behind.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-20 lg:py-28">
+    <SectionHeading eyebrow="How we work" title="Four rules we keep." mark="Four rules" align="center" />
+    <ul class="mt-12 grid gap-5 sm:grid-cols-2" data-reveal-stagger>
+      {values.map(([t, d], i) => (
+        <li class="card p-7">
+          <span class="grid size-10 place-items-center rounded-full bg-teal-soft font-display font-bold text-teal-text">{i + 1}</span>
+          <h3 class="mt-4 font-display text-xl font-bold">{t}</h3>
+          <p class="mt-2 text-muted-foreground leading-relaxed">{d}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="bg-background py-20 lg:py-28">
+    <div class="container-x">
+      <SectionHeading eyebrow="Meet Pola" title="The logo, come to life." mark="come to life" lead="Pola is a starfish. Her yellow top arm is the compass's north tip, her ring nose is its pivot, and her teal is the brand's teal. She shows up at feelings and hand-offs: a first sign-in, a finished note, a level up. She never delivers bad news; the attention colours do that alone." />
+      <ul class="mt-12 grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6" data-reveal-stagger="0.05">
+        {poses.map(([p, use], i) => (
+          <li class="card flex flex-col items-center gap-2 p-4 text-center">
+            <Pola pose={p as any} size="5.5rem" seed={i + 20} />
+            <b class="text-sm font-semibold capitalize">{p}</b>
+            <span class="text-xs text-muted-foreground">{use}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="container-x py-16">
+    <div class="card flex flex-col items-center gap-5 p-8 text-center sm:flex-row sm:text-left" data-reveal>
+      <Pola pose="talk" size="6rem" seed={30} />
+      <div class="flex-1">
+        <h2 class="font-display text-2xl font-bold">Want to talk?</h2>
+        <p class="mt-1 text-muted-foreground">Schools, parents, partners and press: we read everything.</p>
+      </div>
+      <a href="/contact" class="btn-primary btn-lg">Contact us</a>
+    </div>
+  </section>
+</Base>

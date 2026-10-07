@@ -1,0 +1,31 @@
+---
+/**
+ * Eyebrow + display heading with a hand-drawn marker underline on the `mark` word, which
+ * DrawSVG draws in on scroll (motion.markers()).
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** The word or phrase inside `title` to underline. */
+  mark?: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  as?: 'h1' | 'h2' | 'h3';
+  class?: string;
+}
+const { eyebrow, title, mark, lead, align = 'left', as: Tag = 'h2', class: cls = '' } = Astro.props;
+const parts = mark && title.includes(mark) ? title.split(mark) : null;
+---
+
+<div class:list={['max-w-3xl', align === 'center' && 'mx-auto text-center', cls]} data-reveal>
+  {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+  <Tag class:list={['font-display font-bold leading-[1.05] text-foreground', Tag === 'h1' ? 'text-4xl sm:text-5xl lg:text-6xl' : 'text-3xl sm:text-4xl lg:text-[2.75rem]']}>
+    {parts ? (
+      <>
+        {parts[0]}<span class="marker">{mark}<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 40 6, 90 4, 196 9" /></svg></span>{parts[1]}
+      </>
+    ) : title}
+  </Tag>
+  {lead && <p class="mt-5 text-lg leading-relaxed text-muted-foreground">{lead}</p>}
+  <slot />
+</div>

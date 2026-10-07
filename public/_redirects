@@ -1,0 +1,4 @@
+# Old Vercel cleanUrls paths → the same pages under Astro.
+/privacy.html       /privacy      301
+/delete-data.html   /delete-data  301
+/index.html         /             301

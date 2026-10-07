@@ -1,0 +1,198 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PortalMock from '../components/PortalMock.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
+import Pola from '../components/Pola.astro';
+import FAQ from '../components/FAQ.astro';
+import { SITE } from '../lib/site';
+
+const description =
+  'Pathways for Schools automates scheme-of-work planning, lesson plans and reporting, connects teachers directly to parents and learners, and gives the head teacher coverage and progress at a glance. Book a demo.';
+
+const features = [
+  { t: 'Scheme of Work builder', d: 'Generated per subject, grade and term from the CBC design. Edit any week, clone and retarget across streams.', icon: 'layers', c: 'var(--subj-math)' },
+  { t: 'Lesson Plans', d: 'Every lesson pre-filled from the scheme with outcomes, key inquiry questions and activities. Teachers refine, not retype.', icon: 'book', c: 'var(--subj-eng)' },
+  { t: 'Formative hub', d: 'Competency checks, homework and subject tests from one builder, with learner attempts and marking in the same place.', icon: 'check', c: 'var(--subj-swa)' },
+  { t: 'Summative merit lists', d: 'Exam sittings, a marks-entry grid and a report with EE / ME / AE / BE bands and class means, published to parents in a tap.', icon: 'award', c: 'var(--subj-sci)' },
+  { t: 'Record of Work and coverage', d: 'Teachers tick what was taught; heads see coverage roll up by grade, subject and stream without asking around.', icon: 'chart', c: 'var(--subj-soc)' },
+  { t: 'Timetables and calendar', d: 'A central school timetable with per-teacher views, plus a school-wide calendar and announcements to parents.', icon: 'calendar', c: 'var(--subj-art)' },
+  { t: 'Learners, classes and teachers', d: 'A clean roster, classroom setup wizard, multi-admin schools and student insights per learner.', icon: 'users', c: 'var(--subj-cre)' },
+  { t: 'Notes and curriculum library', d: 'Block-rendered study notes for every sub-strand, the same notes parents see at home.', icon: 'file', c: 'var(--subj-agri)' },
+];
+const ICONS: Record<string, string> = {
+  layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+  book: '<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/>',
+  check: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/>',
+  award: '<circle cx="12" cy="9" r="5.5"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/>',
+  chart: '<path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/>',
+  calendar: '<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.5 0 4.5 1.5 4.5 4.5"/>',
+  file: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+};
+
+const week = [
+  ['Monday', 'Plan', 'The Grade 5 Maths teacher opens this week in the scheme: "Adding with regrouping", 5 lessons. The lesson plans are already drafted.', 'scheme'],
+  ['Tuesday', 'Teach', 'Today\'s classes shows what\'s next. After the lesson she ticks it in her Record of Work and sets a 5-question check as homework.', 'coverage'],
+  ['Thursday', 'Check', 'Learner attempts come back marked. Two children struggled with the tens column, so she assigns them the worked example in the app.', 'coverage'],
+  ['End of term', 'Report', 'Marks go into the merit list grid. The head reviews bands and class means, then publishes results to parents.', 'merit'],
+];
+
+const faqs = [
+  { q: 'Does it follow the official CBC design?', a: 'Yes. Learning outcomes for Grades 1 to 9 are mapped by learning area, strand and sub-strand, and schemes of work are generated from that map. Teachers can edit every week.' },
+  { q: 'How are schools billed?', a: 'Per learner, per term, through a sponsorship for each grade you choose to cover. A sponsorship also covers those children\'s families in the parent app. We quote after a short call so the price fits your school; there is no fixed public rate.' },
+  { q: 'What do teachers need?', a: 'A browser. The portal runs on a laptop or a phone, and most schools onboard a whole staff room in an afternoon with the setup wizard.' },
+  { q: 'Can parents see results?', a: 'When you publish a merit list, families linked to your school see their child\'s results, class mean and bands in the Pathways app, alongside your calendar and announcements.' },
+  { q: 'Is our data safe?', a: 'Each school\'s data is isolated by row-level security in our database, access is role-based, and we never sell or share learner data. See our <a class="underline" href="/privacy">privacy policy</a>.' },
+  { q: 'What is not in the portal yet?', a: 'Attendance and a question bank marketplace are on the roadmap, not in the product today. We would rather show you what ships than promise what doesn\'t.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Pathways for Schools',
+  applicationCategory: 'EducationalApplication',
+  operatingSystem: 'Web',
+  url: `${SITE.url}/schools`,
+  offers: { '@type': 'Offer', priceCurrency: 'KES', description: 'Per learner, per term. Quoted per school.' },
+};
+---
+
+<Base title="For Schools" {description} image="/og/schools.png" {jsonLd}>
+  <section class="container-x grid items-center gap-10 py-10 lg:grid-cols-[1fr_1.1fr] lg:py-16">
+    <div>
+      <p class="eyebrow mb-5" data-reveal>Pathways for Schools</p>
+      <h1 class="font-display text-4xl font-bold leading-[1.06] sm:text-5xl lg:text-[3.4rem]" data-reveal data-reveal-delay="0.05">
+        Planning, teaching and merit lists your teachers <span class="marker">keep updated.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 40 6, 90 4, 196 9" /></svg></span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground" data-reveal data-reveal-delay="0.1">
+        A learning platform that automates the paperwork of teaching, connects each teacher directly to their learners' parents, and gives the head teacher coverage and progress without asking around. Built on the CBC design.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3" data-reveal data-reveal-delay="0.15">
+        <a href="/demo" class="btn-teal btn-lg">Book a 30-minute demo</a>
+        <a href={SITE.portalUrl + '/login'} class="btn-ghost btn-lg" rel="noopener">Teacher login</a>
+      </div>
+      <p class="mt-5 text-sm text-muted-foreground" data-reveal data-reveal-delay="0.2">Trusted by {SITE.pilotSchools.join(', ')}. Works on any laptop or phone browser.</p>
+    </div>
+    <div class="relative pb-16 sm:pb-20" data-reveal="scale">
+      <PortalMock view="scheme" />
+      <div class="absolute right-0 bottom-4 w-[46%] sm:-right-4" data-reveal="up" data-reveal-delay="0.3"><PortalMock view="coverage" compact /></div>
+      <div class="absolute -top-10 -left-2 sm:-left-6" data-pola-float><Pola pose="tip" size="5.5rem" seed={3} /></div>
+      <p class="absolute bottom-0 left-0 text-xs text-muted-foreground">Illustrative views of the portal's scheme of work and coverage screens.</p>
+    </div>
+  </section>
+
+  <section class="bg-background py-20 lg:py-28">
+    <div class="container-x">
+      <SectionHeading eyebrow="What ships today" title="Everything a staff room needs, nothing it doesn't." mark="staff room" lead="We list only what a school admin or teacher can use right now. No roadmap features dressed up as product." />
+      <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-reveal-stagger="0.07">
+        {features.map((f) => (
+          <li class="card feature group p-6">
+            <span class="grid size-11 place-items-center rounded-xl" style={`color:${f.c};background:color-mix(in srgb, ${f.c} 14%, transparent)`}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[f.icon]} />
+            </span>
+            <h3 class="mt-4 font-display text-lg font-bold">{f.t}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{f.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="container-x py-20 lg:py-28">
+    <SectionHeading eyebrow="A week in Pathways" title="From Monday's plan to end-of-term report, without re-typing anything." mark="without re-typing" align="center" />
+    <div class="week relative mx-auto mt-14 max-w-5xl">
+      <div class="absolute top-0 bottom-0 left-[1.35rem] w-px bg-border lg:left-1/2" aria-hidden="true"></div>
+      <ol class="grid gap-10">
+        {week.map(([day, verb, text, view], i) => (
+          <li class:list={['relative grid items-center gap-6 pl-14 lg:grid-cols-2 lg:pl-0', i % 2 ? 'lg:[&>div:first-child]:order-2' : '']} data-reveal>
+            <div class:list={['lg:px-12', i % 2 ? 'lg:text-left' : 'lg:text-right']}>
+              <span class="absolute top-1 left-0 grid size-11 place-items-center rounded-full border-2 border-[var(--brand-teal)] bg-card font-display font-bold text-teal-text lg:left-1/2 lg:-translate-x-1/2">{i + 1}</span>
+              <p class="eyebrow">{day}</p>
+              <h3 class="mt-2 font-display text-2xl font-bold">{verb}</h3>
+              <p class="mt-2 text-muted-foreground leading-relaxed">{text}</p>
+            </div>
+            <div class="lg:px-12"><PortalMock view={view as 'merit' | 'scheme' | 'coverage'} class="origin-top scale-[.96]" /></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-background py-20 lg:py-28">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
+      <div>
+        <SectionHeading eyebrow="Teacher to parent to learner" title="Publish once. Every linked family sees it in the app." mark="Every linked family" lead="A school can sponsor whole grades so families get the full parent app at no cost to them: results, calendar, announcements, notes and practice, all from the same curriculum map your teachers plan on. Teachers see each learner's progress and can direct attention where it counts." />
+        <ul class="mt-8 grid gap-3 text-sm" data-reveal-stagger>
+          {['Results with class mean and expectation bands', 'School calendar and timetable on every parent\'s phone', 'Announcements that don\'t get lost in a WhatsApp group', 'Study notes and tests that match what was taught this week'].map((t) => (
+            <li class="flex items-start gap-2.5"><i class="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--brand-teal)]"></i>{t}</li>
+          ))}
+        </ul>
+        <a href="/parents" class="btn-ghost mt-8">See the parent app</a>
+      </div>
+      <div class="flex justify-center gap-5" data-reveal="scale">
+        <PhoneFrame screen="results-jesma" alt="A learner's published results: mean 61.1, class mean 65.5, Meeting Expectations" class="w-[170px] -rotate-3 sm:w-[210px]" />
+        <PhoneFrame screen="hub-collins" alt="A parent's home screen with a child linked to Victory House school" class="w-[170px] translate-y-8 rotate-3 sm:w-[210px]" />
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-20 lg:py-28">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+      <SectionHeading eyebrow="Pricing" title="Per learner, per term. Quoted for your school." mark="Quoted for your school" lead="Schools sponsor the grades they want covered. The per-learner rate depends on your size and which grades you start with, so we price it on a short call rather than publish a number that fits nobody." />
+      <div class="card p-7 sm:p-9" data-reveal="right">
+        <ul class="grid gap-4">
+          {[
+            ['Whole-school portal', 'Admin and every teacher, unlimited classes, schemes, lesson plans, merit lists and coverage.'],
+            ['Parent app for sponsored grades', 'Families of every learner in a sponsored grade get the full app, linked to your school.'],
+            ['Onboarding', 'Roster import, classroom setup and a staff-room walkthrough in your first week.'],
+            ['M-PESA and invoicing', 'Receivables, receipts and tax configuration handled per term.'],
+            ['Support on WhatsApp', 'A real person, during school hours.'],
+          ].map(([t, d]) => (
+            <li class="flex gap-3"><svg class="mt-1 shrink-0 text-teal-text" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg><div><b class="font-semibold">{t}</b><p class="text-sm text-muted-foreground">{d}</p></div></li>
+          ))}
+        </ul>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="/demo" class="btn-teal btn-lg">Get a quote and a demo</a>
+          <p class="text-sm text-muted-foreground">Individual teachers can also start free in the portal, and upgrade to Teacher Pro for KES 500 a month.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-background py-20 lg:py-28">
+    <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.4fr]">
+      <div>
+        <SectionHeading eyebrow="Questions" title="Heads ask us these first." mark="these first" />
+        <div class="mt-8 hidden lg:block" data-reveal="scale"><Pola pose="think" size="9rem" seed={6} /></div>
+      </div>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+
+  <section class="container-x py-16">
+    <div class="card flex flex-col items-center gap-5 p-8 text-center sm:flex-row sm:text-left" data-reveal>
+      <Pola pose="hello" size="6rem" seed={8} />
+      <div class="flex-1">
+        <h2 class="font-display text-2xl font-bold">See it with your own timetable.</h2>
+        <p class="mt-1 text-muted-foreground">Bring one grade's scheme and we'll set it up live during the demo.</p>
+      </div>
+      <a href="/demo" class="btn-teal btn-lg">Book a demo</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .feature { transition: transform .35s var(--ease-out-expo), box-shadow .35s; }
+  .feature:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
+</style>
+
+<script>
+  import { gsap, reduced, onPage } from '../lib/motion';
+  onPage(() => {
+    if (reduced()) return;
+    gsap.utils.toArray<HTMLElement>('[data-pola-float]').forEach((el) => {
+      gsap.to(el, { y: -20, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.8 } });
+    });
+  });
+</script>

@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Pola from '../components/Pola.astro';
+import PortalMock from '../components/PortalMock.astro';
+import { SITE } from '../lib/site';
+
+const description = 'Book a 30-minute Pathways demo for your school. We set up one grade\'s scheme of work live, walk through lesson plans, merit lists and coverage, and quote per learner.';
+---
+
+<Base title="Book a demo" {description} image="/og/schools.png">
+  <section class="container-x grid gap-12 py-10 lg:grid-cols-[1fr_1.25fr] lg:py-16">
+    <div>
+      <p class="eyebrow mb-5" data-reveal>Book a demo</p>
+      <h1 class="font-display text-4xl font-bold leading-[1.04] sm:text-5xl" data-reveal data-reveal-delay="0.05">Thirty minutes, your timetable, one grade set up live.</h1>
+      <p class="mt-5 text-lg text-muted-foreground" data-reveal data-reveal-delay="0.1">Tell us a little about the school and we'll come back with two or three times. Bring a deputy or a head of department if you can; the questions get better.</p>
+      <ol class="mt-8 grid gap-4" data-reveal-stagger>
+        {[
+          ['We set up your school', 'Name, grades, a few classes. Five minutes, on the call.'],
+          ['One scheme of work, generated', 'Pick a subject and grade. Watch the term appear, then edit a week.'],
+          ['Lesson plans, checks and merit lists', 'The teacher view, then the head teacher view: coverage rolled up.'],
+          ['Parents and pricing', 'What families see in the app, and a per-learner quote for the grades you want covered.'],
+        ].map(([t, d], i) => (
+          <li class="flex gap-4">
+            <span class="grid size-9 shrink-0 place-items-center rounded-full bg-teal-soft font-display font-bold text-teal-text">{i + 1}</span>
+            <div><b class="font-semibold">{t}</b><p class="text-sm text-muted-foreground">{d}</p></div>
+          </li>
+        ))}
+      </ol>
+      <div class="relative mt-10 hidden lg:block" data-reveal="scale">
+        <PortalMock view="merit" />
+        <div class="absolute -top-10 -right-4"><Pola pose="tip" size="5.5rem" seed={50} /></div>
+      </div>
+      <p class="mt-6 text-sm text-muted-foreground">Prefer to talk first? WhatsApp <a class="text-primary hover:underline" href={`https://wa.me/${SITE.whatsapp.e164}`} target="_blank" rel="noopener">{SITE.whatsapp.display}</a>.</p>
+    </div>
+    <div data-reveal="right"><LeadForm kind="demo" /></div>
+  </section>
+</Base>

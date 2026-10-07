@@ -1,0 +1,121 @@
+---
+import Logo from './Logo.astro';
+import { NAV, SITE } from '../lib/site';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header fixed inset-x-0 top-0 z-50" transition:persist="header" transition:name="header">
+  <div class="container-x">
+    <nav
+      class="glass mt-3 flex items-center justify-between gap-3 rounded-full border border-border px-3 py-2 shadow-card sm:px-4"
+      aria-label="Primary"
+    >
+      <a href="/" class="flex items-center gap-2.5 rounded-full pl-1 pr-2 font-display text-lg font-bold tracking-tight" aria-label="Pathways home">
+        <Logo size={34} />
+        <span class="hidden sm:inline">Pathways</span>
+      </a>
+
+      <ul class="hidden items-center gap-1 md:flex" id="nav-desktop">
+        {NAV.map((n) => (
+          <li>
+            <a
+              href={n.href}
+              class:list={[
+                'nav-link relative rounded-full px-3.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground',
+                path.startsWith(n.href) && 'is-active text-foreground',
+              ]}
+              aria-current={path.startsWith(n.href) ? 'page' : undefined}
+            >
+              {n.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <a href={SITE.portalUrl + '/login'} class="btn-ghost hidden !py-2 text-sm lg:inline-flex" rel="noopener">School login</a>
+        <a href="/demo" class="btn-primary !py-2 text-sm">Book a demo</a>
+        <button
+          id="nav-toggle"
+          class="grid size-10 place-items-center rounded-full border border-border bg-card md:hidden"
+          aria-expanded="false"
+          aria-controls="nav-mobile"
+          aria-label="Open menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path class="bar1" d="M4 7h16" /><path class="bar2" d="M4 12h16" /><path class="bar3" d="M4 17h10" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <div id="nav-mobile" class="glass mt-2 hidden rounded-3xl border border-border p-2 shadow-float md:hidden" hidden>
+      <ul class="grid gap-1">
+        {NAV.map((n) => (
+          <li>
+            <a href={n.href} class="block rounded-2xl px-4 py-3 text-base font-semibold hover:bg-muted">{n.label}</a>
+          </li>
+        ))}
+        <li class="mt-1 grid grid-cols-2 gap-2 p-1">
+          <a href={SITE.portalUrl + '/login'} class="btn-ghost" rel="noopener">School login</a>
+          <a href={SITE.playStoreUrl} class="btn-teal" rel="noopener" target="_blank">Get the app</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav-link.is-active::after {
+    content: '';
+    position: absolute; left: 50%; bottom: 3px; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--primary); transform: translateX(-50%);
+  }
+  .site-header { transition: transform 0.4s var(--ease-out-expo); }
+  .site-header.hide { transform: translateY(-110%); }
+  #nav-toggle[aria-expanded='true'] .bar1 { transform: translate(3px, 1px) rotate(45deg); transform-origin: 4px 7px; }
+  #nav-toggle[aria-expanded='true'] .bar2 { opacity: 0; }
+  #nav-toggle[aria-expanded='true'] .bar3 { d: path('M4 17h16'); transform: translate(3px, -1px) rotate(-45deg); transform-origin: 4px 17px; }
+  #nav-toggle path { transition: transform 0.3s, opacity 0.2s; }
+</style>
+
+<script>
+  function setup() {
+    const header = document.querySelector<HTMLElement>('.site-header');
+    const toggle = document.getElementById('nav-toggle');
+    const menu = document.getElementById('nav-mobile');
+    if (!header || !toggle || !menu) return;
+    if (header.dataset.bound) return;
+    header.dataset.bound = '1';
+
+    const close = () => { menu.hidden = true; menu.classList.add('hidden'); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); };
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      if (open) close();
+      else { menu.hidden = false; menu.classList.remove('hidden'); toggle.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-label', 'Close menu'); }
+    });
+    document.addEventListener('astro:before-swap', close);
+
+    // Hide on scroll down, show on scroll up.
+    let last = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y > 120 && y > last + 4) header.classList.add('hide');
+      else if (y < last - 4) header.classList.remove('hide');
+      last = y;
+    }, { passive: true });
+
+    // Keep the active dot in sync after client-side navigation.
+    document.addEventListener('astro:page-load', () => {
+      const path = location.pathname.replace(/\/$/, '') || '/';
+      header.querySelectorAll<HTMLAnchorElement>('.nav-link').forEach((a) => {
+        const on = path.startsWith(a.getAttribute('href') || '#');
+        a.classList.toggle('is-active', on);
+        a.classList.toggle('text-foreground', on);
+        if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+    });
+  }
+  setup();
+  document.addEventListener('astro:page-load', setup);
+</script>

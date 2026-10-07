@@ -1,0 +1,101 @@
+---
+/**
+ * The hero's "everything orbits the learner" graphic: dashed orbit rings, CBC subject planets
+ * with progress arcs, and a centre for a phone or an avatar. Pure SVG + CSS vars; the page
+ * script animates planets in and spins the rings slowly.
+ */
+interface Planet { label: string; color: string; icon: string; p: number; tag?: 'urgent' | 'due' | 'result' | 'remark'; }
+interface Props { class?: string; planets?: Planet[]; center?: boolean; /** Degrees from +x, one per planet. Defaults to even spacing. */ angles?: number[]; }
+
+const ICONS: Record<string, string> = {
+  calc: '<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7M9 12h.01M12 12h.01M15 12h.01M9 16h.01M12 16h.01M15 16h.01"/>',
+  book: '<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/>',
+  speech: '<path d="M4 5h16v11H10l-4 4v-4H4z"/><path d="M8 9.5h8M8 12.5h5"/>',
+  flask: '<path d="M9.5 3h5M10.5 3v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3l-5-9V3"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+  palette: '<circle cx="12" cy="12" r="9"/><path d="M8.5 10h.01M12 7.5h.01M15.5 10h.01M9 14.5h.01"/>',
+  sprout: '<path d="M12 21v-8"/><path d="M12 13c0-4-3-6-7-6 0 4 3 6 7 6zM12 15c0-3 2-5 6-5 0 3-2 5-6 5z"/>',
+  cross: '<path d="M12 3v18M6.5 8.5h11"/>',
+};
+const defaults: Planet[] = [
+  { label: 'Mathematics', color: 'var(--subj-math)', icon: 'calc', p: 0.72, tag: 'due' },
+  { label: 'Science & Tech', color: 'var(--subj-sci)', icon: 'flask', p: 0.55 },
+  { label: 'Kiswahili', color: 'var(--subj-swa)', icon: 'speech', p: 0.4, tag: 'result' },
+  { label: 'Social Studies', color: 'var(--subj-soc)', icon: 'globe', p: 0.3 },
+  { label: 'Creative Arts', color: 'var(--subj-art)', icon: 'palette', p: 0.81 },
+  { label: 'English', color: 'var(--subj-eng)', icon: 'book', p: 0.64, tag: 'remark' },
+  { label: 'Agriculture', color: 'var(--subj-agri)', icon: 'sprout', p: 0.5 },
+  { label: 'CRE', color: 'var(--subj-cre)', icon: 'cross', p: 0.6 },
+];
+const { class: cls = '', planets = defaults, center = true, angles } = Astro.props;
+const n = planets.length;
+const angleOf = (i: number) => ((angles?.[i] ?? (-90 + 180 / n + (i * 360) / n)) * Math.PI) / 180;
+const R = 44; // percent of box
+const C = 2 * Math.PI * 27;
+const badge = (t?: string) => (t === 'urgent' ? '!' : t === 'due' ? '2' : t === 'result' ? '★' : t === 'remark' ? '…' : '');
+---
+
+<div class:list={['orbit relative aspect-square w-full', cls]} data-orbit>
+  <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+    <circle class="ring-solid" cx="50" cy="50" r="26" />
+    <g class="orbit-spin" style="transform-origin:50px 50px">
+      <circle class="ring-dashed" cx="50" cy="50" r={R} />
+    </g>
+    <g class="orbit-spin-rev" style="transform-origin:50px 50px">
+      <circle class="ring-dashed" cx="50" cy="50" r="58" style="opacity:.6" />
+    </g>
+    {planets.map((_, i) => {
+      const a = angleOf(i);
+      return <line class="spoke" x1="50" y1="50" x2={50 + R * Math.cos(a)} y2={50 + R * Math.sin(a)} stroke="var(--border)" stroke-width=".4" />;
+    })}
+  </svg>
+
+  {planets.map((pl, i) => {
+    const a = angleOf(i);
+    const x = 50 + R * Math.cos(a), y = 50 + R * Math.sin(a);
+    return (
+      <div class="planet absolute" style={`left:${x}%;top:${y}%;--c:${pl.color};--i:${i}`} data-planet>
+        <div class="float">
+          <svg class="arc" viewBox="0 0 60 60" aria-hidden="true">
+            <circle class="trk" cx="30" cy="30" r="27" />
+            <circle class="val" cx="30" cy="30" r="27" stroke-dasharray={`${(C * pl.p).toFixed(1)} ${C.toFixed(1)}`} />
+          </svg>
+          <span class="disc" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[pl.icon]} />
+          </span>
+          {pl.tag && <span class:list={['badge', `k-${pl.tag}`]}>{badge(pl.tag)}</span>}
+          {pl.tag && (pl.tag === 'due' || pl.tag === 'urgent') && <span class="ripple" />}
+          <span class="lbl">{pl.label}</span>
+        </div>
+      </div>
+    );
+  })}
+
+  {center && (
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <slot />
+    </div>
+  )}
+</div>
+
+<style>
+  .orbit-spin { animation: spin 120s linear infinite; }
+  .orbit-spin-rev { animation: spin 180s linear infinite reverse; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .planet { width: 0; height: 0; }
+  .planet .float { position: absolute; left: -30px; top: -30px; width: 60px; height: 60px; animation: bob var(--dur, 5s) ease-in-out calc(var(--i) * -0.7s) infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(3px); } }
+  .arc { position: absolute; inset: 0; transform: rotate(-90deg); }
+  .arc circle { fill: none; stroke-width: 3; stroke-linecap: round; }
+  .arc .trk { stroke: color-mix(in srgb, var(--c) 18%, transparent); }
+  .arc .val { stroke: var(--c); }
+  .disc { position: absolute; inset: 7px; border-radius: 50%; display: grid; place-items: center; color: var(--c); background: color-mix(in srgb, var(--c) 16%, var(--card)); border: 1.5px solid color-mix(in srgb, var(--c) 45%, transparent); }
+  .badge { position: absolute; right: -1px; top: -1px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; font-size: 10px; font-weight: 800; display: grid; place-items: center; border: 2px solid var(--page); color: #fff; background: var(--p); }
+  .k-due { --p: #d97706; color: #1c1300; } .k-urgent { --p: #e11d48; } .k-result { --p: #ca8a04; color: #1c1300; } .k-remark { --p: #0284c7; }
+  .ripple { position: absolute; inset: 7px; border-radius: 50%; border: 2px solid #d97706; opacity: 0; animation: ripple 1.8s ease-out infinite; pointer-events: none; }
+  @keyframes ripple { 0% { transform: scale(.85); opacity: .7; } 100% { transform: scale(1.9); opacity: 0; } }
+  .lbl { position: absolute; top: 63px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 600; white-space: nowrap; color: var(--muted-foreground); }
+  @media (max-width: 640px) { .planet .float { transform: scale(.8); } .lbl { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .orbit-spin, .orbit-spin-rev, .planet .float, .ripple { animation: none; } }
+  :global(html.reduce) .orbit-spin, :global(html.reduce) .orbit-spin-rev, :global(html.reduce) .planet .float, :global(html.reduce) .ripple { animation: none; }
+</style>

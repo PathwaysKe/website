@@ -1,0 +1,81 @@
+---
+import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
+import { SITE } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path to an OG image under /public, defaults to the brand card. */
+  image?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+const { title, description, image = '/og/default.png', noindex = false, jsonLd } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || SITE.url;
+const fullTitle = title === SITE.name ? `${SITE.name} — CBC learning for schools and families in Kenya` : `${title} · ${SITE.name}`;
+const ogImage = new URL(image, Astro.site).href;
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  logo: `${SITE.url}/logo-512.png`,
+  email: SITE.email,
+  sameAs: [SITE.playStoreUrl],
+  areaServed: 'KE',
+};
+const ld = [org, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex,nofollow" />}
+<meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#0d9488" />
+<meta name="color-scheme" content="light dark" />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_KE" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<Font cssVariable="--font-display" preload />
+<Font cssVariable="--font-sans" preload />
+
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />
+
+<ClientRouter />
+
+{/* Theme: honour a stored choice, else the OS. Inline so there is no flash. */}
+<script is:inline data-astro-rerun>
+  (function () {
+    try {
+      var s = localStorage.getItem('pw-theme');
+      var dark = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.classList.toggle('dark', dark);
+      if (localStorage.getItem('pw-reduce') === '1' || /[?&]motion=off/.test(location.search)) document.documentElement.classList.add('reduce');
+    } catch (e) {}
+  })();
+</script>
+
+<script is:inline defer data-domain={SITE.plausibleDomain} src="https://plausible.io/js/script.js"></script>

@@ -1,0 +1,11 @@
+# Cloudflare Pages project for pathways.ke. First-time setup needs an interactive `wrangler login`
+# (run it yourself), then: npx wrangler pages project create pathways-website --production-branch main
+# Deploy preview: npm run build && npx wrangler pages deploy dist
+name = "pathways-website"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+[env.production.vars]
+NODE_VERSION = "24"
+# PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY are set in the Pages dashboard (or here) —
+# the anon key is public by design; the demo form only has insert rights on website_leads.

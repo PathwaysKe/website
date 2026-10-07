@@ -1,0 +1,50 @@
+---
+/**
+ * First-visit intro: the compass star draws itself, the north tip lights gold, then the
+ * curtain lifts. Shown once per session, skipped under reduced motion, and never blocks
+ * for more than ~1.4s.
+ */
+---
+
+<div id="preloader" class="fixed inset-0 z-[100] grid place-items-center bg-[var(--brand-teal)]" hidden aria-hidden="true">
+  <svg width="120" height="120" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+    <circle id="pl-ring" cx="100" cy="100" r="86" stroke="#ffffff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="3 9" stroke-linecap="round" />
+    <path id="pl-star" d="M100,34 L116,84 L166,100 L116,116 L100,166 L84,116 L34,100 L84,84Z" stroke="#f1f5f7" stroke-width="4" stroke-linejoin="round" />
+    <path id="pl-tip" d="M100,34 L116,84 L100,100 L84,84Z" fill="#fcd34d" opacity="0" />
+    <circle id="pl-pivot" cx="100" cy="100" r="9" fill="#0d9488" stroke="#f1f5f7" stroke-width="3" opacity="0" />
+  </svg>
+</div>
+
+<script>
+  import { gsap } from 'gsap';
+  import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+  gsap.registerPlugin(DrawSVGPlugin);
+
+  const el = document.getElementById('preloader');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('reduce');
+  let seen = false;
+  try { seen = sessionStorage.getItem('pw-intro') === '1'; sessionStorage.setItem('pw-intro', '1'); } catch {}
+
+  const visible = document.visibilityState === 'visible';
+  if (el && !seen && !reduce && visible) {
+    el.hidden = false;
+    document.documentElement.classList.add('intro');
+    let done = false;
+    const finish = () => {
+      if (done) return; done = true;
+      el.hidden = true; document.documentElement.classList.remove('intro'); document.dispatchEvent(new Event('pw:intro-done'));
+    };
+    // Safety: if the tab is throttled (hidden window, low-power mode) never hold the page hostage.
+    setTimeout(finish, 2600);
+    const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' }, onComplete: finish });
+    tl.fromTo('#pl-star', { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.7 })
+      .fromTo('#pl-ring', { rotate: 0, transformOrigin: '50% 50%' }, { rotate: 90, duration: 1.1, ease: 'none' }, 0)
+      .to('#pl-star', { fill: '#f1f5f7', duration: 0.25 }, 0.55)
+      .to('#pl-tip', { opacity: 1, duration: 0.2 }, 0.7)
+      .to('#pl-pivot', { opacity: 1, duration: 0.2 }, 0.75)
+      .to('#preloader svg', { scale: 0.9, duration: 0.3, ease: 'power2.in' }, 1.0)
+      .to(el, { yPercent: -100, duration: 0.5, ease: 'power3.inOut' }, 1.05);
+  } else if (el) {
+    el.hidden = true;
+  }
+</script>

@@ -1,0 +1,66 @@
+---
+/**
+ * A phone-shaped frame for either a real screenshot (src/assets/screens/*.png) or one of the
+ * cut recordings in public/video (name without extension). The frame's radius hides the
+ * recordings' baked-in black corners.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  screen?: string;
+  video?: string;
+  alt?: string;
+  class?: string;
+  /** Width hint for the responsive image. */
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  /** Loop and autoplay (muted). */
+  autoplay?: boolean;
+  bare?: boolean;
+}
+const { screen, video, alt = '', class: cls = '', sizes = '(max-width: 640px) 70vw, 320px', loading = 'lazy', autoplay = true, bare = false } = Astro.props;
+
+const screens = import.meta.glob<{ default: ImageMetadata }>('../assets/screens/*.png', { eager: true });
+const img = screen ? screens[`../assets/screens/${screen}.png`]?.default : undefined;
+if (screen && !img) throw new Error(`PhoneFrame: no screenshot "${screen}"`);
+---
+
+<div class:list={['phone', bare && 'bare', cls]} data-phone={screen || video}>
+  {img && <Image src={img} alt={alt} widths={[320, 540, 810, 1080]} sizes={sizes} loading={loading} draggable="false" />}
+  {video && (
+    <video
+      class="phone-video"
+      playsinline
+      muted
+      loop={autoplay}
+      autoplay={autoplay}
+      preload={autoplay ? 'metadata' : 'none'}
+      poster={`/video/${video}.jpg`}
+      aria-label={alt}
+      data-video={video}
+    >
+      <source src={`/video/${video}.webm`} type="video/webm" />
+      <source src={`/video/${video}.mp4`} type="video/mp4" />
+    </video>
+  )}
+  <slot />
+</div>
+
+<script>
+  // Play recordings only while visible; pause them offscreen to save battery and bandwidth.
+  function setup() {
+    const vids = document.querySelectorAll<HTMLVideoElement>('video.phone-video[autoplay]');
+    if (!vids.length || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const v = e.target as HTMLVideoElement;
+        if (e.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      });
+    }, { threshold: 0.2 });
+    vids.forEach((v) => io.observe(v));
+  }
+  setup();
+  document.addEventListener('astro:page-load', setup);
+</script>

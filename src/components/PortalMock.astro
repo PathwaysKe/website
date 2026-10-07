@@ -1,0 +1,107 @@
+---
+/**
+ * Dimension-accurate, CSS-built stand-in for the school portal (no real portal screenshots exist
+ * yet — see CLAUDE.md). Three views: merit list, scheme of work, coverage. Each is a faithful
+ * abstraction of the real pathways-web screens, labelled as illustrative in the surrounding copy.
+ * Swap for real screenshots by replacing the inner markup with an <Image>.
+ */
+interface Props { view?: 'merit' | 'scheme' | 'coverage'; class?: string; animate?: boolean; compact?: boolean }
+const { view = 'merit', class: cls = '', animate = true, compact = false } = Astro.props;
+
+const learners = [
+  ['Amani K.', [78, 64, 81, 70, 59]], ['Brian O.', [66, 72, 58, 75, 80]], ['Chebet R.', [90, 84, 77, 88, 92]],
+  ['Diana M.', [55, 61, 70, 48, 66]], ['Esther W.', [73, 69, 75, 71, 68]], ['Faith N.', [82, 77, 85, 79, 81]],
+];
+const subjects = ['Math', 'Eng', 'Kis', 'Sci', 'SST'];
+const band = (n: number) => (n >= 80 ? 'EE' : n >= 65 ? 'ME' : n >= 50 ? 'AE' : 'BE');
+const bandColor: Record<string, string> = { EE: '#16a34a', ME: '#2563eb', AE: '#d97706', BE: '#dc2626' };
+const weeks = [
+  ['Wk 1', 'Whole numbers', 'Place value to 1,000,000', 4],
+  ['Wk 2', 'Whole numbers', 'Rounding off and estimation', 4],
+  ['Wk 3', 'Addition', 'Adding with regrouping', 5],
+  ['Wk 4', 'Subtraction', 'Subtracting with regrouping', 5],
+  ['Wk 5', 'Multiplication', 'By 2-digit numbers', 4],
+];
+const coverage = [
+  ['Grade 4', 0.92], ['Grade 5', 0.78], ['Grade 6', 0.64], ['Grade 7', 0.55], ['Grade 8', 0.41],
+];
+---
+
+<div class:list={['portal relative overflow-hidden rounded-2xl border border-border bg-card shadow-float', animate && 'animate', cls]} data-portal={view} aria-hidden="true">
+  <div class="flex items-center gap-2 border-b border-border px-4 py-2.5">
+    <span class="flex gap-1.5"><i class="size-2.5 rounded-full bg-[#fe5f57]"></i><i class="size-2.5 rounded-full bg-[#febc2e]"></i><i class="size-2.5 rounded-full bg-[#28c840]"></i></span>
+    <span class="ml-3 flex h-6 flex-1 items-center rounded-md bg-muted px-3 text-[11px] text-muted-foreground">app.pathways.ke/{view === 'merit' ? 'summative/merit-list' : view === 'scheme' ? 'scheme-of-work' : 'school/coverage'}</span>
+  </div>
+  <div class:list={[compact ? 'grid-cols-1' : 'grid grid-cols-[150px_1fr] max-sm:grid-cols-1', 'grid']}>
+    <aside class:list={['border-r border-border bg-background p-3 text-[11px]', compact ? 'hidden' : 'hidden sm:block']}>
+      <div class="mb-3 flex items-center gap-2 px-1 font-bold"><i class="size-5 rounded-full bg-[var(--brand-teal)]"></i>Pathways</div>
+      {['Today', 'Scheme of Work', 'Lesson Plans', 'Formative', 'Summative', 'Record of Work', 'Timetable', 'Notes'].map((n) => (
+        <div class:list={['rounded-md px-2 py-1.5 text-muted-foreground', ((view === 'merit' && n === 'Summative') || (view === 'scheme' && n === 'Scheme of Work') || (view === 'coverage' && n === 'Today')) && 'bg-primary-container font-semibold text-primary-container-foreground']}>{n}</div>
+      ))}
+    </aside>
+    <section class="p-4 sm:p-5">
+      {view === 'merit' && (
+        <>
+          <div class="mb-3 flex items-end justify-between">
+            <div><div class="text-[11px] text-muted-foreground">Term 2 · 2026 · Grade 5 Blue</div><div class="text-base font-bold">Merit list · Mid-term</div></div>
+            <span class="rounded-full bg-muted px-2.5 py-1 text-[11px] font-semibold">Publish to parents</span>
+          </div>
+          <table class="w-full text-[11px]">
+            <thead><tr class="text-left text-muted-foreground"><th class="py-1 font-semibold">Learner</th>{subjects.map((s) => <th class="py-1 text-center font-semibold">{s}</th>)}<th class="py-1 text-right font-semibold">Mean</th></tr></thead>
+            <tbody>
+              {learners.map(([name, marks], r) => {
+                const m = marks as number[]; const mean = Math.round(m.reduce((a, b) => a + b, 0) / m.length);
+                return (
+                  <tr class="row border-t border-border" style={`--r:${r}`}>
+                    <td class="py-1.5 font-semibold">{name}</td>
+                    {m.map((v) => <td class="py-1.5 text-center"><span class="cell inline-block min-w-8 rounded px-1" style={`color:${bandColor[band(v)]};background:color-mix(in srgb, ${bandColor[band(v)]} 12%, transparent)`}>{v}</span></td>)}
+                    <td class="py-1.5 text-right font-bold" style={`color:${bandColor[band(mean)]}`}>{mean} <span class="font-semibold">{band(mean)}</span></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
+      )}
+      {view === 'scheme' && (
+        <>
+          <div class="mb-3"><div class="text-[11px] text-muted-foreground">Mathematics · Grade 5 · Term 2</div><div class="text-base font-bold">Scheme of work</div></div>
+          <div class="grid gap-2">
+            {weeks.map(([w, strand, sub, n], r) => (
+              <div class="row flex items-center gap-3 rounded-xl border border-border bg-background px-3 py-2 text-[11px]" style={`--r:${r}`}>
+                <span class="w-9 font-bold text-primary">{w}</span>
+                <span class="flex-1"><b class="font-semibold">{strand}</b> · <span class="text-muted-foreground">{sub}</span></span>
+                <span class="flex gap-0.5">{Array.from({ length: n as number }).map(() => <i class="h-2 w-3 rounded-sm bg-[var(--brand-teal)] opacity-80"></i>)}</span>
+                <span class="text-muted-foreground">{n} lessons</span>
+              </div>
+            ))}
+            <div class="mt-1 flex items-center gap-2 text-[11px] text-muted-foreground"><i class="size-2 rounded-full bg-[var(--brand-teal)]"></i>Generated from the CBC design, editable per week</div>
+          </div>
+        </>
+      )}
+      {view === 'coverage' && (
+        <>
+          <div class="mb-3"><div class="text-[11px] text-muted-foreground">Whole school · Term 2 · Week 7</div><div class="text-base font-bold">Curriculum coverage</div></div>
+          <div class="grid gap-2.5">
+            {coverage.map(([g, p], r) => (
+              <div class="row grid grid-cols-[64px_1fr_36px] items-center gap-3 text-[11px]" style={`--r:${r}`}>
+                <span class="font-semibold">{g}</span>
+                <span class="h-2.5 overflow-hidden rounded-full bg-muted"><i class="bar block h-full rounded-full bg-primary" style={`--w:${Math.round((p as number) * 100)}%`}></i></span>
+                <span class="text-right font-bold">{Math.round((p as number) * 100)}%</span>
+              </div>
+            ))}
+            <div class="mt-2 rounded-xl bg-primary-container p-3 text-[11px] text-primary-container-foreground"><b>Behind plan:</b> Grade 8 Science, 3 lessons. Coverage is rolled up from each teacher's Record of Work.</div>
+          </div>
+        </>
+      )}
+    </section>
+  </div>
+</div>
+
+<style>
+  .portal.animate .row { opacity: 0; transform: translateY(6px); animation: rowin .5s var(--ease-out-expo) calc(.15s + var(--r) * .08s) forwards; }
+  .portal.animate .bar { width: 0; animation: grow 1s var(--ease-out-expo) calc(.4s + var(--r) * .1s) forwards; }
+  @keyframes rowin { to { opacity: 1; transform: none; } }
+  @keyframes grow { to { width: var(--w); } }
+  @media (prefers-reduced-motion: reduce) { .portal .row { opacity: 1; transform: none; animation: none; } .portal .bar { width: var(--w); animation: none; } }
+</style>
