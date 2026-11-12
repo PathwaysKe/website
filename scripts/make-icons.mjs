@@ -44,7 +44,7 @@ const card = async (file, title, sub) => {
   const polaPng = await sharp(pola).resize(380, 380).png().toBuffer();
   await sharp(bg).composite([{ input: polaPng, left: 780, top: 150 }]).png().toFile(`public/og/${file}`);
 };
-await card('default.png', 'CBC learning, for schools|and for home.', 'pathways.ke · Learn together.');
+await card('default.png', 'CBC learning, for schools|and for home.', 'pathways.ke · Learn it. Practise it. Own it.');
 await card('schools.png', 'One system for planning,|teaching and merit lists.', 'Pathways for Schools · Book a demo');
 await card('parents.png', 'CBC study notes and practice|your child can use at home.', 'Pathways for Parents · Free to start');
 console.log('icons + og written');

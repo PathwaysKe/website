@@ -4,7 +4,7 @@
  */
 export const SITE = {
   name: 'Pathways',
-  tagline: 'Learn together.',
+  tagline: 'Learn it. Practise it. Own it.',
   domain: 'pathways.ke',
   url: 'https://pathways.ke',
   email: 'hello@pathways.ke',
