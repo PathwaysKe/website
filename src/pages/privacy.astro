@@ -1,0 +1,15 @@
+---
+import LegalDoc from '../components/LegalDoc.astro';
+import { TERMS } from '../lib/terms';
+import { PRIVACY, PRIVACY_SECTIONS, PRIVACY_OPEN_POINTS } from '../lib/privacy';
+---
+
+<LegalDoc
+  title="Privacy Policy"
+  description="How Pathways (Stawi Edtech LLP) collects, uses, shares and protects personal data, including children's data and school data."
+  meta={PRIVACY}
+  intro="This policy explains how we handle personal data in the Pathways app, school portal and website, including your child's data and the data schools keep with us."
+  email={TERMS.email}
+  openPoints={PRIVACY_OPEN_POINTS}
+  sections={PRIVACY_SECTIONS}
+/>
