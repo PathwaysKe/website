@@ -149,7 +149,7 @@ const RAW: Section[] = [
 <tbody>
 <tr><td>Parent account and Learner profiles, learning activity, Learning Assistant conversations</td><td>Until the account or profile is deleted; then deleted within 30 days</td></tr>
 <tr><td>School data</td><td>For the School Agreement, then 12 months so the School can return or ask for an export, then deleted (sooner if the School asks)</td></tr>
-<tr><td>Payment and invoice records</td><td>7 years, as financial records the law requires</td></tr>
+<tr><td>Payment and invoice records</td><td>7 years, as financial records the law requires. If the account is deleted, they are kept without the account's name or contact details</td></tr>
 <tr><td>Reported or safeguarding-flagged conversations</td><td>As long as needed to deal with the report, and any longer period the law requires</td></tr>
 <tr><td>Website enquiries</td><td>Up to 24 months after our last contact</td></tr>
 <tr><td>Crash reports</td><td>90 days</td></tr>
@@ -162,7 +162,7 @@ const RAW: Section[] = [
     title: 'Your rights',
     html: `
 <p><strong>{{.1}}</strong> Under the Data Protection Act, 2019 you have the right to be informed, to access your data, to correct it, to object to its processing, to have it deleted, to data portability, and to withdraw consent at any time.</p>
-<p><strong>{{.2}} How to use them.</strong> You can delete a Learner profile or your account in the App, or at <a href="/delete-data">pathways.ke/delete-data</a>. For anything else, email ${T.email} with the subject "Data rights request". We acknowledge requests within 3 working days and respond within 30 days, or sooner where the law requires.</p>
+<p><strong>{{.2}} How to use them.</strong> You can delete a Learner profile or your account in the App, or at <a href="/delete-data">pathways.ke/delete-data</a>. Sign-in stops straight away and the data is deleted within 30 days; you can change your mind by contacting us within 7 days. School Users should ask their School, or contact us. For anything else, email ${T.email} with the subject "Data rights request". We acknowledge requests within 3 working days and respond within 30 days, or sooner where the law requires.</p>
 <p><strong>{{.3}} School data.</strong> For data a School controls, please contact the School. If you contact us, we pass the request to the School and help it respond.</p>
 <p><strong>{{.4}} Complaints.</strong> You can complain to the Office of the Data Protection Commissioner at <a href="https://www.odpc.go.ke" rel="noopener">odpc.go.ke</a>.</p>`,
   },

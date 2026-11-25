@@ -96,7 +96,7 @@ const RAW: Section[] = [
 <p><strong>{{.1}}</strong> Give accurate information when you sign up and keep it up to date.</p>
 <p><strong>{{.2}}</strong> Keep your password, PIN and login codes secret. You are responsible for activity on your account and the Learner profiles you manage, unless it results from our failure to keep the Services secure. Tell us at once at ${T.email} if you think someone has used your account without permission.</p>
 <p><strong>{{.3}}</strong> Accounts are personal and may not be shared, sold or transferred.</p>
-<p><strong>{{.4}} Closing an account.</strong> A Parent can delete their account, or remove a Learner profile, at any time in the App or at <a href="/delete-data">pathways.ke/delete-data</a>. We then delete the data within 30 days, except payment records the law requires us to keep, as section {{pp:retention}} of the Privacy Policy explains. Records a linked School holds about a Learner stay with the School.</p>`,
+<p><strong>{{.4}} Closing an account.</strong> A Parent can delete their account, or remove a Learner profile, at any time in the App or at <a href="/delete-data">pathways.ke/delete-data</a>. Sign-in stops straight away, and we delete the data within 30 days, except payment records the law requires us to keep (Privacy Policy section {{pp:retention}}). You can change your mind by contacting us within 7 days. School User accounts are closed by the School or through us. Records a linked School holds about a Learner stay with the School.</p>`,
   },
 
   /* ---------------------------------------------------------------- Parents and learners */
