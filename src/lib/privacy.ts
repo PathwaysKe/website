@@ -92,14 +92,14 @@ const RAW: Section[] = [
 <p><strong>{{.1}}</strong> A Learner profile is always created by a Parent, or by the Learner's School. Children cannot hold their own accounts. By creating a profile, a Parent gives consent for the child's data to be processed as this policy describes.</p>
 <p><strong>{{.2}}</strong> In the Learner's view, children can use learning content only. They cannot change account settings, make payments or see billing information.</p>
 <p><strong>{{.3}}</strong> We show no advertising, and a child's name, progress and messages are never public.</p>
-<p><strong>{{.4}}</strong> Parents can see their child's progress, and can remove a Learner profile or delete the whole account in the App at any time.</p>
+<p><strong>{{.4}}</strong> Parents can see their child's progress and read their child's Learning Assistant conversations, and can remove a Learner profile or delete the whole account in the App at any time.</p>
 <p><strong>{{.5}} Safeguarding.</strong> If a Learner's messages to the Learning Assistant suggest they may be at risk of harm, the Learner is shown where to get help, our team reviews the conversation, and we inform the Parent and, where the law requires, the relevant authorities.</p>`,
   },
   {
     id: 'schools',
     title: 'Schools and linking',
     html: `
-<p><strong>{{.1}} What a linked School sees.</strong> A School, or a teacher, that a Parent links a Learner to can see the Learner's name, class and grade, and the work the Learner does on tasks that School or teacher sets (homework, tests and assessments, including answers and marks), with the insights built from that work. They also see records the School keeps itself, such as attendance, marks entered by teachers and library loans. They cannot see the Learner's Learning Assistant conversations or private study at home, such as practice tests, past papers, study notes read or videos watched, and they cannot see the Learner's points, streaks, badges or overall progress.</p>
+<p><strong>{{.1}} What a linked School sees.</strong> A School, or a teacher, that a Parent links a Learner to can see the Learner's name, class and grade, and the work the Learner does on tasks that School or teacher sets (homework, tests and assessments, including answers as the Learner works and marks), with the insights built from that work. They also see records the School keeps itself, such as attendance, marks entered by teachers and library loans. They cannot see the Learner's Learning Assistant conversations or private study at home, such as practice tests, past papers, study notes read or videos watched, and they cannot see the Learner's points, streaks, badges or overall progress.</p>
 <p><strong>{{.2}} What the Parent sees.</strong> The School's announcements, calendar, timetable, homework and results for the Learner, and attendance and library loans where the School turns them on.</p>
 <p><strong>{{.3}} Unlinking.</strong> A Parent can unlink a Learner in the App at any time. The School then stops receiving the Learner's new activity. Records the School already holds remain with the School, which is responsible for them.</p>`,
   },
