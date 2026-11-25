@@ -150,14 +150,14 @@ const RAW: Section[] = [
 <p><strong>{{.4}} Learners who leave</strong> are not refunded for the current School Term and are not counted from the next one.</p>
 <p><strong>{{.5}} Instalments.</strong> Each School Term's fees are paid in two equal instalments: the first by the end of week 3 of the School Term, and the second by the end of the second week after half-term (or, if there is no half-term, six weeks after the first). The School may pay both at once. Payment is by bank transfer or M-PESA to the details on our invoice.</p>
 <p><strong>{{.6}} Holidays.</strong> A School Term's access continues through the holiday that follows it.</p>
-<p><strong>{{.7}} Late payment.</strong> We send reminders when an instalment is overdue. If fees for a School Term are still unpaid when the next School Term starts, we may pause the School's funded access and paid Portal features during that term until they are paid. No data is deleted, and access returns once payment is received.</p>
+<p><strong>{{.7}} Late payment.</strong> We send reminders when an instalment is overdue. If fees for a School Term are still unpaid when the next School Term starts, the School Agreement does not renew for that term. Covered Learners move to the free plan unless their Parents choose to pay, the Portal stays available, and no data is deleted. The unpaid fees remain due, and the School can return to School Collects from a later School Term once they are paid.</p>
 <p><strong>{{.8}} Refunds.</strong> Fees for a School Term that has started are not refunded, except under section {{termination.3}}. Duplicate or mistaken payments are refunded or credited to the next invoice, as the School chooses.</p>`,
   },
   {
     id: 'school-term',
     title: 'Renewal, price changes and ending',
     html: `
-<p><strong>{{.1}} Renewal.</strong> A School Agreement runs School Term by School Term and renews for each following School Term. Either party may stop renewal by written notice at least 30 days before the next School Term starts. Fees already due remain payable.</p>
+<p><strong>{{.1}} Renewal.</strong> A School Agreement runs School Term by School Term and renews for each following School Term. Either party may stop renewal by written notice at least 30 days before the next School Term starts. It also does not renew while fees are unpaid (section {{school-fees.7}}). Fees already due remain payable.</p>
 <p><strong>{{.2}} Changing option.</strong> A School may move between School Collects and Parents Pay Directly from the start of a School Term by written notice under section {{.1}}.</p>
 <p><strong>{{.3}} Price changes.</strong> We may change the Seat Price by at least 30 days' written notice. The new price applies from the next School Term that starts after the notice, never part-way through a term. A School that does not accept it may end the School Agreement at the end of the current School Term, even if that is less than 30 days away.</p>
 <p><strong>{{.4}} Other ways to end it</strong> are set out in sections {{availability.3}} and {{termination.3}}.</p>`,
@@ -248,7 +248,7 @@ const RAW: Section[] = [
     title: 'Suspension and ending',
     html: `
 <p><strong>{{.1}} By you.</strong> A Parent may stop using the App and delete their account at any time. A School may end its School Agreement under section {{school-term.1}}, {{school-term.3}}, {{availability.3}} or {{.3}}.</p>
-<p><strong>{{.2}} By us.</strong> We may suspend or close an account, or a School's access, if it seriously or repeatedly breaks these Terms, if the law or an authority requires it, if needed to protect Learners or the Services, or for unpaid fees under section {{school-fees.7}}. Where reasonable, we will warn you first and give you a chance to put things right.</p>
+<p><strong>{{.2}} By us.</strong> We may suspend or close an account, or a School's access, if it seriously or repeatedly breaks these Terms, if the law or an authority requires it, if needed to protect Learners or the Services. Where reasonable, we will warn you first and give you a chance to put things right.</p>
 <p><strong>{{.3}} Serious breach.</strong> A School or Pathways may end a School Agreement by written notice if the other seriously breaks it, including the Data Processing Schedule, and does not put it right within 30 days of being asked. If a School ends it because of our breach, we refund the fees paid for the rest of the current School Term.</p>
 <p><strong>{{.4}} Afterwards.</strong> The right to use the Services ends. Fees already due, and sections {{content}}, {{privacy}}, {{liability}}, {{school-claims}}, {{disputes}}, {{general}} and {{dps}}, continue to apply.</p>`,
   },
