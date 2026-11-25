@@ -119,7 +119,7 @@ const RAW: Section[] = [
     title: 'Linking a learner to a school',
     html: `
 <p><strong>{{.1}}</strong> A Parent may link a Learner's profile to the Learner's School. The App then shows the School's announcements, calendar, timetable, homework and results for that Learner, and attendance and library loans where the School turns them on.</p>
-<p><strong>{{.2}}</strong> While linked, the School and its teachers see the Learner's work on tasks the School sets, such as homework, tests and assessments, and the progress built from it. They do not see Learning Assistant conversations or study the Learner does on their own (Privacy Policy section {{pp:schools}}).</p>
+<p><strong>{{.2}}</strong> While linked, the School and its teachers see the Learner's work on tasks they set, such as homework, tests and assessments, the insights built from it, and the School's own records such as attendance and library loans. They do not see Learning Assistant conversations or study the Learner does on their own (Privacy Policy section {{pp:schools}}).</p>
 <p><strong>{{.3}}</strong> A Parent may unlink a Learner at any time in the App. The School then stops receiving the Learner's new activity, and any funding by the School for that Learner ends. Records the School already holds stay with the School.</p>`,
   },
 

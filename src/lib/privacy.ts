@@ -17,7 +17,7 @@ export const PRIVACY_SUMMARY = [
   'We collect what we need to run Pathways: account and learner details, learning activity, payments, and school data a school enters.',
   'For parents\' accounts we decide how data is used. For school data, the school decides and we process it for the school.',
   'We never sell personal data or use it for advertising, and children never see ads.',
-  'A linked school sees work on tasks it sets, not Learning Assistant conversations or study a learner does on their own.',
+  'A linked school sees work on tasks it sets and its own records, such as attendance. It does not see Learning Assistant conversations or study a learner does on their own.',
   'Some providers, including AI services, process data outside Kenya, with safeguards.',
   'You can delete a learner profile or your whole account in the app at any time.',
 ];
@@ -25,7 +25,6 @@ export const PRIVACY_SUMMARY = [
 export const PRIVACY_OPEN_POINTS = [
   'Confirm where each provider stores data (in particular the Supabase region) and the transfer safeguards in section 9.',
   'Retention of website enquiries (24 months) is a proposed default; confirm.',
-  'Verify section 6.1 in the code: a linked School must not see Learning Assistant conversations or practice tests a Parent sets at home (only School tasks).',
   'Confirm each AI provider account is on terms that exclude training on our data (section 7.2).',
   'Publish together with the Terms of Service; the delete-data page should then match section 11.',
 ];
@@ -100,7 +99,7 @@ const RAW: Section[] = [
     id: 'schools',
     title: 'Schools and linking',
     html: `
-<p><strong>{{.1}} What a linked School sees.</strong> When a Parent links a Learner to a School, the School and the Learner's teachers can see the Learner's work on tasks the School sets (such as homework, tests and assessments) and the progress built from it. They do not see the Learner's Learning Assistant conversations or private study activity that is not part of a School task.</p>
+<p><strong>{{.1}} What a linked School sees.</strong> A School, or a teacher, that a Parent links a Learner to can see the Learner's name, class and grade, and the work the Learner does on tasks that School or teacher sets (homework, tests and assessments, including answers and marks), with the insights built from that work. They also see records the School keeps itself, such as attendance, marks entered by teachers and library loans. They cannot see the Learner's Learning Assistant conversations or private study at home, such as practice tests, past papers, study notes read or videos watched, and they cannot see the Learner's points, streaks, badges or overall progress.</p>
 <p><strong>{{.2}} What the Parent sees.</strong> The School's announcements, calendar, timetable, homework and results for the Learner, and attendance and library loans where the School turns them on.</p>
 <p><strong>{{.3}} Unlinking.</strong> A Parent can unlink a Learner in the App at any time. The School then stops receiving the Learner's new activity. Records the School already holds remain with the School, which is responsible for them.</p>`,
   },
