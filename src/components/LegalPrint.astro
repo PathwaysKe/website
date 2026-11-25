@@ -1,0 +1,135 @@
+---
+/**
+ * Print/PDF layout for the legal documents. Rendered at /terms/print and /privacy/print and printed to
+ * dist/legal/*.pdf by scripts/legal-pdf.mjs after each build (the "Download PDF" button links there).
+ * Standalone page: no site header, preloader or dark mode; A4 with running footer and page numbers.
+ */
+import { Font } from 'astro:assets';
+import Logo from './Logo.astro';
+import { ENTITY, type Section } from '../lib/legal';
+
+interface Props {
+  title: string;
+  meta: { version: string; updated: string; effective: string; draft: boolean };
+  intro: string;
+  sections: Section[];
+  summary?: string[];
+  openPoints: string[];
+}
+const { title, meta, intro, sections, summary, openPoints } = Astro.props;
+const groups: { part?: string; items: { s: Section; n: number }[] }[] = [];
+sections.forEach((s, i) => {
+  if (s.part || !groups.length) groups.push({ part: s.part, items: [] });
+  groups[groups.length - 1].items.push({ s, n: i + 1 });
+});
+const running = `Pathways ${title} · Version ${meta.version}`;
+---
+
+<!doctype html>
+<html lang="en-KE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>{`Pathways ${title} v${meta.version}`}</title>
+    <Font cssVariable="--font-display" />
+    <Font cssVariable="--font-sans" />
+    <style set:html={`@page { @bottom-left { content: "${running}"; } }`}></style>
+  </head>
+  <body>
+    <header class="cover">
+      <div class="brand"><Logo size={30} /> <span>Pathways</span></div>
+      <h1>{title}</h1>
+      <dl class="meta">
+        <div><dt>Version</dt><dd>{meta.version}</dd></div>
+        <div><dt>Last updated</dt><dd>{meta.updated}</dd></div>
+        <div><dt>Effective</dt><dd>{meta.effective}</dd></div>
+      </dl>
+      <p class="intro">{intro}</p>
+      <p class="entity">{ENTITY.company}, trading as {ENTITY.trading} · Registration {ENTITY.reg} · {ENTITY.email} · {ENTITY.phone}</p>
+    </header>
+
+    {meta.draft && (
+      <div class="draft"><strong>Draft, not yet in force.</strong> Open points: {openPoints.join(' ')}</div>
+    )}
+
+    {summary && (
+      <div class="summary">
+        <p class="k">In short</p>
+        <ul>{summary.map((p) => <li>{p}</li>)}</ul>
+        <p class="note">This summary helps you find your way. The sections below are the full terms.</p>
+      </div>
+    )}
+
+    <nav class="toc">
+      <p class="k">Contents</p>
+      <div class="cols">
+        {groups.map((g) => (
+          <div class="grp">
+            {g.part && <p class="tp">{g.part}</p>}
+            <ol>{g.items.map(({ s, n }) => <li><span>{n}.</span> {s.title}</li>)}</ol>
+          </div>
+        ))}
+      </div>
+    </nav>
+
+    <main class="legal">
+      {groups.map((g) => (
+        <>
+          {g.part && <p class="part">{g.part}</p>}
+          {g.items.map(({ s, n }) => (
+            <section id={s.id}>
+              <h2><span>{n}.</span> {s.title}</h2>
+              <Fragment set:html={s.html} />
+            </section>
+          ))}
+        </>
+      ))}
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  @page { size: A4; margin: 18mm 18mm 20mm;
+    @bottom-left { font: 7.5pt/1 Inter, system-ui, sans-serif; color: #64748b; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 7.5pt/1 Inter, system-ui, sans-serif; color: #64748b; } }
+  @page :first { @bottom-left { content: none; } }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: var(--font-sans), Inter, system-ui, sans-serif; font-size: 9.6pt; line-height: 1.55; color: #1e293b; background: #fff; }
+  .cover { border-bottom: 0.6mm solid #0d9488; padding-bottom: 6mm; margin-bottom: 6mm; }
+  .brand { display: flex; align-items: center; gap: 2.4mm; font-family: var(--font-display), Georgia, serif; font-weight: 700; font-size: 14pt; color: #0f172a; }
+  h1 { font-family: var(--font-display), Georgia, serif; font-size: 30pt; line-height: 1.1; margin: 9mm 0 5mm; color: #0f172a; letter-spacing: -0.01em; }
+  .meta { display: flex; gap: 10mm; }
+  .meta dt { font-size: 6.6pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #0f766e; }
+  .meta dd { font-size: 9.6pt; margin-top: 0.6mm; }
+  .intro { margin-top: 5mm; font-size: 10.4pt; color: #334155; max-width: 150mm; }
+  .entity { margin-top: 3mm; font-size: 8pt; color: #64748b; }
+  .k { font-size: 6.8pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #0f766e; margin-bottom: 2mm; }
+  .draft { border: 0.3mm dashed #d97706; background: #fef3c7; color: #78350f; border-radius: 2mm; padding: 3mm 4mm; font-size: 8.4pt; margin-bottom: 5mm; }
+  .summary { background: #f0fdfa; border: 0.3mm solid #99f6e4; border-radius: 2.4mm; padding: 4.5mm 5mm; margin-bottom: 6mm; break-inside: avoid; }
+  .summary ul { list-style: none; display: grid; gap: 1.6mm; }
+  .summary li { position: relative; padding-left: 4mm; }
+  .summary li::before { content: ''; position: absolute; left: 0; top: 1.9mm; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: #0d9488; }
+  .summary .note { margin-top: 2.4mm; font-size: 7.8pt; color: #64748b; }
+  .toc { break-before: page; break-after: page; }
+  .toc .cols { columns: 2; column-gap: 10mm; }
+  .toc .grp { break-inside: avoid; margin-bottom: 3.4mm; }
+  .toc .tp { font-size: 7pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0f766e; margin-bottom: 1mm; }
+  .toc ol { list-style: none; display: grid; gap: 0.8mm; font-size: 9pt; }
+  .toc ol span { color: #64748b; display: inline-block; min-width: 6mm; }
+  .legal .part { margin: 2mm 0 1mm; padding: 2mm 3.4mm; border-radius: 1.6mm; background: #ccfbf1; color: #115e59; font-size: 7.4pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; break-after: avoid; }
+  .legal section { padding: 4mm 0 1mm; }
+  .legal section + section { border-top: 0.25mm solid #e2e8f0; }
+  .legal h2 { font-family: var(--font-display), Georgia, serif; font-size: 13pt; line-height: 1.25; margin-bottom: 2.2mm; color: #0f172a; break-after: avoid; }
+  .legal h2 span { color: #0d9488; margin-right: 1mm; }
+  .legal p, .legal li { color: #334155; orphans: 3; widows: 3; }
+  .legal p + p, .legal p + ul, .legal p + ol, .legal ul + p, .legal ol + p, .legal p + table, .legal table + p { margin-top: 1.8mm; }
+  .legal ul { padding-left: 5mm; display: grid; gap: 1mm; }
+  .legal ol { padding-left: 5mm; list-style: lower-alpha; display: grid; gap: 1mm; }
+  .legal strong { color: #0f172a; font-weight: 650; }
+  .legal a { color: #1d4ed8; text-decoration: none; }
+  .legal table { width: 100%; border-collapse: collapse; font-size: 8.8pt; break-inside: auto; }
+  .legal th { text-align: left; font-weight: 650; color: #0f172a; padding: 1.6mm 2mm; border-bottom: 0.5mm solid #cbd5e1; }
+  .legal td { padding: 1.6mm 2mm; border-bottom: 0.25mm solid #e2e8f0; vertical-align: top; }
+  .legal tr { break-inside: avoid; }
+</style>

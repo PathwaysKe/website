@@ -4,14 +4,23 @@
  * were taken from the backend code (supabase/functions on origin/main, 2026-11-23); update the table when a
  * provider is added. Same {{.n}} / {{id.n}} numbering scheme as terms.ts.
  */
-import { TERMS } from './terms';
+import { ENTITY, LEGAL_STATUS, numberSections, sectionNumbers, type Section } from './legal';
 
 export const PRIVACY = {
-  draft: TERMS.draft,
+  ...LEGAL_STATUS,
   version: '2.0',
-  effective: TERMS.effective,
-  updated: TERMS.updated,
+  pdf: '/legal/pathways-privacy-policy-v2.0.pdf',
 };
+
+/** Plain-language summary shown above the policy. */
+export const PRIVACY_SUMMARY = [
+  'We collect what we need to run Pathways: account and learner details, learning activity, payments, and school data a school enters.',
+  'For parents\' accounts we decide how data is used. For school data, the school decides and we process it for the school.',
+  'We never sell personal data or use it for advertising, and children never see ads.',
+  'A linked school sees work on tasks it sets, not Learning Assistant conversations or study a learner does on their own.',
+  'Some providers, including AI services, process data outside Kenya, with safeguards.',
+  'You can delete a learner profile or your whole account in the app at any time.',
+];
 
 export const PRIVACY_OPEN_POINTS = [
   'Confirm where each provider stores data (in particular the Supabase region) and the transfer safeguards in section 9.',
@@ -21,8 +30,7 @@ export const PRIVACY_OPEN_POINTS = [
   'Publish together with the Terms of Service; the delete-data page should then match section 11.',
 ];
 
-type Section = { id: string; title: string; html: string };
-const T = TERMS;
+const T = ENTITY;
 
 const RAW: Section[] = [
   {
@@ -183,12 +191,5 @@ const RAW: Section[] = [
   },
 ];
 
-const NUM: Record<string, number> = Object.fromEntries(RAW.map((s, i) => [s.id, i + 1]));
-export const PRIVACY_SECTIONS: Section[] = RAW.map((s, i) => ({
-  ...s,
-  html: s.html.replace(/\{\{([a-z-]*)(\.\d+)?\}\}/g, (_m, id: string, sub?: string) => {
-    const n = id ? NUM[id] : i + 1;
-    if (!n) throw new Error(`privacy.ts: unknown section id "${id}"`);
-    return `${n}${sub ?? ''}`;
-  }),
-}));
+export const PRIVACY_NUM = sectionNumbers(RAW);
+export const PRIVACY_SECTIONS: Section[] = numberSections(RAW, 'privacy.ts');

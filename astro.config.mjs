@@ -11,7 +11,7 @@ export default defineConfig({
   compressHTML: true,
   integrations: [
     sitemap({
-      filter: (page) => !page.endsWith('/404'),
+      filter: (page) => !page.endsWith('/404') && !page.endsWith('/print'),
     }),
   ],
   vite: {

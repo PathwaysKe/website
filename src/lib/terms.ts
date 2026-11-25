@@ -1,296 +1,303 @@
 /**
- * Pathways Terms of Service — single source for the /terms page (and its printed copy).
+ * Pathways Terms of Service — single source for /terms, /terms/print and the downloadable PDF.
  * The mobile app links here (mobile-app-v1/lib/helpers/links.dart → https://pathways.ke/terms).
  *
- * Long-term document: no dated offers and no fixed prices (the App and each School Agreement carry those).
- * The Terms describe the intended product; features they rely on that are not yet built are tracked in
- * GitHub issues (see OPEN_POINTS). Decisions behind each clause: memory "terms-and-agreement-decisions".
+ * Long-term document: no dated offers and no fixed school prices (each School Agreement carries those).
+ * It describes the intended product; features it relies on that are not yet built are tracked in GitHub
+ * issues (see OPEN_POINTS). Decisions behind each clause: memory "terms-and-agreement-decisions".
  *
- * Numbering is generated: inside a section's html, `{{.3}}` becomes "<section no>.3", and `{{id}}` or
- * `{{id.3}}` becomes the number of the section with that id. Never type section numbers by hand.
+ * The School Services Agreement (print-collateral/proposal-short.html) is one signed page that refers here
+ * for everything except the option, learners covered, Seat Price, start date and contacts. Keep the
+ * "School Agreement" section in step with that page.
+ *
+ * Numbering is generated (see legal.ts): {{.3}}, {{id}}, {{id.3}}, and {{pp:id}} for Privacy Policy sections.
  */
+import { ENTITY, LEGAL_STATUS, numberSections, type Section } from './legal';
+import { PRIVACY_NUM } from './privacy';
+
 export const TERMS = {
-  draft: true,
+  ...LEGAL_STATUS,
+  ...ENTITY,
   version: '1.0',
-  effective: 'to be set on publication',
-  updated: '23 November 2026',
-  company: 'Stawi Edtech LLP',
-  trading: 'Pathways',
-  reg: 'LLP-BP5SDE',
-  email: 'support@pathways.ke',
-  phone: '0764 626 668',
-  office: 'Greatwall Gardens, Wuyi Road, Athi River, Machakos County',
-  postal: 'P.O. Box 44682-00100, Nairobi',
+  pdf: '/legal/pathways-terms-of-service-v1.0.pdf',
 };
 
 /** Points still open before publication; shown only while draft is true. */
 export const OPEN_POINTS = [
-  'Features these Terms describe that are still being built (in-app account deletion, unlinking a learner, paid-period reminders, instalment billing with access from signing, learner reporting in the Learning Assistant, safeguarding alerts, recorded acceptance) are tracked in GitHub issues. Publish once they ship, or adjust the wording.',
-  'Republish the Privacy Policy alongside these Terms (same entity, school data, all service providers).',
-  'Advocate review of the whole document, in particular the liability, data-processing and third-party content clauses.',
+  'Features these Terms describe that are still being built are tracked in GitHub issues: in-app account deletion and unlinking, paid-period reminders, instalment billing with access from signing, learner reporting and safeguarding alerts in the Learning Assistant, and recorded acceptance (backend#2289–2295, mobile-app-v1#681–685, pathways-web#1314). Publish once they ship, or adjust the wording.',
+  'Advocate review, in particular the liability, data-processing and third-party content sections.',
 ];
 
-type Section = { id: string; title: string; html: string };
-const T = TERMS;
+/** Plain-language summary shown above the Terms. It is not part of the Terms. */
+export const TERMS_SUMMARY = [
+  'Pathways is provided by Stawi Edtech LLP. Accounts are for adults; children use Pathways through a profile their parent or school sets up.',
+  'Parents: there is a free plan and paid plans priced per household. You pay by M-PESA when you choose to. Nothing renews or charges automatically.',
+  'Schools: the portal, set-up, training and support cost nothing. A school that chooses to fund the app for its learners pays the per-learner price in its School Agreement, in two instalments each term.',
+  'Personal data is never sold or used for advertising. Schools control the data they enter; we process it for them.',
+  'The Learning Assistant is an AI study aid. Reported conversations are reviewed by our team, and safeguarding concerns are passed to parents.',
+  'If something goes wrong: talk to us first, then mediation, then the Kenyan courts.',
+];
+
+const T = ENTITY;
+const PARENTS = 'Parents and learners';
+const SCHOOLS = 'Schools';
+const ALL = 'Everyone';
 
 const RAW: Section[] = [
+  /* ---------------------------------------------------------------- General */
   {
     id: 'about',
-    title: 'About these terms',
+    part: 'About these Terms',
+    title: 'Who we are and what these Terms cover',
     html: `
-<p><strong>{{.1}}</strong> These Terms of Service (the <strong>Terms</strong>) are a legal agreement between you and <strong>${T.company}</strong>, a limited liability partnership registered in Kenya (registration number ${T.reg}), trading as <strong>${T.trading}</strong> (<strong>Pathways</strong>, <strong>we</strong>, <strong>us</strong> or <strong>our</strong>).</p>
-<p><strong>{{.2}}</strong> They apply whenever you use any part of Pathways: the Pathways mobile app, the Pathways school portal at platform.pathways.ke, the website at pathways.ke, and any related service we provide (together, the <strong>Services</strong>).</p>
-<p><strong>{{.3}} How you accept them.</strong> A Parent accepts these Terms by confirming acceptance when creating an account. A School accepts them by signing a School Agreement. A School User accepts them when first signing in to the Portal. We keep a record of the version accepted and when. If you do not agree to these Terms, please do not use the Services.</p>
-<p><strong>{{.4}}</strong> These Terms work together with our <a href="/privacy">Privacy Policy</a> and, for Schools, the School Agreement and the Data Processing Schedule in section {{dps}}. Section {{general.2}} explains which applies if they differ.</p>`,
+<p><strong>{{.1}}</strong> These Terms of Service (the <strong>Terms</strong>) are an agreement between you and <strong>${T.company}</strong>, a limited liability partnership registered in Kenya (number ${T.reg}), trading as <strong>${T.trading}</strong> (<strong>we</strong>, <strong>us</strong>).</p>
+<p><strong>{{.2}}</strong> They apply to the Pathways mobile app, the Pathways school portal at platform.pathways.ke, the website at pathways.ke, and any related service we provide (the <strong>Services</strong>).</p>
+<p><strong>{{.3}} Accepting them.</strong> A Parent accepts these Terms when creating an account, a School by signing a School Agreement, and a School User when first signing in to the Portal. We record the version accepted and when. If you do not agree, please do not use the Services.</p>
+<p><strong>{{.4}} Related documents.</strong> Our <a href="/privacy">Privacy Policy</a> explains how we handle personal data. For Schools, the School Agreement and the Data Processing Schedule (section {{dps}}) also apply. Section {{general.2}} says which applies if they differ.</p>
+<p><strong>{{.5}} How these Terms are arranged.</strong> Sections {{about}} to {{accounts}} apply to everyone. Sections {{parent-plans}} to {{linking}} apply to Parents and Learners, and sections {{school-agreement}} to {{school-duties}} to Schools. Sections {{acceptable-use}} to {{contact}} apply to everyone. The Data Processing Schedule (section {{dps}}) applies to Schools.</p>`,
   },
   {
     id: 'definitions',
     title: 'Definitions',
     html: `
-<p>In these Terms:</p>
 <ul>
-<li><strong>App</strong> means the Pathways mobile application for parents and learners.</li>
-<li><strong>Portal</strong> means the Pathways web platform used by Schools and School Users.</li>
-<li><strong>Parent</strong> means a parent, legal guardian or other person with parental responsibility for a child under the Children Act, 2022, who holds a Pathways account and manages one or more Learner profiles.</li>
-<li><strong>Learner</strong> means a child who uses Pathways through a profile created by a Parent or by a School.</li>
-<li><strong>School</strong> means a school or other educational institution that uses the Portal under a School Agreement.</li>
-<li><strong>School User</strong> means a head teacher, administrator, teacher or other staff member given access to the Portal by a School.</li>
-<li><strong>School Agreement</strong> means the School Services Agreement signed by a School and Pathways, made up of its schedule and key terms. A proposal that accompanies it is for information only and does not form part of it.</li>
-<li><strong>Seat Price</strong> means the price per Learner per School Term set in a School Agreement.</li>
-<li><strong>Sponsorship</strong> means an arrangement under which a School pays for its Learners' access to the paid features of the App.</li>
-<li><strong>School Term</strong> means a term of the School's academic year, as set in the School's published calendar.</li>
-<li><strong>Pathways Content</strong> means study notes, study cards, worked examples, questions, tests, curriculum mapping, illustrations, the Pola mascot, software and other material that we create.</li>
-<li><strong>Third-Party Content</strong> means material we make available under a licence or arrangement with someone else, such as examination bodies, publishers, authors or other content partners.</li>
-<li><strong>School Content</strong> means material created or uploaded by a School or its School Users, such as schemes of work, lesson plans, records of work, questions, tests, marks, announcements, timetables, attendance and library records.</li>
-<li><strong>User Content</strong> means material a Parent or Learner submits, such as answers, photos of written work, messages and profile details.</li>
-<li><strong>Learning Assistant</strong> means the AI-powered study feature in the App described in section {{learning.3}}, whatever name it is shown under in the App.</li>
+<li><strong>App:</strong> the Pathways mobile app for parents and learners.</li>
+<li><strong>Portal:</strong> the Pathways web platform used by Schools.</li>
+<li><strong>Parent:</strong> a parent, guardian or other person with parental responsibility under the Children Act, 2022, who holds an account and manages Learner profiles.</li>
+<li><strong>Learner:</strong> a child who uses Pathways through a profile created by a Parent or a School.</li>
+<li><strong>School:</strong> a school that uses the Portal under a School Agreement.</li>
+<li><strong>School User:</strong> a head teacher, administrator, teacher or other staff member given Portal access by a School.</li>
+<li><strong>School Agreement:</strong> the School Services Agreement signed by a School and Pathways (section {{school-agreement}}).</li>
+<li><strong>School Collects</strong> and <strong>Parents Pay Directly:</strong> the two funding options a School chooses between in its School Agreement (section {{school-agreement.3}}).</li>
+<li><strong>Covered Learner:</strong> an active Learner in a level the School covers under School Collects.</li>
+<li><strong>Seat Price:</strong> the price per Covered Learner per School Term set in the School Agreement.</li>
+<li><strong>School Term:</strong> a term of the School's academic year, as set in its published calendar.</li>
+<li><strong>Pathways Content:</strong> study notes, study cards, questions, tests, curriculum mapping, illustrations, the Pola mascot, software and other material we create.</li>
+<li><strong>Third-Party Content:</strong> material we offer under a licence from someone else, such as an examination body, publisher or author.</li>
+<li><strong>School Content:</strong> material a School or its School Users create or upload, such as schemes of work, lesson plans, records of work, tests, marks, announcements, timetables, attendance and library records.</li>
+<li><strong>User Content:</strong> material a Parent or Learner submits, such as answers, photos of written work and messages.</li>
+<li><strong>Learning Assistant:</strong> the AI study feature in the App (section {{learning.3}}), whatever name the App shows for it.</li>
 </ul>`,
   },
   {
     id: 'eligibility',
     title: 'Who can use Pathways',
     html: `
-<p><strong>{{.1}} Adults hold accounts.</strong> You must be at least 18 years old to create a Pathways account, and you confirm this when you sign up. Children use Pathways only through a Learner profile created and managed by their Parent, or set up by their School.</p>
-<p><strong>{{.2}} Parents.</strong> By creating a Learner profile you confirm that you are that child's Parent, and that you consent to the child using the Services as described in these Terms and the Privacy Policy. You are responsible for supervising the child's use of the App.</p>
-<p><strong>{{.3}} Schools.</strong> The person who signs a School Agreement confirms that they are authorised to bind the School. A School decides which staff become School Users and must remove access when a staff member leaves.</p>
-<p><strong>{{.4}} School Users.</strong> If you use the Portal as a School User, you do so on behalf of your School. Your School's School Agreement and these Terms both apply to you.</p>
-<p><strong>{{.5}} Independent use of the App.</strong> Any Parent may use the App without a School. Linking a Learner to a School is optional and is described in section {{linking}}.</p>`,
+<p><strong>{{.1}} Adults hold accounts.</strong> You must be 18 or older to create an account, and you confirm this when you sign up. Children use Pathways only through a Learner profile that their Parent or School sets up.</p>
+<p><strong>{{.2}} Parents.</strong> By creating a Learner profile you confirm you are the child's Parent and consent to the child using the Services as these Terms and the Privacy Policy describe. You are responsible for supervising the child's use of the App.</p>
+<p><strong>{{.3}} Schools.</strong> The person who signs a School Agreement confirms they are authorised to bind the School.</p>
+<p><strong>{{.4}} School Users.</strong> A School User uses the Portal on behalf of their School, under these Terms and the School's School Agreement.</p>
+<p><strong>{{.5}} No school needed.</strong> Any Parent may use the App without a School. Linking a Learner to a School is optional (section {{linking}}).</p>`,
   },
   {
     id: 'accounts',
     title: 'Accounts and security',
     html: `
-<p><strong>{{.1}}</strong> You must give accurate information when you create an account and keep it up to date.</p>
-<p><strong>{{.2}}</strong> Keep your password, PIN and any login codes secret. You are responsible for activity on your account and on the Learner profiles you manage, unless it results from our failure to keep the Services secure.</p>
-<p><strong>{{.3}}</strong> Tell us at once at ${T.email} if you believe someone has accessed your account without permission.</p>
-<p><strong>{{.4}}</strong> Accounts are personal. Do not share an account, sell it or transfer it to someone else. A School may reassign a staff member's classes to another School User, but not a School User's login.</p>
-<p><strong>{{.5}} Closing your account.</strong> A Parent can delete their account, or remove a Learner profile, at any time in the App or at <a href="/delete-data">pathways.ke/delete-data</a>. Section {{privacy.7}} explains what happens to the data.</p>`,
+<p><strong>{{.1}}</strong> Give accurate information when you sign up and keep it up to date.</p>
+<p><strong>{{.2}}</strong> Keep your password, PIN and login codes secret. You are responsible for activity on your account and the Learner profiles you manage, unless it results from our failure to keep the Services secure. Tell us at once at ${T.email} if you think someone has used your account without permission.</p>
+<p><strong>{{.3}}</strong> Accounts are personal and may not be shared, sold or transferred.</p>
+<p><strong>{{.4}} Closing an account.</strong> A Parent can delete their account, or remove a Learner profile, at any time in the App or at <a href="/delete-data">pathways.ke/delete-data</a>. We then delete the data within 30 days, except payment records the law requires us to keep, as section {{pp:retention}} of the Privacy Policy explains. Records a linked School holds about a Learner stay with the School.</p>`,
   },
+
+  /* ---------------------------------------------------------------- Parents and learners */
   {
     id: 'parent-plans',
-    title: 'Plans and payments for parents',
+    part: PARENTS,
+    title: 'Plans and payments',
     html: `
-<p><strong>{{.1}} Plans.</strong> The App offers a free plan and one or more paid plans. The features and price of each plan are shown in the App before you pay. Prices are per household and depend on the number of Learners on the account. The price shown when you pay applies to that period.</p>
-<p><strong>{{.2}} Free trial.</strong> Where we offer a free trial of a paid plan, its length is shown in the App. No payment is taken for a trial, and when it ends your account returns to the free plan unless you choose to pay.</p>
-<p><strong>{{.3}} Paying.</strong> Parents pay by M-PESA through a payment request sent to the phone number you give. A paid period starts when your payment is confirmed. We do not see or store your M-PESA PIN.</p>
-<p><strong>{{.4}} No automatic charges.</strong> Paid plans do not renew or charge you automatically, so there is nothing to cancel. Before a paid period ends we remind you in the App. If you do not pay for the next period, your account returns to the free plan when the current period ends, and your Learners' progress and history are kept.</p>
-<p><strong>{{.5}} Refunds.</strong> Payments are not refundable once a paid period has started, and we do not refund part of a period if you stop using the App. If you were charged twice for the same period, or charged for a payment that did not give you access, contact us within 30 days and we will refund the extra or failed amount.</p>
-<p><strong>{{.6}} Sponsored Learners.</strong> If a School sponsors a Learner, the Parent does not pay for that Learner's access while the Sponsorship lasts, and sections {{.2}} to {{.5}} do not apply to that Learner. When a Sponsorship ends, the Learner moves to the free plan unless the Parent chooses to pay.</p>
-<p><strong>{{.7}} Promotional codes and rewards.</strong> Discount codes, free-access codes and referral rewards are subject to the conditions stated when they are issued (for example, some cannot be used during a free trial). They have no cash value and may not be sold.</p>
-<p><strong>{{.8}} Taxes.</strong> Pathways is not registered for VAT, so no VAT is added to prices. If that changes, we will give at least 30 days' notice of any effect on prices.</p>`,
-  },
-  {
-    id: 'school-services',
-    title: 'School services, fees and payment',
-    html: `
-<p><strong>{{.1}} School Agreement.</strong> A School's chosen option, the grades and Learners covered, the Seat Price and the start date are set out in its School Agreement.</p>
-<p><strong>{{.2}} Trials.</strong> We may agree a free trial with a School. Its length and scope are those agreed in writing, and it ends with nothing to pay unless the School signs a School Agreement for a paid option.</p>
-<p><strong>{{.3}} Access.</strong> Sponsored access starts when the School Agreement is signed, or on the start date in it if later. Every active Learner in a covered grade receives access, including Learners admitted during a School Term, and is counted for billing. A School Term's access continues through the holiday that follows it, until the next School Term begins.</p>
-<p><strong>{{.4}} Fees.</strong> Fees for each School Term are the Seat Price multiplied by the number of covered Learners. The number of Learners is confirmed with the School at the start of each School Term, and that School Term's invoice follows the confirmed number.</p>
-<p><strong>{{.5}} Learners who join or leave during a School Term.</strong> A Learner who joins in the first third of a School Term is charged the full Seat Price, in the middle third two-thirds of it, and in the final third one-third of it. Fees for a Learner who leaves during a School Term are not refunded; the Learner is not counted from the next School Term.</p>
-<p><strong>{{.6}} Instalments.</strong> Each School Term's fees are payable in two equal instalments:</p>
-<ol>
-<li>the first, by the end of the third week of the School Term; and</li>
-<li>the second, by the end of the second week after the School Term's half-term break, or, if the School Term has no half-term break, six weeks after the first instalment is due.</li>
-</ol>
-<p>A School may pay a School Term's fees at once. Payment is by bank transfer or M-PESA to the details on our invoice.</p>
-<p><strong>{{.7}} Taxes.</strong> Pathways is not registered for VAT, so no VAT is added to fees. If that changes, we will give at least 30 days' notice of any effect on fees.</p>
-<p><strong>{{.8}} Late payment.</strong> If an instalment is not paid when due we will send reminders. If any fees for a School Term remain unpaid when the following School Term starts, we may suspend the School's Sponsorship and paid Portal features during that following School Term until the outstanding amount is paid. Suspension does not delete any data, and full access returns once payment is received.</p>
-<p><strong>{{.9}} Duration and renewal.</strong> A School Agreement runs School Term by School Term and renews automatically for each following School Term. Either side may stop renewal by giving written notice at least 30 days before the next School Term starts. Fees already due remain payable.</p>
-<p><strong>{{.10}} Price changes.</strong> We may change the Seat Price by giving at least 30 days' written notice. The new price applies from the first School Term that starts after the notice period ends, never part-way through a School Term. A School that does not accept a new price may end its School Agreement at the end of the current School Term, even if that is less than 30 days away.</p>
-<p><strong>{{.11}} Refunds.</strong> Fees for a School Term that has started are not refundable, except under section {{termination.3}}. Duplicate or mistaken payments are refunded or credited to the next invoice, at the School's choice.</p>
-<p><strong>{{.12}} What is included.</strong> Unless the School Agreement says otherwise, the fees include set-up, import of the School's class lists, training for School Users, and support by phone, WhatsApp and email during business hours.</p>`,
-  },
-  {
-    id: 'school-responsibilities',
-    title: "Schools' responsibilities",
-    html: `
-<p>A School is responsible for:</p>
-<ul>
-<li><strong>Lawful data.</strong> having a lawful basis, including any consent required from parents, for the personal data of Learners, Parents and staff that it enters into the Portal;</li>
-<li><strong>Accuracy.</strong> the accuracy of the information it records and publishes, including marks, merit lists, reports, attendance, timetables, calendars and announcements, and any marks suggested with the help of automated or AI tools before a School User publishes them;</li>
-<li><strong>Its own policies.</strong> its school rules and decisions, including any library loan periods or fines, which Pathways records for the School but does not set, charge or collect;</li>
-<li><strong>School Users.</strong> the conduct of its School Users on the Services, and removing access for staff who leave;</li>
-<li><strong>Communications.</strong> the content of announcements and messages it sends to Parents through the Services.</li>
-</ul>`,
-  },
-  {
-    id: 'acceptable-use',
-    title: 'Rules for using Pathways',
-    html: `
-<p>When you use the Services you must not:</p>
-<ul>
-<li>break any law, including the Data Protection Act, 2019, the Computer Misuse and Cybercrimes Act, 2018 and the Children Act, 2022;</li>
-<li>post or send anything that is abusive, threatening, discriminatory, sexually explicit, defamatory or otherwise unsuitable for a learning service used by children;</li>
-<li>collect or share another person's personal data without a lawful reason, or contact Learners outside the purposes of the Services;</li>
-<li>use the Services to cheat in a school or national assessment, or to help someone else do so;</li>
-<li>copy, sell, publish or redistribute Pathways Content or Third-Party Content outside the Services, except as allowed in section {{content}};</li>
-<li>try to access accounts, schools or data that are not yours, test or bypass our security, or interfere with the Services;</li>
-<li>copy, decompile or reverse-engineer the App or Portal, or use automated tools to extract content or data, except where the law allows it;</li>
-<li>use the Services to advertise or sell to other users without our written permission.</li>
-</ul>
-<p>We may remove content that breaks these rules and may act under section {{termination}}.</p>`,
-  },
-  {
-    id: 'content',
-    title: 'Content and intellectual property',
-    html: `
-<p><strong>{{.1}} Pathways Content.</strong> We own Pathways Content and the Services. While you use the Services in line with these Terms, we give you a personal, non-exclusive, non-transferable licence to use Pathways Content for learning and teaching. Schools may use Pathways Content with their own Learners and staff, including printing it for classroom use, but may not sell it or publish it outside the School.</p>
-<p><strong>{{.2}} Third-Party Content.</strong> Some content, such as past examination papers, books, assessments or courses from other providers, belongs to third parties and is made available under a licence or arrangement with them. Where practical, we show its source. Third-Party Content may be used only within the Services, for the purpose and on any further conditions shown with it, and its owners keep all their rights. If a licence ends or its owner asks us to, we may change or remove Third-Party Content. If that content was the main subject of a separate purchase, we will offer a replacement of similar value or a refund of the unused part.</p>
-<p><strong>{{.3}} Paid content and add-ons.</strong> We may offer content or services sold separately from a plan, such as exam papers, revision packs, courses or other paid items, from us or from content partners. Their price, what is included, and how long access lasts are shown before you buy, and sections {{parent-plans.3}} and {{parent-plans.5}} apply to them unless different conditions are shown at the time of purchase.</p>
-<p><strong>{{.4}} School Content belongs to the School.</strong> Schemes of work, lesson plans, records of work, questions, tests and other material created by School Users in the Portal belong to the School. The School gives us a licence to host, store, copy and display School Content only as needed to provide the Services to that School and its Parents and Learners. We will not use School Content for any other School, or for any other purpose, without the School's written permission.</p>
-<p><strong>{{.5}} User Content.</strong> You keep ownership of User Content. You give us a licence to host, store, process and display it as needed to provide the Services to you and, where you have linked a Learner to a School, to that School.</p>
-<p><strong>{{.6}} Curriculum.</strong> Pathways Content is organised around the curriculum designs published by the Kenya Institute of Curriculum Development. Pathways is independent and is not endorsed by, or affiliated with, the Ministry of Education, KICD or KNEC, unless we say so for a specific item.</p>
-<p><strong>{{.7}} Feedback.</strong> If you send us ideas or suggestions, we may use them to improve the Services without owing you anything.</p>
-<p><strong>{{.8}} Names and logos.</strong> "Pathways", our logo and Pola are our trade marks. We will name a School as a Pathways client, or show its logo, only with the School's written consent, which the School may withdraw at any time.</p>`,
-  },
-  {
-    id: 'learning',
-    title: 'Learning content, AI features and safeguarding',
-    html: `
-<p><strong>{{.1}} Supporting learning.</strong> Pathways is designed to support learning at school and at home. It does not replace teachers, schools or parents, and learning outcomes depend on many things beyond the Services. We do not promise any particular mark, grade or result in a school or national assessment.</p>
-<p><strong>{{.2}} Our content.</strong> We prepare and review Pathways Content carefully and keep improving it. The grades, subjects and content available grow over time and are shown in the App and Portal. If you think something is incorrect or unclear, please tell us in the App or at ${T.email}, and we will review it promptly.</p>
-<p><strong>{{.3}} The Learning Assistant.</strong> The Learning Assistant is an AI-powered feature in the App that helps Learners work through questions and explains concepts step by step, in line with the curriculum they are studying. It is a study aid that works alongside notes, lessons and teachers.</p>
-<p><strong>{{.4}} How it works.</strong> Learning Assistant responses are generated automatically for each conversation, so a person does not check them before they are shown. We design and monitor it to keep it accurate, age-appropriate and focused on learning. Learners should check what they learn against their notes and lessons and ask their teacher about anything that remains unclear, and Parents should take an interest in how their children use it.</p>
-<p><strong>{{.5}} Using it well.</strong> The Learning Assistant is for learning. Learners should not share personal details such as their full name, address or phone number in a conversation, and should not use it to complete work that is meant to be their own.</p>
-<p><strong>{{.6}} Reporting.</strong> Learners and Parents can report a response that seems unsuitable or confusing in the App, or at ${T.email}. Our team reviews every report, which means a member of our staff may read the reported conversation.</p>
-<p><strong>{{.7}} AI-assisted marking.</strong> Some features use AI to help mark answers, including written and photographed work, and to suggest feedback. Marks and feedback set by a School are the School's responsibility, and its teachers can review them before they are published.</p>
-<p><strong>{{.8}} Safeguarding.</strong> If a Learner's messages suggest they may be at risk of harm, such as abuse, bullying or self-harm, the Learning Assistant responds supportively and shows where to get help, such as Childline Kenya on 116. Our team reviews the conversation and informs the Learner's Parent, and, where the law requires it, the relevant authorities.</p>`,
+<p><strong>{{.1}} Plans.</strong> The App has a free plan and paid plans. Each plan's features and price are shown in the App before you pay. Prices are per household and depend on the number of Learners on the account.</p>
+<p><strong>{{.2}} Free trial.</strong> Where we offer a free trial, its length is shown in the App. Nothing is charged, and when it ends the account returns to the free plan unless you choose to pay.</p>
+<p><strong>{{.3}} Paying.</strong> You pay by M-PESA, through a payment request sent to the phone number you give. A paid period starts when payment is confirmed. We never see your M-PESA PIN.</p>
+<p><strong>{{.4}} No automatic charges.</strong> Paid plans never renew or charge you automatically, so there is nothing to cancel. We remind you in the App before a paid period ends. If you do not pay again, the account returns to the free plan and your Learners' progress is kept.</p>
+<p><strong>{{.5}} Refunds.</strong> A payment is not refundable once its paid period has started. If you were charged twice, or paid without receiving access, tell us within 30 days and we will refund that amount.</p>
+<p><strong>{{.6}} Learners funded by a School.</strong> A Covered Learner has the paid features through their School, and the Parent pays nothing for that Learner while the School funds them. When that ends, the Learner moves to the free plan unless the Parent chooses to pay.</p>
+<p><strong>{{.7}} Promotions.</strong> Discount codes, free-access codes and referral rewards follow the conditions stated when issued. They have no cash value and cannot be sold.</p>
+<p><strong>{{.8}} Tax.</strong> Pathways is not registered for VAT, so no VAT is added. If that changes, we will give 30 days' notice of any effect on prices.</p>`,
   },
   {
     id: 'linking',
     title: 'Linking a learner to a school',
     html: `
-<p><strong>{{.1}}</strong> A Parent may link a Learner's profile to the Learner's School. When linked, the App shows the School's information for that Learner, such as announcements, the calendar, timetables, homework, results and, where the School turns them on, attendance and library loans.</p>
-<p><strong>{{.2}}</strong> While linked, the Learner's School and teachers can see the Learner's work on tasks the School sets (such as homework, tests and assessments) and the progress built from it. The Privacy Policy describes this in detail.</p>
-<p><strong>{{.3}}</strong> A Parent may unlink a Learner at any time in the App. The School then stops receiving the Learner's new activity, and any Sponsorship for that Learner ends. Records the School already holds remain with the School.</p>`,
+<p><strong>{{.1}}</strong> A Parent may link a Learner's profile to the Learner's School. The App then shows the School's announcements, calendar, timetable, homework and results for that Learner, and attendance and library loans where the School turns them on.</p>
+<p><strong>{{.2}}</strong> While linked, the School and its teachers see the Learner's work on tasks the School sets, such as homework, tests and assessments, and the progress built from it. They do not see Learning Assistant conversations or study the Learner does on their own (Privacy Policy section {{pp:schools}}).</p>
+<p><strong>{{.3}}</strong> A Parent may unlink a Learner at any time in the App. The School then stops receiving the Learner's new activity, and any funding by the School for that Learner ends. Records the School already holds stay with the School.</p>`,
+  },
+
+  /* ---------------------------------------------------------------- Schools */
+  {
+    id: 'school-agreement',
+    part: SCHOOLS,
+    title: 'The School Agreement',
+    html: `
+<p><strong>{{.1}} What it contains.</strong> The School Agreement is a single signed page. It records the parties, the School's funding option, the levels and number of Learners covered, the Seat Price, the start date, and the School's contacts for notices and billing. It is signed, and stamped by the School. Everything else is set by these Terms.</p>
+<p><strong>{{.2}} Included under either option.</strong> The Portal for all School Users, set-up, import of class lists, training and support are provided at no charge to the School.</p>
+<p><strong>{{.3}} The two funding options.</strong></p>
+<ol>
+<li><strong>School Collects.</strong> The School funds the App's paid features for every Covered Learner, collects the cost with its school fees, and pays Pathways the Seat Price for each Covered Learner each School Term (section {{school-fees}}).</li>
+<li><strong>Parents Pay Directly.</strong> Nothing is payable to Pathways by the School. Each Parent may subscribe in the App under section {{parent-plans}}.</li>
+</ol>
+<p><strong>{{.4}} Start.</strong> The School Agreement starts on the start date it shows, or when both parties have signed if that is later. Under School Collects, Covered Learners have access from then.</p>
+<p><strong>{{.5}} Proposals.</strong> A proposal sent with a School Agreement is for information only and is not part of it.</p>
+<p><strong>{{.6}} Trials.</strong> We may agree a free trial with a School in writing. It ends with nothing to pay unless the School signs a School Agreement.</p>`,
+  },
+  {
+    id: 'school-fees',
+    title: 'Fees under School Collects',
+    html: `
+<p><strong>{{.1}} Amount.</strong> Fees for each School Term are the Seat Price multiplied by the number of Covered Learners. The School confirms the number at the start of each School Term, and the invoice follows it. All active Learners in a covered level are included.</p>
+<p><strong>{{.2}} The School pays.</strong> The School is responsible for the fees whether or not it has collected them from parents.</p>
+<p><strong>{{.3}} Learners who join during a term</strong> get access straight away and are charged the full Seat Price if they join in the first third of the School Term, two-thirds of it in the middle third, and one-third in the final third.</p>
+<p><strong>{{.4}} Learners who leave</strong> are not refunded for the current School Term and are not counted from the next one.</p>
+<p><strong>{{.5}} Instalments.</strong> Each School Term's fees are paid in two equal instalments: the first by the end of week 3 of the School Term, and the second by the end of the second week after half-term (or, if there is no half-term, six weeks after the first). The School may pay both at once. Payment is by bank transfer or M-PESA to the details on our invoice.</p>
+<p><strong>{{.6}} Holidays.</strong> A School Term's access continues through the holiday that follows it.</p>
+<p><strong>{{.7}} Tax.</strong> Pathways is not registered for VAT, so no VAT is added. If that changes, we will give 30 days' notice of any effect on fees.</p>
+<p><strong>{{.8}} Late payment.</strong> We send reminders when an instalment is overdue. If fees for a School Term are still unpaid when the next School Term starts, we may pause the School's funded access and paid Portal features during that term until they are paid. No data is deleted, and access returns once payment is received.</p>
+<p><strong>{{.9}} Refunds.</strong> Fees for a School Term that has started are not refunded, except under section {{termination.3}}. Duplicate or mistaken payments are refunded or credited to the next invoice, as the School chooses.</p>`,
+  },
+  {
+    id: 'school-term',
+    title: 'Renewal, price changes and ending',
+    html: `
+<p><strong>{{.1}} Renewal.</strong> A School Agreement runs School Term by School Term and renews for each following School Term. Either party may stop renewal by written notice at least 30 days before the next School Term starts. Fees already due remain payable.</p>
+<p><strong>{{.2}} Changing option.</strong> A School may move between School Collects and Parents Pay Directly from the start of a School Term by written notice under section {{.1}}.</p>
+<p><strong>{{.3}} Price changes.</strong> We may change the Seat Price by at least 30 days' written notice. The new price applies from the next School Term that starts after the notice, never part-way through a term. A School that does not accept it may end the School Agreement at the end of the current School Term, even if that is less than 30 days away.</p>
+<p><strong>{{.4}} Other ways to end it</strong> are set out in sections {{availability.3}} and {{termination.3}}.</p>`,
+  },
+  {
+    id: 'school-duties',
+    title: "The School's responsibilities",
+    html: `
+<p>A School is responsible for:</p>
+<ul>
+<li><strong>Lawful data:</strong> having a lawful basis, including any consent needed from parents, for the personal data it enters into the Portal;</li>
+<li><strong>Accuracy:</strong> what it records and publishes, including marks, merit lists, reports, attendance, timetables and announcements, and any marks suggested by automated tools before its staff publish them;</li>
+<li><strong>Its own rules:</strong> its school policies, including library loan periods and fines, which Pathways records but does not set or collect;</li>
+<li><strong>Its staff:</strong> who becomes a School User, their conduct on the Services, and removing access when they leave;</li>
+<li><strong>Its messages:</strong> the content of announcements and messages it sends to Parents.</li>
+</ul>
+<p>We name a School as a Pathways client, or show its logo, only with its written consent (for example, the tick box in the School Agreement). The School may withdraw consent at any time.</p>`,
+  },
+
+  /* ---------------------------------------------------------------- Everyone */
+  {
+    id: 'acceptable-use',
+    part: ALL,
+    title: 'Rules for using Pathways',
+    html: `
+<p>You must not:</p>
+<ul>
+<li>break the law, including the Data Protection Act, 2019, the Computer Misuse and Cybercrimes Act, 2018 and the Children Act, 2022;</li>
+<li>post or send anything abusive, threatening, discriminatory, sexual, defamatory or otherwise unsuitable for a service used by children;</li>
+<li>collect or share someone else's personal data without a lawful reason, or contact Learners for any purpose outside the Services;</li>
+<li>use the Services to cheat in a school or national assessment, or help someone else to;</li>
+<li>copy, sell or publish Pathways Content or Third-Party Content outside the Services, except as section {{content}} allows;</li>
+<li>access accounts, schools or data that are not yours, test or bypass our security, or interfere with the Services;</li>
+<li>reverse-engineer the App or Portal, or extract content or data with automated tools, except where the law allows;</li>
+<li>advertise or sell to other users without our written permission.</li>
+</ul>
+<p>We may remove content that breaks these rules and act under section {{termination}}.</p>`,
+  },
+  {
+    id: 'content',
+    title: 'Content and ownership',
+    html: `
+<p><strong>{{.1}} Pathways Content</strong> belongs to us. While you follow these Terms you may use it for learning and teaching. Schools may use it with their own Learners and staff, including printing it for class, but may not sell it or publish it outside the School.</p>
+<p><strong>{{.2}} Third-Party Content</strong>, such as past examination papers, books or courses from other providers, belongs to its owners and is offered under a licence. It may be used only within the Services and on any conditions shown with it. We may change or remove it if a licence ends; if it was the main subject of a separate purchase, we will offer a similar replacement or refund the unused part.</p>
+<p><strong>{{.3}} Paid content and add-ons.</strong> We may sell content or services separately from a plan, such as exam papers, revision packs or courses, from us or from partners. The price, what is included and how long access lasts are shown before you buy. Sections {{parent-plans.3}} and {{parent-plans.5}} apply unless different conditions are shown.</p>
+<p><strong>{{.4}} School Content belongs to the School.</strong> The School lets us host, copy and display it only to provide the Services to that School, its Parents and Learners. We do not use it for another School or any other purpose without the School's written permission.</p>
+<p><strong>{{.5}} User Content</strong> stays yours. You let us host, process and display it to provide the Services to you and, if you link a Learner to a School, to that School.</p>
+<p><strong>{{.6}} Curriculum.</strong> Pathways Content follows the curriculum designs published by the Kenya Institute of Curriculum Development. Pathways is independent and is not endorsed by the Ministry of Education, KICD or KNEC unless we say so for a specific item.</p>
+<p><strong>{{.7}} Feedback.</strong> We may use ideas you send us to improve the Services without owing you anything.</p>
+<p><strong>{{.8}} Our brand.</strong> "Pathways", our logo and Pola are our trade marks.</p>`,
+  },
+  {
+    id: 'learning',
+    title: 'Learning, AI features and safeguarding',
+    html: `
+<p><strong>{{.1}} Supporting learning.</strong> Pathways supports learning at school and at home. It does not replace teachers, schools or parents, and we do not promise any particular mark or result.</p>
+<p><strong>{{.2}} Our content.</strong> We prepare and review Pathways Content carefully and keep improving it. The grades and subjects available grow over time and are shown in the App and Portal. If something looks wrong or unclear, tell us in the App or at ${T.email} and we will review it.</p>
+<p><strong>{{.3}} The Learning Assistant</strong> is an AI study feature in the App. It helps Learners work through questions and explains ideas step by step, in line with the curriculum they study. It works alongside notes, lessons and teachers.</p>
+<p><strong>{{.4}} How it works.</strong> Its replies are generated automatically, so a person does not check each one before it is shown. We design and monitor it to keep it accurate, age-appropriate and focused on learning. Learners should check what they learn against their notes and ask their teacher about anything still unclear.</p>
+<p><strong>{{.5}} Using it well.</strong> Learners should not share personal details such as a full name, address or phone number in a conversation, or use it to do work meant to be their own.</p>
+<p><strong>{{.6}} Reporting.</strong> Learners and Parents can report a reply in the App or at ${T.email}. Our team reviews every report, so our staff may read the reported conversation. Otherwise, staff read conversations only for a safeguarding concern (Privacy Policy section {{pp:ai}}).</p>
+<p><strong>{{.7}} AI-assisted marking.</strong> Some features use AI to help mark answers, including photographed written work, and to suggest feedback. Teachers can review marks for School tasks before they are published, and those marks are the School's responsibility.</p>
+<p><strong>{{.8}} Safeguarding.</strong> If a Learner's messages suggest they may be at risk of harm, such as abuse, bullying or self-harm, the Learning Assistant responds supportively and shows where to get help, such as Childline Kenya on 116. Our team reviews the conversation and informs the Learner's Parent and, where the law requires, the authorities.</p>`,
   },
   {
     id: 'privacy',
-    title: 'Privacy and data protection',
+    title: 'Personal data',
     html: `
-<p><strong>{{.1}}</strong> We handle personal data in line with the Data Protection Act, 2019.</p>
-<p><strong>{{.2}} Data a Parent gives us.</strong> For a Parent's account and the Learner profiles a Parent creates, Pathways decides how the data is used, as described in the <a href="/privacy">Privacy Policy</a>.</p>
-<p><strong>{{.3}} Data a School gives us.</strong> For personal data that a School enters into the Portal, and data a School receives through linking under section {{linking}}, the School decides how it is used, and Pathways processes it on the School's behalf under the Data Processing Schedule in section {{dps}}.</p>
-<p><strong>{{.4}} We never sell personal data</strong> and never use Learners' data for advertising.</p>
-<p><strong>{{.5}} Service providers.</strong> We use carefully chosen providers for hosting, AI features, payments, notifications and crash reporting, some of which process data outside Kenya. The Privacy Policy lists them and explains the safeguards we use.</p>
-<p><strong>{{.6}} After a School leaves.</strong> When a School Agreement ends, we keep the School's records for 12 months so that the School can return or ask for an export, and then delete them, except records we must keep by law such as invoices. A School may ask us to delete its records sooner. Information the School shared with a linked Parent, such as published results, stays in that Parent's account unless the Parent deletes it.</p>
-<p><strong>{{.7}} After a Parent closes an account.</strong> When a Parent deletes their account, we delete their data and their Learners' data as the Privacy Policy describes, except records we must keep by law such as payment records. Records a linked School holds about a Learner remain with the School.</p>`,
+<p><strong>{{.1}}</strong> We handle personal data under the Data Protection Act, 2019, as our <a href="/privacy">Privacy Policy</a> describes. We never sell personal data and never use Learners' data for advertising.</p>
+<p><strong>{{.2}} Parents' data.</strong> For a Parent's account and the Learner profiles they create, we decide how the data is used (we are the data controller).</p>
+<p><strong>{{.3}} Schools' data.</strong> For personal data a School enters into the Portal, or receives through linking, the School is the data controller and we process it for the School under the Data Processing Schedule (section {{dps}}).</p>
+<p><strong>{{.4}} Service providers.</strong> We use providers for hosting, AI features, payments, email, notifications and crash reporting, some outside Kenya. Privacy Policy sections {{pp:sharing}} and {{pp:transfers}} list them and the safeguards we use.</p>
+<p><strong>{{.5}} How long we keep data</strong> is set out in Privacy Policy section {{pp:retention}}. In short: a Parent's data is deleted within 30 days of the account being deleted; a School's records are kept for 12 months after its School Agreement ends so it can ask for them back, then deleted (sooner if it asks); payment records are kept for 7 years. Results a School has shared with a linked Parent stay in that Parent's account.</p>
+<p><strong>{{.6}} Your rights</strong> to access, correct or delete your data, and how to use them, are in Privacy Policy section {{pp:rights}}.</p>`,
   },
   {
     id: 'availability',
     title: 'Availability and changes to the Services',
     html: `
-<p><strong>{{.1}}</strong> We use reasonable efforts to keep the Services available and working well, but we cannot promise they will always be available, uninterrupted or free of faults. Availability also depends on things outside our control, such as internet and mobile network services.</p>
-<p><strong>{{.2}} Maintenance.</strong> We give advance notice of planned maintenance that will interrupt the Services, and schedule it outside school hours where we can.</p>
-<p><strong>{{.3}} Changes.</strong> We keep improving the Services and may add, change or remove features. If we remove a feature that is a significant part of a paid plan or a School Agreement, we will tell affected users in advance, and a School may end its School Agreement at the end of the current School Term without the 30 days' notice in section {{school-services.9}}.</p>
-<p><strong>{{.4}} New features.</strong> Some features may be labelled as new, preview or beta. They are offered so that you can try them and help us improve them, and may change before they are finished.</p>
-<p><strong>{{.5}} Third-party services.</strong> Some parts of the Services rely on other providers, such as Safaricom for M-PESA payments, Google Play for distributing the App, and our hosting and AI providers. Their own terms apply to your use of their services. We choose them carefully but are not responsible for their failures.</p>`,
+<p><strong>{{.1}}</strong> We use reasonable efforts to keep the Services available and working, but cannot promise they will never be interrupted. Availability also depends on things outside our control, such as mobile networks.</p>
+<p><strong>{{.2}} Maintenance.</strong> We give advance notice of planned maintenance that interrupts the Services, and schedule it outside school hours where we can.</p>
+<p><strong>{{.3}} Changes.</strong> We may add, change or remove features. If we remove a feature that is a significant part of a paid plan or a School Agreement, we will tell affected users in advance, and a School may end its School Agreement at the end of the current School Term without the notice in section {{school-term.1}}.</p>
+<p><strong>{{.4}} New features</strong> may be labelled preview or beta, and may change before they are finished.</p>
+<p><strong>{{.5}} Other providers.</strong> Parts of the Services rely on others, such as Safaricom for M-PESA and Google Play for the App. Their own terms apply to their services, and we are not responsible for their failures.</p>`,
   },
   {
     id: 'termination',
-    title: 'Suspension and termination',
+    title: 'Suspension and ending',
     html: `
-<p><strong>{{.1}} By you.</strong> A Parent may stop using the App and delete their account at any time. A School may end its School Agreement under section {{school-services.9}}, {{school-services.10}}, {{availability.3}} or {{.3}}.</p>
-<p><strong>{{.2}} By us.</strong> We may suspend or close an account, or suspend a School's access, if:</p>
-<ul>
-<li>it seriously or repeatedly breaks these Terms;</li>
-<li>we must do so to comply with the law or a lawful request from an authority;</li>
-<li>it is needed to protect Learners, other users or the security of the Services; or</li>
-<li>fees remain unpaid as described in section {{school-services.8}}.</li>
-</ul>
-<p>Where it is reasonable, we will warn you first and give you a chance to put things right.</p>
-<p><strong>{{.3}} Serious breach.</strong> Either a School or Pathways may end a School Agreement by written notice if the other seriously breaks it, including by a serious breach of the Data Processing Schedule, and does not put it right within 30 days of being asked to. If a School ends it because of our breach, we refund the fees paid for the rest of the current School Term.</p>
-<p><strong>{{.4}} What happens next.</strong> When an account or School Agreement ends, the right to use the Services ends. Fees already due, and sections {{content}}, {{privacy.6}}, {{privacy.7}}, {{liability}}, {{indemnity}}, {{disputes}}, {{general}} and {{dps}}, continue to apply.</p>`,
+<p><strong>{{.1}} By you.</strong> A Parent may stop using the App and delete their account at any time. A School may end its School Agreement under section {{school-term.1}}, {{school-term.3}}, {{availability.3}} or {{.3}}.</p>
+<p><strong>{{.2}} By us.</strong> We may suspend or close an account, or a School's access, if it seriously or repeatedly breaks these Terms, if the law or an authority requires it, if needed to protect Learners or the Services, or for unpaid fees under section {{school-fees.8}}. Where reasonable, we will warn you first and give you a chance to put things right.</p>
+<p><strong>{{.3}} Serious breach.</strong> A School or Pathways may end a School Agreement by written notice if the other seriously breaks it, including the Data Processing Schedule, and does not put it right within 30 days of being asked. If a School ends it because of our breach, we refund the fees paid for the rest of the current School Term.</p>
+<p><strong>{{.4}} Afterwards.</strong> The right to use the Services ends. Fees already due, and sections {{content}}, {{privacy}}, {{liability}}, {{school-claims}}, {{disputes}}, {{general}} and {{dps}}, continue to apply.</p>`,
   },
   {
     id: 'liability',
     title: 'Responsibility and limits',
     html: `
-<p><strong>{{.1}} Your legal rights.</strong> Nothing in these Terms limits any right you have under the Consumer Protection Act, 2012, the Data Protection Act, 2019 or any other law that cannot be limited by agreement. Nothing limits liability for fraud, wilful misconduct, or death or personal injury caused by negligence.</p>
-<p><strong>{{.2}} What is excluded.</strong> Subject to section {{.1}}, neither Pathways nor a School is responsible to the other, and Pathways is not responsible to a Parent, for:</p>
-<ul>
-<li>loss of profit, revenue, business or opportunity, or any indirect or consequential loss;</li>
-<li>loss caused by information a School or user enters, publishes or relies on, except where it results from our breach;</li>
-<li>loss caused by events beyond reasonable control (section {{general.5}}); or</li>
-<li>loss caused by the other party's breach of these Terms.</li>
-</ul>
-<p><strong>{{.3}} Limit for Parents.</strong> Subject to section {{.1}}, our total liability to a Parent for all claims connected with the Services is limited to the greater of the amount the Parent paid us in the 12 months before the event that caused the claim, and KES 5,000.</p>
-<p><strong>{{.4}} Limit between Pathways and a School.</strong> Subject to section {{.1}}, each party's total liability to the other for all claims connected with a School Agreement is limited to the fees paid and payable under it in the 12 months before the event that caused the claim. This limit does not apply to the School's obligation to pay fees.</p>`,
+<p><strong>{{.1}} Your legal rights.</strong> Nothing in these Terms limits rights you have under the Consumer Protection Act, 2012, the Data Protection Act, 2019 or any other law that cannot be limited by agreement, or liability for fraud, wilful misconduct, or death or personal injury caused by negligence.</p>
+<p><strong>{{.2}} Excluded losses.</strong> Subject to section {{.1}}, neither Pathways nor a School is responsible to the other, and Pathways is not responsible to a Parent, for loss of profit, business or opportunity, indirect or consequential loss, loss caused by information someone else entered or published (unless caused by our breach), or loss caused by events beyond reasonable control (section {{general.5}}).</p>
+<p><strong>{{.3}} Limit for Parents.</strong> Subject to section {{.1}}, our total liability to a Parent is limited to the greater of what the Parent paid us in the 12 months before the event that caused the claim, and KES 5,000.</p>
+<p><strong>{{.4}} Limit between Pathways and a School.</strong> Subject to section {{.1}}, each party's total liability to the other is limited to the fees paid and payable under the School Agreement in the 12 months before the event that caused the claim. This does not limit the School's duty to pay fees.</p>`,
   },
   {
-    id: 'indemnity',
+    id: 'school-claims',
     title: 'Claims caused by a School',
     html: `
-<p>A School agrees to compensate Pathways for reasonable costs and losses arising from a claim by a third party that results from the School's breach of section {{school-responsibilities}} (for example, entering personal data without a lawful basis, or publishing unlawful content through the Services), subject to section {{liability.4}}. We will tell the School promptly about any such claim and cooperate reasonably in dealing with it. This section does not apply to Parents or Learners.</p>`,
+<p>A School will cover Pathways' reasonable costs of a claim by someone else that results from the School breaking section {{school-duties}}, for example by entering personal data without a lawful basis, subject to section {{liability.4}}. We will tell the School promptly about such a claim and cooperate in dealing with it. This section does not apply to Parents or Learners.</p>`,
   },
   {
     id: 'disputes',
-    title: 'Governing law and disputes',
+    title: 'Complaints and disputes',
     html: `
-<p><strong>{{.1}}</strong> These Terms and every School Agreement are governed by the laws of Kenya.</p>
-<p><strong>{{.2}} Talk to us first.</strong> If you have a complaint, contact us at ${T.email}. We aim to reply within 5 working days. If a dispute is not resolved, either side may give written notice of the dispute, and both sides will try in good faith to settle it within 30 days of that notice.</p>
-<p><strong>{{.3}} Mediation.</strong> If the dispute is not settled within those 30 days, either side may refer it to mediation by a mediator agreed by both sides or, if they cannot agree within 14 days, appointed by the Chartered Institute of Arbitrators (Kenya Branch). Each side pays its own costs and shares the mediator's fees equally.</p>
-<p><strong>{{.4}} Courts.</strong> If the dispute is not settled within 60 days of the mediator being appointed, or either side refuses to mediate, it may be taken to the courts of Kenya, which have exclusive jurisdiction. Nothing in this section stops either side from seeking urgent relief from a court, or stops a consumer or data subject from using any complaint procedure the law gives them, including complaints to the Office of the Data Protection Commissioner.</p>`,
+<p><strong>{{.1}} Talk to us first.</strong> Contact us at ${T.email}. We aim to reply within 5 working days. If a dispute is not resolved, either side may give written notice of it, and both will try in good faith to settle it within 30 days.</p>
+<p><strong>{{.2}} Mediation.</strong> If it is not settled, either side may refer it to a mediator agreed by both or, failing agreement within 14 days, appointed by the Chartered Institute of Arbitrators (Kenya Branch). Each side pays its own costs and half the mediator's fees.</p>
+<p><strong>{{.3}} Courts.</strong> If mediation has not settled it within 60 days, or either side refuses to mediate, the courts of Kenya decide it. Either side may still ask a court for urgent relief, and anyone may complain to the Office of the Data Protection Commissioner or use other procedures the law gives them.</p>
+<p><strong>{{.4}} Law.</strong> These Terms and every School Agreement are governed by the laws of Kenya.</p>`,
   },
   {
     id: 'changes',
-    title: 'Changes to these terms',
+    title: 'Changes to these Terms',
     html: `
-<p><strong>{{.1}}</strong> We may update these Terms, for example to reflect changes to the Services or the law. Each version has a number and date shown at the top of this page, and earlier versions are available on request.</p>
-<p><strong>{{.2}}</strong> For changes that materially affect your rights, we will give at least 30 days' notice by email, in the App or in the Portal before they take effect.</p>
-<p><strong>{{.3}} Schools.</strong> A School is bound by the version of these Terms named in its School Agreement until the first School Term that starts after notice of a new version, and changes to fees follow section {{school-services.10}}.</p>
-<p><strong>{{.4}}</strong> If you continue to use the Services after a change takes effect, the updated Terms apply. If you do not agree to a change, you may stop using the Services and, for a School, end its School Agreement at the end of the current School Term.</p>
-<p><strong>{{.5}}</strong> We may make changes without notice where the law requires it or where they do not reduce your rights, such as correcting errors or clarifying wording.</p>`,
+<p><strong>{{.1}}</strong> Each version of these Terms has a number and date, shown at the top. Earlier versions are available on request.</p>
+<p><strong>{{.2}}</strong> We give at least 30 days' notice of changes that materially affect your rights, by email, in the App or in the Portal. Corrections and changes that do not reduce your rights, or that the law requires, may apply straight away.</p>
+<p><strong>{{.3}} Schools.</strong> A School stays on the version named in its School Agreement until the first School Term that starts after notice of a new version. Fee changes follow section {{school-term.3}}.</p>
+<p><strong>{{.4}}</strong> If you keep using the Services after a change takes effect, the new version applies. If you do not agree, you may stop using the Services, and a School may end its School Agreement at the end of the current School Term.</p>`,
   },
   {
     id: 'general',
     title: 'General',
     html: `
-<p><strong>{{.1}} Whole agreement.</strong> These Terms, the Privacy Policy and, for a School, its School Agreement and the Data Processing Schedule are the whole agreement about the Services. Proposals, brochures and other marketing material are not part of it.</p>
-<p><strong>{{.2}} Which document applies.</strong> If documents conflict: for a School, its School Agreement applies first, then the Data Processing Schedule (on School data), then these Terms. For a Parent, these Terms apply, and the Privacy Policy applies on how a Parent's data is handled.</p>
-<p><strong>{{.3}} Transfer.</strong> You may not transfer your rights under these Terms without our written consent. We may transfer ours to another organisation that takes over the Services, and will tell you if we do; this will not reduce your rights.</p>
-<p><strong>{{.4}} Severability.</strong> If a court finds any part of these Terms invalid, the rest stays in force.</p>
-<p><strong>{{.5}} Events beyond reasonable control.</strong> Neither side is responsible for delays or failures caused by events beyond its reasonable control, such as power or network outages, natural disasters, civil unrest, or actions of government or service providers. The affected side will tell the other and do what it reasonably can to limit the effect. This does not excuse the payment of fees for access already received.</p>
-<p><strong>{{.6}} No waiver.</strong> If a right is not enforced straight away, it can still be enforced later.</p>
-<p><strong>{{.7}} Notices.</strong> We send notices to the email address or phone number on your account, in the App or Portal, or, for Schools, to the contact person named in the School Agreement (and invoices to its billing contact). You can send notices to ${T.email} or by post to ${T.postal}.</p>
-<p><strong>{{.8}} Language.</strong> These Terms are written in English. If they are translated, the English version applies.</p>`,
-  },
-  {
-    id: 'dps',
-    title: 'Data Processing Schedule (Schools)',
-    html: `
-<p>This schedule applies to personal data that Pathways processes on a School's behalf under section {{privacy.3}} (<strong>School Data</strong>). It forms part of every School Agreement and is the written contract between the School, as data controller, and Pathways, as data processor, under the Data Protection Act, 2019.</p>
-<p><strong>{{.1}} Subject and duration.</strong> Pathways processes School Data to provide the Services to the School, its School Users, and its Parents and Learners, for as long as the School Agreement lasts and then as described in section {{.9}}.</p>
-<p><strong>{{.2}} Data and people.</strong> School Data may include Learners' names, grades, classes, admission numbers, gender, attendance, marks, assessment answers (including photos of written work), progress and library records; Parents' names and contact details; and School Users' names, contact details and roles.</p>
-<p><strong>{{.3}} Instructions.</strong> Pathways processes School Data only on the School's documented instructions, which are given by the School Agreement, these Terms and the School's use of the Portal. If the law requires otherwise, we tell the School first where the law allows.</p>
-<p><strong>{{.4}} Confidentiality and security.</strong> Pathways ensures that its staff and contractors who access School Data are bound by confidentiality, and protects School Data with appropriate technical and organisational measures, including encryption in transit, access controls and limiting access to those who need it.</p>
-<p><strong>{{.5}} Service providers.</strong> The School authorises Pathways to use the service providers listed in the Privacy Policy to process School Data. Each is bound by written terms that protect the data to a standard at least equivalent to this schedule. We give the School at least 30 days' notice of a new provider, and the School may object on reasonable data-protection grounds; if we cannot resolve the objection, the School may end its School Agreement without penalty.</p>
-<p><strong>{{.6}} Transfers outside Kenya.</strong> Some providers process data outside Kenya. Pathways transfers School Data only where the Data Protection Act, 2019 allows it, with appropriate safeguards such as contractual protections, and keeps a record of the safeguards, which it shares with the School on request.</p>
-<p><strong>{{.7}} Breaches.</strong> Pathways tells the School without undue delay, and in any event within 48 hours, after becoming aware of a breach affecting School Data, with the information the School needs to meet its own obligations, and helps the School to notify the Data Protection Commissioner and affected people where required.</p>
-<p><strong>{{.8}} Assistance.</strong> Pathways helps the School, taking into account the nature of the processing, to respond to requests from people exercising their data protection rights, to carry out data protection impact assessments, and to consult the Data Protection Commissioner.</p>
-<p><strong>{{.9}} End of processing.</strong> At the end of the School Agreement, Pathways returns School Data to the School on request and deletes it as described in section {{privacy.6}}, unless the law requires it to be kept.</p>
-<p><strong>{{.10}} Information and audit.</strong> Pathways makes available the information the School reasonably needs to show compliance with this schedule, and allows an audit by the School or its appointed auditor once a year, on at least 30 days' notice, during business hours and at the School's cost.</p>`,
+<p><strong>{{.1}} Whole agreement.</strong> These Terms, the Privacy Policy and, for a School, its School Agreement are the whole agreement about the Services. Proposals, brochures and other marketing material are not part of it.</p>
+<p><strong>{{.2}} Which document applies.</strong> For a School, its School Agreement applies first, then the Data Processing Schedule (for School data), then these Terms. For a Parent, these Terms apply, and the Privacy Policy applies to how personal data is handled.</p>
+<p><strong>{{.3}} Transfer.</strong> You may not transfer your rights under these Terms without our written consent. We may transfer ours to an organisation that takes over the Services, and will tell you; your rights will not be reduced.</p>
+<p><strong>{{.4}} Severability.</strong> If a court finds part of these Terms invalid, the rest still applies.</p>
+<p><strong>{{.5}} Events beyond reasonable control.</strong> Neither side is responsible for failures caused by events beyond its reasonable control, such as power or network outages, natural disasters or civil unrest. This does not excuse payment for access already received.</p>
+<p><strong>{{.6}} No waiver.</strong> A right not enforced straight away can still be enforced later.</p>
+<p><strong>{{.7}} Notices.</strong> We send notices to the email or phone number on your account, in the App or Portal, or, for a School, to the contact for notices in its School Agreement (invoices go to its billing contact). Send notices to us at ${T.email} or ${T.postal}.</p>
+<p><strong>{{.8}} Language.</strong> If these Terms are translated, the English version applies.</p>`,
   },
   {
     id: 'contact',
@@ -298,15 +305,23 @@ const RAW: Section[] = [
     html: `
 <p><strong>${T.company}, trading as ${T.trading}</strong><br>Registration number ${T.reg}<br>${T.office}<br>${T.postal}<br>Email: <a href="mailto:${T.email}">${T.email}</a><br>Phone and WhatsApp: ${T.phone}</p>`,
   },
+  {
+    id: 'dps',
+    part: 'Schedule',
+    title: 'Data Processing Schedule (Schools)',
+    html: `
+<p>This schedule is the written contract between a School, as data controller, and Pathways, as data processor, under the Data Protection Act, 2019. It applies to personal data we process for a School under section {{privacy.3}} (<strong>School Data</strong>) and forms part of every School Agreement.</p>
+<p><strong>{{.1}} Purpose and duration.</strong> We process School Data to provide the Services to the School, its School Users, Parents and Learners, for as long as the School Agreement lasts, and then as section {{.9}} describes.</p>
+<p><strong>{{.2}} Data.</strong> School Data may include Learners' names, grades, classes, admission numbers, gender, attendance, marks, assessment answers (including photos of written work), progress and library records; Parents' names and contact details; and School Users' names, contact details and roles (Privacy Policy section {{pp:collect.5}}).</p>
+<p><strong>{{.3}} Instructions.</strong> We process School Data only on the School's instructions, given by the School Agreement, these Terms and its use of the Portal. If the law requires otherwise, we tell the School first where the law allows.</p>
+<p><strong>{{.4}} Confidentiality and security.</strong> Our staff and contractors who access School Data are bound by confidentiality. We protect it with appropriate measures, including encryption, access controls and access only for those who need it (Privacy Policy section {{pp:security}}).</p>
+<p><strong>{{.5}} Service providers.</strong> The School authorises the providers listed in Privacy Policy section {{pp:sharing}}. Each is bound by written terms protecting the data at least as well as this schedule. We give the School 30 days' notice of a new provider; the School may object on reasonable data-protection grounds and, if we cannot resolve it, end its School Agreement without penalty.</p>
+<p><strong>{{.6}} Transfers outside Kenya</strong> happen only where the Data Protection Act, 2019 allows, with appropriate safeguards. We keep a record of them and share it with the School on request (Privacy Policy section {{pp:transfers}}).</p>
+<p><strong>{{.7}} Breaches.</strong> We tell the School within 48 hours of becoming aware of a breach affecting School Data, with what it needs to meet its own duties, and help it notify the Data Protection Commissioner and affected people.</p>
+<p><strong>{{.8}} Assistance.</strong> We help the School respond to people exercising their data rights, carry out impact assessments, and consult the Data Protection Commissioner.</p>
+<p><strong>{{.9}} End of processing.</strong> When the School Agreement ends, we return School Data on request and delete it after 12 months, or sooner if the School asks, unless the law requires us to keep it.</p>
+<p><strong>{{.10}} Audit.</strong> We give the School the information it reasonably needs to show compliance, and allow one audit a year by the School or its auditor, on 30 days' notice, during business hours and at the School's cost.</p>`,
+  },
 ];
 
-/** Resolve {{.n}} (own section) and {{id}} / {{id.n}} (other sections) to generated numbers. */
-const NUM: Record<string, number> = Object.fromEntries(RAW.map((s, i) => [s.id, i + 1]));
-export const SECTIONS: Section[] = RAW.map((s, i) => ({
-  ...s,
-  html: s.html.replace(/\{\{([a-z-]*)(\.\d+)?\}\}/g, (_m, id: string, sub?: string) => {
-    const n = id ? NUM[id] : i + 1;
-    if (!n) throw new Error(`terms.ts: unknown section id "${id}"`);
-    return `${n}${sub ?? ''}`;
-  }),
-}));
+export const SECTIONS: Section[] = numberSections(RAW, 'terms.ts', { pp: PRIVACY_NUM });
