@@ -112,7 +112,7 @@ const RAW: Section[] = [
 <p><strong>{{.5}} Refunds.</strong> A payment is not refundable once its paid period has started. If you were charged twice, or paid without receiving access, tell us within 30 days and we will refund that amount.</p>
 <p><strong>{{.6}} Learners funded by a School.</strong> A Covered Learner has the paid features through their School, and the Parent pays nothing for that Learner while the School funds them. When that ends, the Learner moves to the free plan unless the Parent chooses to pay.</p>
 <p><strong>{{.7}} Promotions.</strong> Discount codes, free-access codes and referral rewards follow the conditions stated when issued. They have no cash value and cannot be sold.</p>
-<p><strong>{{.8}} Tax.</strong> Pathways is not registered for VAT, so no VAT is added. If that changes, we will give 30 days' notice of any effect on prices.</p>`,
+`,
   },
   {
     id: 'linking',
@@ -150,9 +150,8 @@ const RAW: Section[] = [
 <p><strong>{{.4}} Learners who leave</strong> are not refunded for the current School Term and are not counted from the next one.</p>
 <p><strong>{{.5}} Instalments.</strong> Each School Term's fees are paid in two equal instalments: the first by the end of week 3 of the School Term, and the second by the end of the second week after half-term (or, if there is no half-term, six weeks after the first). The School may pay both at once. Payment is by bank transfer or M-PESA to the details on our invoice.</p>
 <p><strong>{{.6}} Holidays.</strong> A School Term's access continues through the holiday that follows it.</p>
-<p><strong>{{.7}} Tax.</strong> Pathways is not registered for VAT, so no VAT is added. If that changes, we will give 30 days' notice of any effect on fees.</p>
-<p><strong>{{.8}} Late payment.</strong> We send reminders when an instalment is overdue. If fees for a School Term are still unpaid when the next School Term starts, we may pause the School's funded access and paid Portal features during that term until they are paid. No data is deleted, and access returns once payment is received.</p>
-<p><strong>{{.9}} Refunds.</strong> Fees for a School Term that has started are not refunded, except under section {{termination.3}}. Duplicate or mistaken payments are refunded or credited to the next invoice, as the School chooses.</p>`,
+<p><strong>{{.7}} Late payment.</strong> We send reminders when an instalment is overdue. If fees for a School Term are still unpaid when the next School Term starts, we may pause the School's funded access and paid Portal features during that term until they are paid. No data is deleted, and access returns once payment is received.</p>
+<p><strong>{{.8}} Refunds.</strong> Fees for a School Term that has started are not refunded, except under section {{termination.3}}. Duplicate or mistaken payments are refunded or credited to the next invoice, as the School chooses.</p>`,
   },
   {
     id: 'school-term',
@@ -249,7 +248,7 @@ const RAW: Section[] = [
     title: 'Suspension and ending',
     html: `
 <p><strong>{{.1}} By you.</strong> A Parent may stop using the App and delete their account at any time. A School may end its School Agreement under section {{school-term.1}}, {{school-term.3}}, {{availability.3}} or {{.3}}.</p>
-<p><strong>{{.2}} By us.</strong> We may suspend or close an account, or a School's access, if it seriously or repeatedly breaks these Terms, if the law or an authority requires it, if needed to protect Learners or the Services, or for unpaid fees under section {{school-fees.8}}. Where reasonable, we will warn you first and give you a chance to put things right.</p>
+<p><strong>{{.2}} By us.</strong> We may suspend or close an account, or a School's access, if it seriously or repeatedly breaks these Terms, if the law or an authority requires it, if needed to protect Learners or the Services, or for unpaid fees under section {{school-fees.7}}. Where reasonable, we will warn you first and give you a chance to put things right.</p>
 <p><strong>{{.3}} Serious breach.</strong> A School or Pathways may end a School Agreement by written notice if the other seriously breaks it, including the Data Processing Schedule, and does not put it right within 30 days of being asked. If a School ends it because of our breach, we refund the fees paid for the rest of the current School Term.</p>
 <p><strong>{{.4}} Afterwards.</strong> The right to use the Services ends. Fees already due, and sections {{content}}, {{privacy}}, {{liability}}, {{school-claims}}, {{disputes}}, {{general}} and {{dps}}, continue to apply.</p>`,
   },
