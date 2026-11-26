@@ -93,7 +93,7 @@ const RAW: Section[] = [
 <p><strong>{{.2}}</strong> In the Learner's view, children can use learning content only. They cannot change account settings, make payments or see billing information.</p>
 <p><strong>{{.3}}</strong> We show no advertising, and a child's name, progress and messages are never public.</p>
 <p><strong>{{.4}}</strong> Parents can see their child's progress and read their child's Learning Assistant conversations (except while a safeguarding concern is open), and can remove a Learner profile or delete the whole account in the App at any time.</p>
-<p><strong>{{.5}} Safeguarding.</strong> If a Learner's messages to the Learning Assistant suggest they may be at risk of harm, the Learner is shown where to get help (Childline Kenya 116, or 999 or 112 in an emergency). Trained staff review the conversation, and every review is logged. We then inform the Parent, without quoting the child, unless doing so could put the child at risk, and inform the authorities where the law requires. While a concern is open, the conversation may be hidden from the Parent.</p>`,
+<p><strong>{{.5}} Safeguarding.</strong> If a Learner's messages to the Learning Assistant suggest they may be at risk of harm, the Learner is shown where to get help (Childline Kenya 116, or 999 or 112 in an emergency). Only authorised staff review the conversation, and every review is logged. We then inform the Parent, without quoting the child, unless doing so could put the child at risk, and inform the authorities where the law requires. While a concern is open, the conversation may be hidden from the Parent.</p>`,
   },
   {
     id: 'schools',
