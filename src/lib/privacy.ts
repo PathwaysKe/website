@@ -92,8 +92,8 @@ const RAW: Section[] = [
 <p><strong>{{.1}}</strong> A Learner profile is always created by a Parent, or by the Learner's School. Children cannot hold their own accounts. By creating a profile, a Parent gives consent for the child's data to be processed as this policy describes.</p>
 <p><strong>{{.2}}</strong> In the Learner's view, children can use learning content only. They cannot change account settings, make payments or see billing information.</p>
 <p><strong>{{.3}}</strong> We show no advertising, and a child's name, progress and messages are never public.</p>
-<p><strong>{{.4}}</strong> Parents can see their child's progress and read their child's Learning Assistant conversations, and can remove a Learner profile or delete the whole account in the App at any time.</p>
-<p><strong>{{.5}} Safeguarding.</strong> If a Learner's messages to the Learning Assistant suggest they may be at risk of harm, the Learner is shown where to get help, our team reviews the conversation, and we inform the Parent and, where the law requires, the relevant authorities.</p>`,
+<p><strong>{{.4}}</strong> Parents can see their child's progress and read their child's Learning Assistant conversations (except while a safeguarding concern is open), and can remove a Learner profile or delete the whole account in the App at any time.</p>
+<p><strong>{{.5}} Safeguarding.</strong> If a Learner's messages to the Learning Assistant suggest they may be at risk of harm, the Learner is shown where to get help (Childline Kenya 116, or 999 or 112 in an emergency). Trained staff review the conversation, and every review is logged. We then inform the Parent, without quoting the child, unless doing so could put the child at risk, and inform the authorities where the law requires. While a concern is open, the conversation may be hidden from the Parent.</p>`,
   },
   {
     id: 'schools',
@@ -147,9 +147,9 @@ const RAW: Section[] = [
 <thead><tr><th>Data</th><th>How long</th></tr></thead>
 <tbody>
 <tr><td>Parent account and Learner profiles, learning activity, Learning Assistant conversations</td><td>Until the account or profile is deleted; then deleted within 30 days</td></tr>
-<tr><td>School data</td><td>For the School Agreement, then 12 months so the School can return or ask for an export, then deleted (sooner if the School asks)</td></tr>
+<tr><td>School data</td><td>For the School Agreement, then 12 months so the School can ask for its records back, then deleted (sooner if the School asks). We give the School 30 days' notice in the Portal before deletion. Results already shared with a Parent stay in the Parent's account</td></tr>
 <tr><td>Payment and invoice records</td><td>7 years, as financial records the law requires. If the account is deleted, they are kept without the account's name or contact details</td></tr>
-<tr><td>Reported or safeguarding-flagged conversations</td><td>As long as needed to deal with the report, and any longer period the law requires</td></tr>
+<tr><td>Reported or safeguarding-flagged conversations</td><td>While the report or concern is open, then 90 days after it is closed, or longer where the law requires</td></tr>
 <tr><td>Website enquiries</td><td>Up to 24 months after our last contact</td></tr>
 <tr><td>Crash reports</td><td>90 days</td></tr>
 <tr><td>Server logs</td><td>30 days</td></tr>
