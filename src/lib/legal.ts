@@ -21,9 +21,9 @@ export const ENTITY = {
 
 /** Both documents are published together, so they share one status. */
 export const LEGAL_STATUS = {
-  draft: true,
-  effective: 'to be set on publication',
-  updated: '23 November 2026',
+  draft: false,
+  effective: '26 November 2026',
+  updated: '26 November 2026',
 };
 
 export type Section = { id: string; title: string; part?: string; html: string };
