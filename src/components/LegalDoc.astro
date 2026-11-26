@@ -1,0 +1,117 @@
+---
+/** Shared web layout for the legal documents (Terms of Service, Privacy Policy). Print/PDF: LegalPrint.astro. */
+import Base from '../layouts/Base.astro';
+import type { Section } from '../lib/legal';
+
+interface Props {
+  title: string;
+  description: string;
+  meta: { version: string; updated: string; effective: string; draft: boolean; pdf: string };
+  intro: string;
+  email: string;
+  openPoints: string[];
+  sections: Section[];
+  summary?: string[];
+}
+const { title, description, meta, intro, email, openPoints, sections, summary } = Astro.props;
+
+// Group sections under their part headings (a section with `part` starts a new group).
+const groups: { part?: string; items: { s: Section; n: number }[] }[] = [];
+sections.forEach((s, i) => {
+  if (s.part || !groups.length) groups.push({ part: s.part, items: [] });
+  groups[groups.length - 1].items.push({ s, n: i + 1 });
+});
+---
+
+<Base {title} {description} noindex={meta.draft}>
+  <section class="container-x pb-20 pt-6 lg:pb-28">
+    <header class="max-w-3xl">
+      <p class="eyebrow mb-4">Legal</p>
+      <h1 class="font-display text-4xl font-bold leading-tight sm:text-5xl">{title}</h1>
+      <p class="mt-4 text-sm text-muted-foreground">
+        Version {meta.version} · Last updated {meta.updated} · Effective date: {meta.effective}
+      </p>
+      <p class="mt-5 text-lg leading-relaxed text-muted-foreground">
+        {intro} Questions: <a class="text-primary hover:underline" href={`mailto:${email}`}>{email}</a>.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a class="btn-pdf" href={meta.pdf} download>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /></svg>
+          Download PDF
+        </a>
+      </div>
+      {meta.draft && (
+        <div class="draft mt-6 rounded-2xl border border-dashed p-5 text-sm">
+          <strong>Draft, not yet in force.</strong> Open points before publication:
+          <ul class="mt-2 list-disc pl-5">{openPoints.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      )}
+      {summary && (
+        <div class="summary mt-6 rounded-2xl p-6">
+          <p class="text-xs font-bold uppercase tracking-[0.14em]">In short</p>
+          <ul class="mt-3 grid gap-2">{summary.map((p) => <li>{p}</li>)}</ul>
+          <p class="mt-3 text-xs opacity-75">This summary helps you find your way. The sections below are the full terms.</p>
+        </div>
+      )}
+    </header>
+
+    <div class="mt-12 grid gap-12 lg:grid-cols-[17rem_1fr]">
+      <nav aria-label="Contents" class="toc lg:sticky lg:top-28 lg:self-start lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">Contents</p>
+        {groups.map((g) => (
+          <div class="mt-4">
+            {g.part && <p class="toc-part">{g.part}</p>}
+            <ol class="mt-1.5 grid gap-1.5 text-sm">
+              {g.items.map(({ s, n }) => (
+                <li><a class="hover:text-primary" href={`#${s.id}`}><span class="tabular-nums text-muted-foreground">{n}.</span> {s.title}</a></li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </nav>
+
+      <article class="legal max-w-3xl">
+        {groups.map((g) => (
+          <>
+            {g.part && <p class="part">{g.part}</p>}
+            {g.items.map(({ s, n }) => (
+              <section id={s.id}>
+                <h2><span>{n}.</span> {s.title}</h2>
+                <Fragment set:html={s.html} />
+              </section>
+            ))}
+          </>
+        ))}
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .btn-pdf { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 999px; background: var(--primary); color: var(--primary-foreground); padding: 0.6rem 1.1rem; font-size: 0.9rem; font-weight: 600; }
+  .btn-pdf:hover { filter: brightness(1.08); }
+  .btn-pdf svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .draft { border-color: #d97706; background: #fef3c7; color: #78350f; }
+  :global(.dark) .draft { background: color-mix(in srgb, #d97706 14%, transparent); color: #fcd34d; }
+  .summary { background: color-mix(in srgb, var(--brand-teal) 9%, var(--card)); border: 1px solid color-mix(in srgb, var(--brand-teal) 25%, transparent); }
+  .summary > p:first-child { color: var(--brand-teal-text); }
+  .summary li { position: relative; padding-left: 1.1rem; line-height: 1.6; }
+  .summary li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--brand-teal-text); }
+  .toc-part { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-teal-text); }
+  .legal .part { margin-top: 3rem; padding: 0.55rem 0.9rem; border-radius: 0.6rem; background: color-mix(in srgb, var(--brand-teal) 10%, transparent); color: var(--brand-teal-text); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+  .legal .part:first-child { margin-top: 0; }
+  .legal section { scroll-margin-top: 7rem; padding-top: 2rem; }
+  .legal section + section { margin-top: 2rem; border-top: 1px solid var(--border); }
+  .legal :global(h2) { font-family: var(--font-display, inherit); font-size: 1.5rem; font-weight: 700; line-height: 1.25; margin-bottom: 1rem; }
+  .legal :global(h2 span) { color: var(--brand-teal-text); margin-right: 0.25rem; }
+  .legal :global(p), .legal :global(li), .legal :global(td) { color: var(--muted-foreground); line-height: 1.75; }
+  .legal :global(p + p), .legal :global(ul + p), .legal :global(ol + p), .legal :global(p + ul), .legal :global(p + ol), .legal :global(table + p), .legal :global(p + table) { margin-top: 0.9rem; }
+  .legal :global(ul) { list-style: disc; padding-left: 1.4rem; display: grid; gap: 0.45rem; }
+  .legal :global(ol) { list-style: lower-alpha; padding-left: 1.4rem; display: grid; gap: 0.45rem; }
+  .legal :global(strong) { color: var(--foreground); font-weight: 650; }
+  .legal :global(a) { color: var(--primary); }
+  .legal :global(a:hover) { text-decoration: underline; }
+  .legal :global(table) { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  .legal :global(th) { text-align: left; font-weight: 650; color: var(--foreground); padding: 0.6rem 0.75rem; border-bottom: 2px solid var(--border); }
+  .legal :global(td) { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+</style>

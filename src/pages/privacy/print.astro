@@ -1,0 +1,13 @@
+---
+import LegalPrint from '../../components/LegalPrint.astro';
+import { PRIVACY, PRIVACY_SECTIONS, PRIVACY_OPEN_POINTS, PRIVACY_SUMMARY } from '../../lib/privacy';
+---
+
+<LegalPrint
+  title="Privacy Policy"
+  meta={PRIVACY}
+  intro="This policy explains how we handle personal data in the Pathways app, school portal and website. The current version is always at pathways.ke/privacy."
+  sections={PRIVACY_SECTIONS}
+  summary={PRIVACY_SUMMARY}
+  openPoints={PRIVACY_OPEN_POINTS}
+/>

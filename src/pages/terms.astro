@@ -1,0 +1,15 @@
+---
+import LegalDoc from '../components/LegalDoc.astro';
+import { TERMS, SECTIONS, OPEN_POINTS, TERMS_SUMMARY } from '../lib/terms';
+---
+
+<LegalDoc
+  title="Terms of Service"
+  description="The terms that apply to the Pathways app, school portal and website, provided by Stawi Edtech LLP, trading as Pathways."
+  meta={TERMS}
+  intro="These Terms explain how the Pathways app, school portal and website work, what you can expect from us, and what we expect from you."
+  email={TERMS.email}
+  openPoints={OPEN_POINTS}
+  sections={SECTIONS}
+  summary={TERMS_SUMMARY}
+/>

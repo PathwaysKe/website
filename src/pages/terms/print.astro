@@ -1,0 +1,13 @@
+---
+import LegalPrint from '../../components/LegalPrint.astro';
+import { TERMS, SECTIONS, OPEN_POINTS, TERMS_SUMMARY } from '../../lib/terms';
+---
+
+<LegalPrint
+  title="Terms of Service"
+  meta={TERMS}
+  intro="These Terms explain how the Pathways app, school portal and website work, what you can expect from us, and what we expect from you. The current version is always at pathways.ke/terms."
+  sections={SECTIONS}
+  summary={TERMS_SUMMARY}
+  openPoints={OPEN_POINTS}
+/>
